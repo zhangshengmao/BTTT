@@ -3,8 +3,8 @@ var dbServer = new mongodb.Server('localhost', 27017);
 var db = new mongodb.Db('BTTT', dbServer);
 
 module.exports = {
-    insert: function(_collection, _data, _callback){
-        db.open(function(error, db){console.log(_data)
+    insert: function(_collection, _data, _callback){console.log(_data)
+        db.open(function(error, db){
             if(error){
                 _callback({status: false, message: error});
             } else {
@@ -26,7 +26,6 @@ module.exports = {
                 _callback({status: false, message: error});
             } else {
                 db.collection(_collection, function(error, collection){
-                    console.log(_collection)
                     if(error){
                         _callback({status: false, message: error});
                     } else {
@@ -34,7 +33,7 @@ module.exports = {
                             db.close();
                             if(error){
                                 _callback({status: false, message: error});
-                            } else {console.log(6)
+                            } else {
                                 _callback({status: true, data: dataset});
                             }
                         })
