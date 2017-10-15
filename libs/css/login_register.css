@@ -1,0 +1,10 @@
+#login,#register{width:400px;border:1px solid #ccc;background-color: #fff;
+	margin:100px auto;padding:10px;box-shadow:0px 0px  30px #ccc;}
+#login>h3,#register>h3{text-align:center;padding:10px;}
+#register{width:560px;padding:10px 30px;}
+#login>div,#register>div{margin:10px 0px;}
+#login>div>input,#register>div>input{width:375px;}
+#login>div>select,#register>div>select{width:375px;}
+#login>div>label,#register>div>label{display:inline-block;width:80px;}
+#login>div>#btnLogin,#register>div>#btnRegister{width:80px;}
+#btnRegister{margin-left:83px;width:100px;}

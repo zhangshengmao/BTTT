@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="libs/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="libs/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="libs/css/index.css" />
+    <link rel="stylesheet" type="text/css" href="libs/css/purchase.css">
+    <script type="text/javascript" src="libs/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="libs/js/purchase.js"></script>
+</head>
+<body>
+    <header id="header">HEADER</header>
+    <main id="main">
+        <div class="row">
+            <ul class="nav col-md-2">
+                <li class="product">
+                    <a href="#" class="btn btn-default btn-lg">产品管理</a>
+                </li>
+                <li class="purchase">
+                    <a href="#" class="btn btn-default btn-lg">采购管理</a>
+                </li>
+                <li class="warehouse">
+                    <a href="#" class="btn btn-default btn-lg">仓库管理</a>
+                </li>
+                <li class="sell">
+                    <a href="#" class="btn btn-default btn-lg">销售管理</a>
+                </li>
+            </ul>
+            <div class="content col-md-10">
+                <ul class="top row">
+                    <li class="reserve col-md-4">
+                        <a href="#" class="btn btn-default" id="supplier">供货商管理</a>
+                    </li>
+                    <li class="receive reserve col-md-4">
+                        <a href="#" class="btn btn-default" id="purchase">采购进货</a>
+                    </li>
+                </ul>
+
+                <div id="supplier_box">
+                    <div class="condition">
+                        <div class="row">
+                            <div class="firm col-md-4">
+                                <span>供货商名称：</span>
+                                <select name="firmSel" id="firmSel">
+                                </select>
+                            </div>
+                            <div class="classify col-md-4">
+                                <span>供货商地址：</span>
+                                <select name="classSel" id="classSel">
+                                </select>                       
+                            </div>
+                            <div class="classify col-md-4">
+                                <span>主联系人：</span>
+                                <select name="classSel" id="classSel">
+                                </select>                       
+                            </div>
+                            <div class="col-md-4" style="margin-top:30px">
+                                <button class="btn btn-success btn-xs">确认</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" search form-group has-success has-feedback col-xs-4">
+                        <input type="text" class="form-control" id="inputSuccess1" aria-describedby="inputSuccess2Status">
+                        <button type="button" class="btn btn-success">搜索</button>
+                    </div>   
+
+                    <table class="table table-bordered table-hover">
+                        <caption>供货商管理表</caption>
+                        <thead>
+                            <tr>
+                                <th>供货商名称</th>
+                                <th>供货商地址</th>
+                                <th>主联系人姓名</th>
+                                <th>电话</th>
+                                <th>邮箱</th>
+                                <th>职务</th>
+                                <th>业务员</th>
+                                <th>修改时间</th>
+                                <th><button class="btn btn-success btn-xs" id="add_supplier">增加</button></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" /></td>
+                                <td><input type="text" /></td>
+                                <td><input type="text" /></td>
+                                <td><input type="text" /></td>
+                                <td><input type="text" /></td>
+                                <td><input type="text" /></td>
+                                <td><input type="text" /></td>
+                                <td><input type="text" /></td>
+                                <td><button class="btn btn-default btn-xs">确认</button></td>
+                                <td><button class="btn btn-default btn-xs">删除</button></td>
+                            </tr>
+                        </tbody>
+                    </table> 
+                    <div  class="add_sup_box">
+                        <h3>登记供货商信息</h3>
+                        <label for="sup_name">供货商名称：</label><input type="text" id="sup_name" class="form-control">
+                        <label for="sup_address">供货商地址：</label><input type="text" id="sup_address" class="form-control">
+                        <label for="linkman_name">主联系人姓名：</label><input type="text" id="linkman_name" class="form-control">
+                        <label for="linkman_tel">主联系人电话：</label><input type="text" id="linkman_name" class="form-control">
+                        <label for="linkman_position">职务：</label><input type="text" id="sup_position" class="form-control">
+                        <label for="clerk_name">业务员姓名：</label><input type="text" id="clerk_name" class="form-control">
+                        <input type="button" id="addToDb" value="添加" class="btn btn-success btn-xs">
+                    </div>
+                </div>
+
+                <div id="purchase_box">
+                    <div class="condition">
+                        <div class="row">
+                            <div class="purchase col-md-4">
+                                <span>进价区间：</span>
+                                <input type="text" id="pur1"/>
+                                <span>-</span>
+                                <input type="text" id="pur2"/>
+                            </div>
+                            <div class="sell col-md-4">
+                                <span>售价区间：</span>
+                                <input type="text" id="sel1" />
+                                <span>-</span>
+                                <input type="text" id="sel2" />         
+                            </div>
+                            <div class="amount col-md-4">
+                                <span>数量区间：</span>
+                                <input type="text" id="amo1" />
+                                <span>-</span>
+                                <input type="text" id="amo2" />                   
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="firm col-md-4">
+                                <span>供货商家：</span>
+                                <select name="firmSel" id="firmSel">
+                                </select>
+                            </div>
+                            <div class="classify col-md-4">
+                                <span>商品分类：</span>
+                                <select name="classSel" id="classSel">
+                                </select>                       
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-success btn-xs">确认</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" search form-group has-success has-feedback col-xs-4">
+                        <input type="text" class="form-control" id="inputSuccess1" aria-describedby="inputSuccess2Status">
+                        <button type="button" class="btn btn-success">搜索</button>
+                    </div> 
+                    <table class="table table-bordered table-hover">
+                        <caption>库存管理表</caption>
+                        <thead>
+                            <tr>
+                                <th>商品编码</th>
+                                <th>商品条码</th>
+                                <th>商品名称</th>
+                                <th>商品分类</th>
+                                <th>数量</th>
+                                <th>进价</th>
+                                <th>售价</th>
+                                <th>商家</th>
+                                <th>修改时间</th>
+                                <th><button class="btn btn-success btn-xs">增加</button></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" /></td>
+                                <td><input type="text" /></td>
+                                <td><input type="text" /></td>
+                                <td><input type="text" /></td>
+                                <td><input type="text" /></td>
+                                <td><input type="text" /></td>
+                                <td><input type="text" /></td>
+                                <td><input type="text" /></td>
+                                <td><input type="text" /></td>
+                                <td><button class="btn btn-default btn-xs">确认</button></td>
+                                <td><button class="btn btn-default btn-xs">删除</button></td>
+                            </tr>
+                        </tbody>
+                    </table>         
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer id="footer">FOOTER</footer>
+</body>
+</html>

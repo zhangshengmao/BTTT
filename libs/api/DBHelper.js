@@ -4,9 +4,8 @@ var db = new mongodb.Db('BTTT', dbServer);
 
 module.exports = {
     insert: function(_collection, _data, _callback){
-        db.open(function(error, db){
+        db.open(function(error, db){console.log(_data)
             if(error){
-                console.log(1)
                 _callback({status: false, message: error});
             } else {
                 db.collection(_collection, function(error, collection){
@@ -21,7 +20,7 @@ module.exports = {
             }
         })
     },
-    select: function(_collection, _condition, _callback){
+    select: function(_collection, _condiction, _callback){
         db.open(function(error, db){
             if(error){
                 _callback({status: false, message: error});
@@ -31,7 +30,8 @@ module.exports = {
                     if(error){
                         _callback({status: false, message: error});
                     } else {
-                        collection.find(_condition || {}).toAarry(function(error, dataset){
+                        collection.find(_condiction || {}).toArray(function(error, dataset){
+                            db.close();
                             if(error){
                                 _callback({status: false, message: error});
                             } else {console.log(6)
