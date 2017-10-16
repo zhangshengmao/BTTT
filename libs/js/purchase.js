@@ -38,20 +38,20 @@ jQuery(function($){
 		date+ week_str[week] + " " + hour + ":" + min + ":" + sec;
 		return mydate;
 	}
+
 	$.post("http://localhost:88/newSup",function(result){
-		console.log(result.data.data);
 		result.data.data.forEach(function(item){
 			for(var attr in item){
 				var $tr = $(`
 					<tr>
-					<td>${item.sup_name}</td>
-					<td>${item.sup_address}</td>
-					<td>${item.linkman_name}</td>
-					<td>${item.linkman_tel}</td>
-					<td>${item.linkman_position}</td>
-					<td>${item.clerk_name}</td>
+					<td class="sup_name">${item.sup_name}</td>
+					<td class="sup_adress">${item.sup_address}</td>
+					<td class="linkman_name">${item.linkman_name}</td>
+					<td class="linkman_tel">${item.linkman_tel}</td>
+					<td class="linkman_position">${item.linkman_position}</td>
+					<td class="clerk_name">${item.clerk_name}</td>
 					<td>${createTime()}</td>
-					<td><button class="btn btn-default btn-xs">确认</button></td>
+					<td><button class="btn btn-default btn-xs affirm">确认</button></td>
 					<td><button class="btn btn-default btn-xs delete">删除</button></td>
 					</tr>
 					`)
@@ -63,7 +63,6 @@ jQuery(function($){
 	});
 	//输入供应商的信息
 	$("#addToDb").click(function(){
-
 
 		//获取输入框的信息
 		var msg = {
@@ -89,10 +88,70 @@ jQuery(function($){
 			console.log(result);
 
 		});
-		
+
+		window.location.reload();
 	});
 
+	//删除供货商
+	$("#supplier_box").on("click",".delete",function(){
+		//删除当前tr:dom节点+数据库都删除
+		var msg = {sup_name:$(this).parents("tr").find(".sup_name").text()}
+		$(this).parents("tr").remove();
+		$.post("http://localhost:88/delete_supplier",msg,function(result){
+			console.log(result);
+		})
+	});
 
+	var supplier = document.querySelector('#supplier_box')
+	// 事件委托：把事件绑定给td的父级
+	supplier.onclick = function(e){
+		e = e || window.event;
+		var target = e.target || e.srcElement;
+
+		// 点击td编辑
+		if(target.tagName.toLowerCase() === 'td'){
+
+			if(target === target.parentNode.lastElementChild.previousElementSibling
+			 || target === target.parentNode.lastElementChild ||
+			 target === target.parentNode.firstElementChild ||
+			  target === target.parentNode.lastElementChild.previousElementSibling.previousElementSibling){
+				return;
+			}
+
+			// 生成一个输入框
+			var input = document.createElement('input');
+			input.type = 'text';
+			input.value = target.innerText;
+
+			// 把输入框写入td
+			target.innerHTML = '';
+			target.appendChild(input);
+			input.focus();
+
+			// 失去焦点是保存
+			input.onblur = function(){
+				target.innerHTML = this.value;
+			}
+		}
+	}
+
+	//点击“确认”按钮，更改数据
+	$("#supplier_box").on("click",".affirm",function(){
+		//获取当前行
+		var msg = {
+			sup_name:$(this).parents("tr").find(".sup_name").text(),
+			sup_address:$(this).parents("tr").find(".sup_address").text(),
+			linkman_name:$(this).parents("tr").find(".linkman_name").text(),
+			linkman_tel:$(this).parents("tr").find(".linkman_tel").text(),
+			linkman_position:$(this).parents("tr").find(".linkman_position").text(),
+			clerk_name:$(this).parents("tr").find(".clerk_name").text(),
+		}
+		console.log(msg);
+
+		$.post("http://localhost:88/update_supplier",msg,function(result){
+			console.log(result);
+		})
+	})
 
 /*-----------------------------------------------------------------------*/
 
