@@ -1,5 +1,5 @@
 var mongodb = require('mongodb');
-var dbServer = new mongodb.Server('localhost', 27017);
+var dbServer = new mongodb.Server('10.3.131.22', 27017);
 var db = new mongodb.Db('BTTT', dbServer);
 
 module.exports = {
