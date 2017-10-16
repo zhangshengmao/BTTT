@@ -1,5 +1,5 @@
 module.exports={
-    sales:function(app, urlencode, db){
+    Sales:function(app, urlencode, db){
         
     }
 }

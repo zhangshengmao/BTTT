@@ -1,9 +1,9 @@
 var mongodb = require('mongodb');
-var dbServer = new mongodb.Server('10.3.131.22', 27017);
+var dbServer = new mongodb.Server('localhost', 27017);
 var db = new mongodb.Db('BTTT', dbServer);
 
 module.exports = {
-    insert: function(_collection, _data, _callback){console.log(_data)
+    insert: function(_collection, _data, _callback){
         db.open(function(error, db){
             if(error){
                 _callback({status: false, message: error});
@@ -13,14 +13,14 @@ module.exports = {
                         _callback({status: false, message: error});
                     } else {
                         collection.insert(_data);
-                        _callback({status: true});
+                        _callback({status: true,data:_data});
                     }
                     db.close();
                 })
             }
         })
     },
-    select: function(_collection, _condiction, _callback){
+    select: function(_collection, _condition, _callback){
         db.open(function(error, db){
             if(error){
                 _callback({status: false, message: error});
@@ -29,7 +29,7 @@ module.exports = {
                     if(error){
                         _callback({status: false, message: error});
                     } else {
-                        collection.find(_condiction || {}).toArray(function(error, dataset){
+                        collection.find(_condition || {}).toArray(function(error, dataset){
                             db.close();
                             if(error){
                                 _callback({status: false, message: error});
@@ -42,19 +42,18 @@ module.exports = {
             }
         })
     },
-    update: function(_collection, _condiction, _callback){console.log(_condiction)
+    update: function(_collection, _condition, _callback){console.log(_condition)
         db.open(function(error, db){
             if(error){
                 _callback({status: false, message: error});
             } else {
                 db.collection(_collection, function(error, collection){
                     if(error){
-                        console.log('error');
                         _callback({status: false, message: error});
                     } else {
-                        console.log(_condiction[0],_condition[1]);
                         // _condition=[{修改的那一条的Id：_id},{修改这条数据的哪一种属性：改成什么}]
-                        collection.update(_condiction[0], {$set:_condition[1]}, {safe:true}, function(err, result){
+                        collection.update(_condition[0], {$set:_condition[1]}, {safe:true}, function(err, result){
+
                             if(err){
                                 _callback({status: false, message: error});
                             }else{
