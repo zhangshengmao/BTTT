@@ -1,8 +1,9 @@
 var bodyparser = require('body-parser');
 var urlencode = bodyparser.urlencoded({extended: false});
+var express = require('express');
 module.exports = {
-    Register: function(app,db){
-
+    Register: function(app, db){
+        // app.use(express.static(path.join(__dirname, '/')));
         app.post("/register", urlencode, function(request, response){
             
             db.select("users", {username: request.body.username}, function(result){
@@ -17,28 +18,39 @@ module.exports = {
                     })
                 }
             });
-        });
-
-        app.post("/login", urlencode, function(request, response){
-            db.select("users", {username: request.body.username}, function(result){
-                console.log(result);
-                var pwd;
-                result.data.forEach(function(item){
-                    pwd = item.password;
+        })
+        
+        app.post('/login', urlencode, function(reqeust, response){
+            //操作数据库
+            
                
+            db.select('users',reqeust.body, function(result){
+                if(!result.status){
+                    response.send(result);
 
-                    if(!result.status){
-                        response.send(result);
-
-                    } else if(result.data.length > 0 && request.body.password===pwd) {
-                        response.send({status:true,data:result});
-                    } else {
-                        response.send({status: false, message: "当前用户还未注册/密码错误"});
-                    }
-
+                } else {
+                    var path = require('path');
+                    var cookieParser = require('cookie-parser');
+                    var session = require('express-session');
+                    app.use(cookieParser());
+                    app.use(session({
+                        secret: '12345',
+                        name: 'testapp',
+                        cookie: {maxAge: 80000 },
+                        resave: false,
+                        saveUninitialized: true,    
+                    }))
+                    app.use(express.static(path.join(__dirname, '/')));
                     
-                 });
-            })
-        });
+                    //操作数据库
+                    console.log(reqeust.body);
+                    
+                    var username = reqeust.body.username;
+                    var password = reqeust.body.password;
+                    // reqeust.session.name = username;
+                    response.send(result); 
+                }
+             });
+        })
     }
 } 

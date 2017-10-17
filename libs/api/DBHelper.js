@@ -1,7 +1,7 @@
 var mongodb = require('mongodb');
 var dbServer = new mongodb.Server('localhost', 27017);
 var db = new mongodb.Db('BTTT', dbServer);
-
+// var querystringify= require('querystringify')
 module.exports = {
     insert: function(_collection, _data, _callback){
         db.open(function(error, db){
@@ -12,12 +12,12 @@ module.exports = {
                     if(error){
                         _callback({status: false, message: error});
                     } else {
+            
                         collection.insert(_data);
                         _callback({
                             status: true,data:_data
                         });
 
-                        _callback({status: true,data:_data});
                     }
                     db.close();
                 })
@@ -38,7 +38,7 @@ module.exports = {
                             if(error){
                                 _callback({status: false, message: error});
                             } else {
-                                _callback({status: true, data: dataset});
+                                _callback({status: true, data:dataset});
                             }
                         })
                     }
@@ -55,16 +55,15 @@ module.exports = {
                     if(error){
                         _callback({status: false, message: error});
                     } else {
-                        // _condition=[{修改的那一条的Id：_id},{修改这条数据的哪一种属性：改成什么}]
+                        // _condition=[{修改的那一条的Id：_id},{修改这条数据的哪一种属性：改成什么,}]
                         collection.update(_condition[0], {$set:_condition[1]}, {safe:true}, function(err, result){
 
                             if(err){
-                                _callback({status: false, message: error});
-                            }else{
+                                 _callback({status: false, message: error});
+                             }else{console.log(66)
                                 _callback({status: true, data: result})
                              }
                              db.close();
-                            
                         });
                     }
                 })
