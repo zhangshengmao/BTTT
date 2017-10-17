@@ -165,15 +165,28 @@
     <footer id="footer">FOOTER</footer>
     <div  class="putaway_box">
         <h3>商品上架信息</h3>
-        <label for="sup_name">商品编号：</label><input type="text" id="sup_name" class="form-control">
-        <label for="sup_address">商品条码：</label><input type="text" id="sup_address" class="form-control">
-        <label for="linkman_name">商品名称：</label><input type="text" id="linkman_name" class="form-control">
-        <label for="linkman_tel">分类：</label><input type="text" id="linkman_tel" class="form-control">
-        <label for="linkman_position">数量：</label><input type="text" id="linkman_position" class="form-control">
-        <label for="clerk_name">价格</label><input type="text" id="clerk_name" class="form-control">
-        <input type="button" id="addputaway" value="添加" class="btn btn-success btn-xs">
+        <table class="table table-bordered table-hover" id="putaway_table">
+            <caption>供货商管理表</caption>
+            <thead>
+                <tr>
+                    <th>商品编号</th>
+                    <th>商品条码</th>
+                    <th>商品名称</th>
+                    <th>商品分类</th>
+                    <th>商品数量</th>
+                    <th>价格</th>
+                    <th>修改时间</th>
+                    <th></th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+               
+            </tbody>
+        </table>
+        <input type="button" id="addputaway" value="添加" class="btn btn-success btn-xs ss">
 
-        <span class="close">&times;</span>
+        <span class="close" id="close1">&times;</span>
     </div>
 </body>
 </html>

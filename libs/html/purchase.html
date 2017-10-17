@@ -162,16 +162,25 @@
 
                     <div  class="add_pur_box">
                         <h3>登记采购进货信息</h3>
-                        <label for="goods_order">商品编码：</label><input type="text" id="goods_order" class="form-control">
-                        <label for="goods_code">商品条形码：</label><input type="text" id="goods_code" class="form-control">
-                        <label for="goods_name">商品名称：</label><input type="text" id="goods_name" class="form-control">
-                        <label for="goods_classify">商品分类：</label><input type="text" id="goods_classify" class="form-control">
-                        <label for="goods_qty">商品数量：</label><input type="text" id="goods_qty" class="form-control">
-                        <label for="prime_price">进价：</label><input type="text" id="prime_price" class="form-control">
-                        <label for="sale_price">售价：</label><input type="text" id="sale_price" class="form-control">
-                        <label for="supName">供货商名称：</label><input type="text" id="supName" class="form-control">
-                        <input type="button" id="addToPur" value="添加" class="btn btn-success btn-xs">
-
+                        <table class="table table-bordered table-hover">
+                        <caption>供货商管理表</caption>
+                        <thead>
+                            <tr>
+                                <th>供货商名称</th>
+                                <th>供货商地址</th>
+                                <th>主联系人姓名</th>
+                                <th>电话</th>
+                                <th>职务</th>
+                                <th>业务员</th>
+                                <th>修改时间</th>
+                                <th><button class="btn btn-success btn-xs" id="add_supplier">增加</button></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           
+                        </tbody>
+                    </table>
                         <span class="close">&times;</span>
                     </div>     
 

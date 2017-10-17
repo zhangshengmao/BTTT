@@ -45,12 +45,36 @@ module.exports={
                 response.send(result)
             })
         })
-        // app.post('/hunt', urlencode, function(reqeust, response){
+        app.post('/hunt', urlencode, function(request, response){
+            db.select("reserve",
+                {$or:[{goods_order:{$regex:request.body.info}},
+                        {goods_code:{$regex:request.body.info}},
+                        {goods_name:{$regex:request.body.info}},
+                        {goods_classify:{$regex:request.body.info}},
+                        {goods_qty:parseInt(request.body.info)},
+                        {sup_name:{$regex:request.body.info}},
+                        {prime_price:parseFloat(request.body.info)},
+                        {sale_price:parseFloat(request.body.info)}
+                    ]
+                },
+                function(result){
+                response.send(result);
+            })
+        })
+        app.post('/putaway', urlencode, function(reqeust, response){
+            db.select('reserve', reqeust.body, function(result){
+                // console.log(result)
+                response.send(result);
 
-        //     db.select('grounding',reqeust, function(result){
-                
-        //     })
-        // })
+            });
+        })
+        app.post('/putawaySave', urlencode, function(reqeust, response){
+            var arr=JSON.parse(reqeust.body.arr);
+            db.insert('grounding', arr, function(res){
+                response.send(res)
+            })             
+        })
 
     }
+    
 }

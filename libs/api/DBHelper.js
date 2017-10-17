@@ -12,6 +12,7 @@ module.exports = {
                     if(error){
                         _callback({status: false, message: error});
                     } else {
+            
                         collection.insert(_data);
                         _callback({
                             status: true,data:_data
