@@ -1,9 +1,10 @@
 var userRouter = require('./userRouter');
 var db = require('../DBHelper.js');
-var purchaseRouter=require('./purchaseRuoter.js')
+var purchaseRouter=require('./purchaseRuoter.js');
+var warehouseRouter = require('./warehouseRouter.js');
 var bodyparser = require('body-parser');
 var urlencode = bodyparser.urlencoded({extended: false});
-var PrimaryRuter = Object.assign({}, userRouter, purchaseRouter);
+var PrimaryRuter = Object.assign({}, userRouter, purchaseRouter,warehouseRouter);
 
 module.exports = {
     Register: function(express){
@@ -22,7 +23,8 @@ module.exports = {
         });
         app.use(express.static(__dirname + '/'));
         PrimaryRuter.Register(app, db);
-        PrimaryRuter.Purchase(app, urlencode, db);    
+        PrimaryRuter.Purchase(app, urlencode, db);
+        PrimaryRuter.Warehouse(app, urlencode, db);    
         app.listen(88);
         
 

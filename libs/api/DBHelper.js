@@ -13,7 +13,9 @@ module.exports = {
                         _callback({status: false, message: error});
                     } else {
                         collection.insert(_data);
-                        _callback({status: true});
+                        _callback({
+                            status: true,data:_data
+                        });
                     }
                     db.close();
                 })
@@ -58,7 +60,7 @@ module.exports = {
                              }else{
                                 _callback({status: true, data: result})
                              }
-                             close();
+                             db.close();
                         });
                     }
                 })
@@ -80,7 +82,7 @@ module.exports = {
                             } else {
                                 _callback({status: true, data: result});
                             }
-                            close();
+                            db.close();
                       });
                     }
                 })
