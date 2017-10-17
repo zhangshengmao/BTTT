@@ -1,0 +1,33 @@
+#main .content{position:relative;}
+.add_info{position:absolute;left:200px;top:50px;border:1px solid #ccc;
+    width:650px;background-color: #fff;box-shadow:0px 0px 30px #ccc;padding:10px;display:none;}
+.add_info h3{text-align:center;padding:10px;}
+.add_info label{display:inline-block;width:85px;margin-left:10px;}
+.add_info input{width:200px;display:inline-block;height:28px;margin:10px 0 ;}
+.add_info #addToDb{width:80px;margin-left:100px;}
+.add_info .close{position:absolute;right:5px;top:0;}
+.row #firmSel,#supplier_box .row #classSel{width:200px;height:25px;}
+input:disabled{background-color: #fff;}
+#header{height:60px;background-color:#fff;border-bottom:2px solid #777;}
+#main{border-bottom:2px solid #777;}
+#main .row{margin:0px;}
+#main .row .nav{background-color:#eee;height:550px;padding-left:10px;border-right:2px solid #777;}
+#main .nav li{margin-top:15px;}
+#main .content{background-color:#fefefe;height:550px;padding-left:10px;overflow:scroll;}
+#main .top{padding:10px 0px;border-bottom:1px solid #777;}
+#main .top li{text-align:center;}
+#main .top li a{ display:inline-block;width: 200px;}
+.condition{padding-top:15px;}
+.condition div{text-align:left;}
+#main .condition .row{margin-bottom:10px;}
+.condition input{width:60px;height: 20px;}
+.condition select{width:100px;}
+.condition button{width:100px;}
+#ser_firms,#ser_classify{width:150px;}
+.search{margin-top:10px;text-align:right; position:relative;}
+.search button{position:absolute;top:0px;right: -80px;}
+.table{text-align:center;}
+.table caption{text-align:center;font-size:16px;}
+.table th{text-align:center;}
+.table tr td input{width:80px;border:0 none;text-align:center;}
+

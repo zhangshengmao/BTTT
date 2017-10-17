@@ -19,10 +19,8 @@ module.exports={
                     console.log(66)
                     response.send({status:false});
                 }else{
-                    // reqeust.goos_qty=result.data.goods_qty*1+reqeust.goos_qty*1
                     db.insert('grounding', reqeust.body, function(result){
                         response.send(result);
-
                     })
                 }
             })
@@ -39,21 +37,20 @@ module.exports={
             })
         });
         app.post('/revamp', urlencode, function(reqeust, response){
-            console.log(reqeust.body)
             var arr=[{goods_order:reqeust.body.goods_order},
                     reqeust.body
             ]
             db.update('grounding',arr, function(result){
+                // console.log(result)
                 response.send(result)
             })
         })
-        app.post('/hunt', urlencode, function(reqeust, response){
-            db.select('grounding', {}, function(result){
-                // console.log(result)
-                for(attr in result.data){
-                    console.log(result.data[attr]+'66')
-                }
-            })
-        })
+        // app.post('/hunt', urlencode, function(reqeust, response){
+
+        //     db.select('grounding',reqeust, function(result){
+                
+        //     })
+        // })
+
     }
 }

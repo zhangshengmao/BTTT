@@ -13,7 +13,10 @@ module.exports = {
                         _callback({status: false, message: error});
                     } else {
                         collection.insert(_data);
-                        _callback({status: true,data:_data});
+                        _callback({
+                            status: true,data:_data
+                        });
+
                     }
                     db.close();
                 })
@@ -54,21 +57,12 @@ module.exports = {
                         // _condition=[{修改的那一条的Id：_id},{修改这条数据的哪一种属性：改成什么,}]
                         collection.update(_condition[0], {$set:_condition[1]}, {safe:true}, function(err, result){
 
-                            if(err){console.log(5)
+                            if(err){
                                  _callback({status: false, message: error});
-                             }else{
+                             }else{console.log(66)
                                 _callback({status: true, data: result})
                              }
                              db.close();
-
-
-                            if(err){
-                                _callback({status: false, message: error});
-                            }else{
-                                _callback({status: true, data: result})
-                            }
-                            db.close();
-
                         });
                     }
                 })

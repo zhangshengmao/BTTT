@@ -44,21 +44,15 @@
                         <div class="row">
                             <div class="firm col-md-4">
                                 <span>商品名称：</span>
-                                <select name="firmSel" id="firmSel">
-                                </select>
+                               <input type="text" name="" id="goodsName" />
                             </div>
                             <div class="classify col-md-4">
                                 <span>商品分类：</span>
-                                <select name="classSel" id="classSel">
-                                </select>                       
+                                <input type="text" name="" id="goodsClass" />              
                             </div>
-                            <div class="classify col-md-4">
-                                <span>商品价格：</span>
-                                <select name="classSel" id="classSel">
-                                </select>                       
-                            </div>
+                            
                             <div class="col-md-4" style="margin-top:30px">
-                                <button class="btn btn-success btn-xs">确认</button>
+                                <button class="btn btn-success btn-xs" id="affirm">确认</button>
                             </div>
                         </div>
                     </div>
@@ -109,19 +103,14 @@
                             <div class="sellGoods_row">
                                 <div class="firm col-md-4">
                                     <span>商品名称：</span>
-                                    <select name="firmSel" id="firmSel">
-                                    </select>
+                                    <input type="text" />
                                 </div>
                                 <div class="classify col-md-4">
                                     <span>商品分类：</span>
-                                    <select name="classSel" id="classSel">
-                                    </select>                       
+                                    <input type="text" />
+                                                    
                                 </div>
-                                <div class="classify col-md-4">
-                                    <span>商品价格：</span>
-                                    <select name="classSel" id="classSel">
-                                    </select>                       
-                                </div>
+                               
                                 <div class="col-md-4" style="margin-top:30px">
                                     <button class="btn btn-success btn-xs">确认</button>
                                 </div>
@@ -174,5 +163,17 @@
         
     </main>
     <footer id="footer">FOOTER</footer>
+    <div  class="putaway_box">
+        <h3>商品上架信息</h3>
+        <label for="sup_name">商品编号：</label><input type="text" id="sup_name" class="form-control">
+        <label for="sup_address">商品条码：</label><input type="text" id="sup_address" class="form-control">
+        <label for="linkman_name">商品名称：</label><input type="text" id="linkman_name" class="form-control">
+        <label for="linkman_tel">分类：</label><input type="text" id="linkman_tel" class="form-control">
+        <label for="linkman_position">数量：</label><input type="text" id="linkman_position" class="form-control">
+        <label for="clerk_name">价格</label><input type="text" id="clerk_name" class="form-control">
+        <input type="button" id="addputaway" value="添加" class="btn btn-success btn-xs">
+
+        <span class="close">&times;</span>
+    </div>
 </body>
 </html>

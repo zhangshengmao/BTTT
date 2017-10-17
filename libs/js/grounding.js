@@ -1,11 +1,13 @@
 jQuery(function($){
 /*--------------------------上架管理-------------------------------------*/
     $(".add_sup_box").hide();
+    $('.putaway_box').hide();
     $("#add_supplier").click(function(){
         $(".add_sup_box").show();
     });
     $(".close").click(function(){
         $(".add_sup_box").hide();
+        $('.putaway_box').hide();
     });
     $('.sellGoods').hide();
     $('#sellGoods').click(function(){
@@ -69,6 +71,7 @@ jQuery(function($){
 
             }
         });
+        $('.add_sup_box').hide();
 
     });
     $.post(common.baseUrl+"/create",function(result){
@@ -133,11 +136,20 @@ jQuery(function($){
     }
     $('#hunt').click(function(){
         $.post(common.baseUrl+'/hunt', $('#inputSuccess1').val(),function(result){
-            console.log(result)
+            console.log(result);
         })
     })
 
-
+    $('#affirm').click(function(){
+        $('.putaway_box').show();
+        var gName={good_name:$('#goodsName').val()};
+        var gClass={goods_class:$('#goodsClass').val()};
+        var obj= $('#goodsName').val()==""? gClass : $('#goodsClass').val()=="" ? gName : Object.assign({}, gClass, gName);
+        $.post(common.baseUrl+'/putaway',obj, function(result) {
+            
+        });
+        
+    });
 
 
    
