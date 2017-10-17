@@ -1,7 +1,6 @@
 module.exports = {
     Purchase: function(app, urlencode, db){
       //供货商管理
-      //添加数据
       app.post("/insert_supplier",urlencode,function(request,response){
        		db.select("supplier", {sup_name: request.body.sup_name}, function(result){
                 if(!result.status){
@@ -30,18 +29,36 @@ module.exports = {
           });
       });
 
-       //请求并获取所有的数据
       app.post("/search_supplier",urlencode,function(request,response){
-        db.select("supplier", {}, function(result){
-            if(!result.status){
+        console.log(request.body.info);
+        if(request.body.blur1Search){
+            db.select("supplier",
+                {$or:[{sup_name:{$regex:request.body.info}},
+                        {sup_address:{$regex:request.body.info}},
+                        {linkman_name:{$regex:request.body.info}},
+                        {linkman_tel:{$regex:request.body.info}},
+                        {linkman_position:{$regex:request.body.info}},
+                        {clerk_name:{$regex:request.body.info}},
+                    ]
+                },
+                function(result){
                 response.send(result);
-            } else if(result.data.length > 0) {
-                response.send(result);
-            } else { 
-                response.send({status: false, message: "错误"});
-            }
+            })
+            return false;
+        }else{
+          db.select("supplier", {}, function(result){
+              if(!result.status){
+                  response.send(result);
+              } else if(result.data.length > 0) {
+                  response.send(result);
+              } else { 
+                  response.send({status: false, message: "错误"});
+              }
           });
+        }
+
       });
+
 
 
 
