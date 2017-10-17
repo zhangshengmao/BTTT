@@ -1,5 +1,5 @@
 jQuery(function($){
-
+/*--------------------------上架管理-------------------------------------*/
     $(".add_sup_box").hide();
     $("#add_supplier").click(function(){
         $(".add_sup_box").show();
@@ -7,7 +7,16 @@ jQuery(function($){
     $(".close").click(function(){
         $(".add_sup_box").hide();
     });
-
+    $('.sellGoods').hide();
+    $('#sellGoods').click(function(){
+        console.log(666)
+        $('.sellGoods').show();
+        $('#supplier_box').hide();
+    })
+    $('#putaway').click(function(){
+        $('.sellGoods').hide();
+        $('#supplier_box').show();
+    });
     function createTime(){
         //创建当前时间
         var now = new Date();
@@ -39,16 +48,7 @@ jQuery(function($){
             goods_price:$("#clerk_name").val(),
             time:createTime()
         }
-        // console.log(msg)
-        //往表格添加一行
-        // var $tr = $("<tr/>");
-        // for(var attr in msg){
-        //     $(`<td></td>`).html(msg[attr]).appendTo($tr);
-        // }
-        // var $yes_del = $(`<td>
-        //     <button class="btn btn-default btn-xs ">确认修改</button></td>
-        //     <td><button class="btn btn-default btn-xs">删除</button></td>`).appendTo($tr);
-        // $tr.appendTo($("#supplier_box table tbody"));
+       
         $.post(common.baseUrl+"/grounding", msg, function(result){
             console.log(result)
             if(result.status){
@@ -133,7 +133,13 @@ jQuery(function($){
     }
     $('#hunt').click(function(){
         $.post(common.baseUrl+'/hunt', $('#inputSuccess1').val(),function(result){
-
+            console.log(result)
         })
     })
+
+
+
+
+   
+    /*--------------------------收银管理-------------------------------------*/
 })

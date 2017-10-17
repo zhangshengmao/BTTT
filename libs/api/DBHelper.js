@@ -1,5 +1,5 @@
 var mongodb = require('mongodb');
-var dbServer = new mongodb.Server('10.3.131.22', 27017);
+var dbServer = new mongodb.Server('localhost', 27017);
 var db = new mongodb.Db('BTTT', dbServer);
 // var querystringify= require('querystringify')
 module.exports = {
@@ -20,7 +20,7 @@ module.exports = {
             }
         })
     },
-    select: function(_collection, _condiction, _callback){
+    select: function(_collection, _condition, _callback){
         db.open(function(error, db){
             if(error){
                 _callback({status: false, message: error});
@@ -29,7 +29,7 @@ module.exports = {
                     if(error){
                         _callback({status: false, message: error});
                     } else {
-                        collection.find(_condiction || {}).toArray(function(error, dataset){
+                        collection.find(_condition || {}).toArray(function(error, dataset){
                             db.close();
                             if(error){
                                 _callback({status: false, message: error});
@@ -42,7 +42,7 @@ module.exports = {
             }
         })
     },
-    update: function(_collection, _condition, _callback){
+    update: function(_collection, _condition, _callback){console.log(_condition)
         db.open(function(error, db){
             if(error){
                 _callback({status: false, message: error});
@@ -53,12 +53,22 @@ module.exports = {
                     } else {
                         // _condition=[{修改的那一条的Id：_id},{修改这条数据的哪一种属性：改成什么,}]
                         collection.update(_condition[0], {$set:_condition[1]}, {safe:true}, function(err, result){
+
                             if(err){console.log(5)
                                  _callback({status: false, message: error});
                              }else{
                                 _callback({status: true, data: result})
                              }
                              db.close();
+
+
+                            if(err){
+                                _callback({status: false, message: error});
+                            }else{
+                                _callback({status: true, data: result})
+                            }
+                            db.close();
+
                         });
                     }
                 })

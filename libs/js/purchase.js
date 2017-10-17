@@ -1,10 +1,14 @@
 jQuery(function($){
 
-/*--------------------------供货商管理-------------------------------------*/
+/*--------------------------供应商管理-------------------------------------*/
+	
+
+	$("#supplier_box").hide();
 
 	$("#supplier").click(function(){
 		$("#supplier_box").show();
 		$("#purchase_box").hide();
+
 	});
 	$("#purchase").click(function(){
 		$("#supplier_box").hide();
@@ -12,6 +16,8 @@ jQuery(function($){
 	});
 
 	$(".add_sup_box").hide();
+
+
 	//点击“增加”按钮，实现添加供应商
 	$("#add_supplier").click(function(){
 		$(".add_sup_box").show();
@@ -19,6 +25,7 @@ jQuery(function($){
 	$(".close").click(function(){
 		$(".add_sup_box").hide();
 	});
+
 
 	function createTime(){
 		//创建当前时间
@@ -38,32 +45,79 @@ jQuery(function($){
 		date+ week_str[week] + " " + hour + ":" + min + ":" + sec;
 		return mydate;
 	}
-	$.post("http://localhost:88/newSup",function(result){
-		console.log(result.data.data);
-		result.data.data.forEach(function(item){
+
+	
+	
+	function render1(data){
+		data.forEach(function(item){
 			for(var attr in item){
 				var $tr = $(`
 					<tr>
-					<td>${item.sup_name}</td>
-					<td>${item.sup_address}</td>
-					<td>${item.linkman_name}</td>
-					<td>${item.linkman_tel}</td>
-					<td>${item.linkman_position}</td>
-					<td>${item.clerk_name}</td>
+					<td class="sup_name">${item.sup_name}</td>
+					<td class="sup_adress">${item.sup_address}</td>
+					<td class="linkman_name">${item.linkman_name}</td>
+					<td class="linkman_tel">${item.linkman_tel}</td>
+					<td class="linkman_position">${item.linkman_position}</td>
+					<td class="clerk_name">${item.clerk_name}</td>
 					<td>${createTime()}</td>
-					<td><button class="btn btn-default btn-xs">确认</button></td>
+					<td><button class="btn btn-default btn-xs affirm">修改</button></td>
 					<td><button class="btn btn-default btn-xs delete">删除</button></td>
 					</tr>
 					`)
 			}
-		$tr.appendTo($("#supplier_box table tbody"));
-
+			$tr.appendTo($("#supplier_box table tbody"));
 		})
+	}
 
+
+	var supplier = document.querySelector('#supplier_box');
+	var purchase = document.querySelector('#purchase_box');
+	function edit(boxId){
+		// 事件委托：把事件绑定给td的父级
+		boxId.onclick = function(e){
+			e = e || window.event;
+			var target = e.target || e.srcElement;
+
+			// 点击td编辑
+			if(target.tagName.toLowerCase() === 'td'){
+
+				if(target === target.parentNode.lastElementChild.previousElementSibling
+				 || target === target.parentNode.lastElementChild ||
+				 target === target.parentNode.firstElementChild ||
+				  target === target.parentNode.lastElementChild.previousElementSibling.previousElementSibling){
+					return;
+				}
+
+				// 生成一个输入框
+				var input = document.createElement('input');
+				input.type = 'text';
+				input.value = target.innerText;
+
+				// 把输入框写入td
+				target.innerHTML = '';
+				target.appendChild(input);
+				input.focus();
+
+				// 失去焦点是保存
+				input.onblur = function(){
+					target.innerHTML = this.value;
+				}
+			}
+		}
+	}
+
+	edit(supplier);
+	edit(purchase);
+
+
+
+
+	$.post("http://localhost:88/search_supplier",function(result){
+		render1(result.data);
 	});
-	//输入供应商的信息
-	$("#addToDb").click(function(){
 
+	//添加输入供应商的信息
+	$("#addToSup").click(function(){
 
 		//获取输入框的信息
 		var msg = {
@@ -81,16 +135,97 @@ jQuery(function($){
 		for(var attr in msg){
 			$(`<td></td>`).html(msg[attr]).appendTo($tr);
 		}
-		var $yes_del = $(`<td>
-			<button class="btn btn-default btn-xs">确认</button></td>
+		var $yes_del = $(`
+			<td><button class="btn btn-default btn-xs">确认</button></td>
 			<td><button class="btn btn-default btn-xs">删除</button></td>`).appendTo($tr);
 		$tr.appendTo($("#supplier_box table tbody"));
 		$.post("http://localhost:88/insert_supplier",msg,function(result){
 			console.log(result);
 
 		});
-		
+
+		window.location.reload();
 	});
+
+	//删除供货商
+	$("#supplier_box").on("click",".delete",function(){
+		//删除当前tr:dom节点+数据库都删除
+		var msg = {sup_name:$(this).parents("tr").find(".sup_name").text()}
+		$(this).parents("tr").remove();
+		$.post("http://localhost:88/delete_supplier",msg,function(result){
+			console.log(result);
+		})
+	});
+
+	
+
+	//点击“修改”按钮，更改数据
+	$("#supplier_box").on("click",".affirm",function(){
+		//获取当前行
+		var msg = {
+			sup_name:$(this).parents("tr").find(".sup_name").text(),
+			sup_address:$(this).parents("tr").find(".sup_address").text(),
+			linkman_name:$(this).parents("tr").find(".linkman_name").text(),
+			linkman_tel:$(this).parents("tr").find(".linkman_tel").text(),
+			linkman_position:$(this).parents("tr").find(".linkman_position").text(),
+			clerk_name:$(this).parents("tr").find(".clerk_name").text(),
+		}
+		console.log(msg);
+
+		$.post("http://localhost:88/update_supplier",msg,function(result){
+			console.log(result);
+		})
+	});
+
+
+
+	//模糊查询
+	$("#blurSearch1").click(function(){
+		var msg = {val:$("#inputSuccess1").val()};
+        var reg = new RegExp(msg.val);
+		$.post("http://localhost:88/search_supplier",msg,function(result){
+			var data = [];
+			result.data.forEach(function(item){
+				for(var attr in item){
+					if(reg.test(item[attr])){
+						data.push(item);
+						break;
+					}
+				}
+			});
+			$("#supplier_box table tbody tr").remove();
+			render1(data);
+
+		})
+	});
+
+
+	//精确查询
+	$("#clearSearch1").click(function(){
+		var msg = {
+			sup_name:$("#firmSel").val(),
+			linkman_name:$(".classSel1").val(),
+			clerk_name:$(".classSel2").val()
+		};
+		$.post("http://localhost:88/search_supplier",msg,function(result){
+        	var supName = new RegExp(msg.sup_name);
+        	var linkmanName = new RegExp(msg.linkman_name);
+        	var clerkName = new RegExp(msg.clerk_name);
+
+			var data = [];
+			result.data.forEach(function(item){
+				for(var attr in item){
+					if(supName.test(item["sup_name"])&&linkmanName.test(item["linkman_name"])&&clerkName.test(item["clerk_name"])){
+						data.push(item);
+						break;
+					}
+				}
+			});
+			$("#supplier_box table tbody tr").remove();
+			render1(data);
+		})
+	});
+
 
 
 
@@ -106,12 +241,177 @@ jQuery(function($){
 
 
 /*--------------------------采购进货-------------------------------------*/
-	//采购进货
-	$("#purchase_box").hide();
-	$.post("http://localhost:88/purchase",function(result){
-		console.log(result);
 
-	})
+	// $("#purchase_box").hide();
+	$(".add_pur_box").hide();
+
+
+	//点击“增加”按钮，实现添加进货商品
+	$("#add_purchase").click(function(){
+		$(".add_pur_box").show();
+	});
+	$(".close").click(function(){
+		$(".add_pur_box").hide();
+	});
+
+
+
+	function render2(data){
+		data.forEach(function(item){
+			for(var attr in item){
+				var $tr = $(`
+					<tr>
+					<td class="goods_order">${item.goods_order}</td>
+					<td class="goods_code">${item.goods_code}</td>
+					<td class="goods_name">${item.goods_name}</td>
+					<td class="goods_classify">${item.goods_classify}</td>
+					<td class="goods_qty">${item.goods_qty}</td>
+					<td class="prime_price">${item.prime_price}</td>
+					<td class="sale_price">${item.sale_price}</td>
+					<td class="supName">${item.supName}</td>
+					<td class="time">${createTime()}</td>
+					<td><button class="btn btn-default btn-xs affirm">修改</button></td>
+					<td><button class="btn btn-default btn-xs delete">删除</button></td>
+					</tr>
+					`)
+			}
+			$tr.appendTo($("#purchase_box table tbody"));
+		})
+	}
+
+
+
+
+	$("#purchase").click(function(){
+		$.post("http://localhost:88/search_purchase",function(result){console.log(result);
+			render2(result.data);
+		});
+
+	});
+
+
+	//添加输入商品的信息
+	$("#addToPur").click(function(){
+
+		//获取输入框的信息
+		var msg = {
+			goods_order:$("#goods_order").val(),
+			goods_code:$("#goods_code").val(),
+			goods_name:$("#goods_name").val(),
+			goods_qty:$("#goods_qty").val(),
+			goods_classify:$("#goods_classify").val(),
+			prime_price:$("#prime_price").val(),
+			sale_price:$("#sale_price").val(),
+			supName:$("#supName").val(),
+			time:createTime(),
+		}
+		console.log(msg);
+		//往表格添加一行
+		var $tr = $("<tr/>");
+		for(var attr in msg){
+			$(`<td></td>`).html(msg[attr]).appendTo($tr);
+		}
+		var $yes_del = $(`
+			<td><button class="btn btn-default btn-xs">修改</button></td>
+			<td><button class="btn btn-default btn-xs">删除</button></td>`).appendTo($tr);
+		$tr.appendTo($("#purchase_box table tbody"));
+		$.post("http://localhost:88/insert_purchase",msg,function(result){
+			console.log(result);
+
+		});
+
+		// window.location.reload();
+	});
+
+	
+
+	//删除商品
+	$("#purchase_box").on("click",".delete",function(){
+		//删除当前tr:dom节点+数据库都删除
+		var msg = {goods_order:$(this).parents("tr").find(".goods_order").text()}
+		$(this).parents("tr").remove();
+		$.post("http://localhost:88/delete_purchase",msg,function(result){
+			console.log(result);
+		})
+	});
+
+
+	//点击“修改”按钮，更改数据
+	$("#purchase_box").on("click",".affirm",function(){
+		//获取当前行
+		var msg = {
+			goods_order:$(this).parents("tr").find(".goods_order").text(),
+			goods_code:$(this).parents("tr").find(".goods_code").text(),
+			goods_name:$(this).parents("tr").find(".goods_name").text(),
+			goods_qty:$(this).parents("tr").find(".goods_qty").text(),
+			goods_classify:$(this).parents("tr").find(".goods_classify").text(),
+			prime_price:$(this).parents("tr").find(".prime_price").text(),
+			sale_price:$(this).parents("tr").find(".sale_price").text(),
+			supName:$(this).parents("tr").find(".supName").text(),
+		}
+
+		$.post("http://localhost:88/update_purchase",msg,function(result){
+			console.log(result);
+		})
+	});
+
+
+	//模糊查询
+	$("#blurSearch2").click(function(){
+		var msg = {val:$(".inputSuccess2").val()};
+        var reg = new RegExp(msg.val);
+		$.post("http://localhost:88/search_purchase",msg,function(result){
+			//得到所有的数据，再将所有的数据进行正则匹配
+			var data = [];
+			result.data.forEach(function(item){
+				for(var attr in item){
+					if(reg.test(item[attr])){
+						data.push(item);
+						break;
+					}
+				}
+			});
+			console.log(data);
+			$("#purchase_box table tbody tr").remove();
+			render2(data);
+
+		})
+	});
+
+
+
+
+	//精确查询
+	$("#clearSearch2").click(function(){
+		var msg = {
+			pur1:$("#pur1").val(),
+			pur2:$("#pur2").val(),
+			sel1:$("#sel1").val(),
+			sel2:$("#sel2").val(),
+			amo1:$("#amo1").val(),
+			amo2:$("#amo2").val(),
+			goods_name:$("#purchase_box #firmSel").val(),
+			goods_classify:$("#purchase_box #classSel").val(),
+		};
+		// console.log(msg);
+		$.post("http://localhost:88/search_purchase",msg,function(result){
+        	var goodsName = new RegExp(msg.goods_name);
+        	var goodsClassify = new RegExp(msg.goods_classify);
+			var data = [];
+			result.data.forEach(function(item){
+				for(var attr in item){
+					if(goodsName.test(item["goods_name"])&&goodsClassify.test(item["goods_classify"])
+						){
+						data.push(item);
+						break;
+					}
+				}
+			});
+			console.log(data);
+			$("#purchase_box table tbody tr").remove();
+			render2(data);
+		})
+	});
 
 /*-----------------------------------------------------------------------*/
 })
