@@ -5,7 +5,38 @@ jQuery(function($){
 /*--------------------------供货商管理-------------------------------------*/
 	
 
-	// $("#supplier_box").hide();
+
+        
+	$('.content .top li').eq(0).children().css({backgroundColor:'#5cb85c',color:'#fff'});
+    $('.content .top a').click(function(){
+
+        var idx = $(this).parent().index();
+        // if(idx == 0){
+        //     postUrl = "http://localhost:88/reserve"; 
+        //     initTable();
+        // }else if(idx == 1){
+        //     postUrl = "http://localhost:88/receive";
+        //     initTable();
+        // }else if(idx == 2){
+        //     postUrl = "http://localhost:88/return";
+        //     initTable();
+        // };
+        if(idx==1){
+        	$.post(common.baseUrl + "/search_purchase",function(result){
+			$("#purchase_box table tbody tr").remove();
+				render2(result.data);
+			});
+        }
+
+
+        $('.content .top li').children().css({backgroundColor:'#fff',color:'#000'});
+        $('.content .top li').eq(idx).children().css({backgroundColor:'#5cb85c',color:'#fff'});
+        $('.content .box').children().css({display:'none'}).eq(idx).css({display:'block'});
+    });
+
+
+
+	$("#supplier_box").hide();
 
 	$("#supplier").click(function(){
 		$("#supplier_box").show();
@@ -162,93 +193,46 @@ jQuery(function($){
 			linkman_position:$(this).parents("tr").find(".linkman_position").text(),
 			clerk_name:$(this).parents("tr").find(".clerk_name").text(),
 		}
-		console.log(msg);
-
 		$.post(common.baseUrl + "/update_supplier",msg,function(result){
-			console.log(result);
+			// console.log(result);
 		})
 	});
 
 
 
+
 	//模糊查询
-	// $("#blurSearch1").click(function(){
-	// 	var msg = {val:$("#inputSuccess1").val()};
- //        var reg = new RegExp(msg.val);
-	// 	$.post(common.baseUrl + "/search_supplier",msg,function(result){
-	// 		var data = [];
-	// 		result.data.forEach(function(item){
-	// 			for(var attr in item){
-	// 				if(reg.test(item[attr])){
-	// 					data.push(item);
-	// 					break;
-	// 				}
-	// 			}
-	// 		});
-	// 		$("#supplier_box table tbody tr").remove();
-	// 		render1(data);
-
-	// 	})
-	// });
-
-
 	$("#blurSearch1").click(function(){
-		// var msg = {val:$("#inputSuccess1").val()};
 
 		$.post(common.baseUrl + "/search_supplier",
         {
             blurSearch1:true,
             info:$("#inputSuccess1").val()
         },
-        function(response){
-            var data = response.data;
-            console.log(data[0]);
-            // makeTrs(data);
+        function(result){
+            var data = result.data;
             $("#supplier_box table tbody tr").remove();
 			render1(data);
 
         })
 	});
 
+	
 
-	// $('.fuzSearch').click(function(){
- //        $.post("http://localhost:88/reserve",
- //        {
- //            fuzSearch:true,
- //            info:$('.fuzInput').val()
- //        },
- //        function(response){
- //            var data = response.data;
- //            makeTrs(data);
- //        })
- //    });
-
-	//精确查询
 	$("#clearSearch1").click(function(){
 		var msg = {
+			clearSearch1:true,
 			sup_name:$("#firmSel").val(),
 			linkman_name:$(".classSel1").val(),
 			clerk_name:$(".classSel2").val()
 		};
 		$.post(common.baseUrl + "/search_supplier",msg,function(result){
-        	var supName = new RegExp(msg.sup_name);
-        	var linkmanName = new RegExp(msg.linkman_name);
-        	var clerkName = new RegExp(msg.clerk_name);
-
-			var data = [];
-			result.data.forEach(function(item){
-				for(var attr in item){
-					if(supName.test(item["sup_name"])&&linkmanName.test(item["linkman_name"])&&clerkName.test(item["clerk_name"])){
-						data.push(item);
-						break;
-					}
-				}
-			});
-			$("#supplier_box table tbody tr").remove();
+        	 var data = result.data;
+        	 console.log(data);
+            $("#supplier_box table tbody tr").remove();
 			render1(data);
 		})
 	});
-
 
 
 
@@ -265,8 +249,8 @@ jQuery(function($){
 
 /*--------------------------采购进货-------------------------------------*/
 
-	$("#purchase_box").hide();
-	// $(".add_pur_box").hide();
+	// $("#purchase_box").hide();
+	$(".add_pur_box").hide();
 
 
 	//点击“增加”按钮，实现添加进货商品
@@ -305,12 +289,13 @@ jQuery(function($){
 
 
 
-	$("#purchase").click(function(){
-		$.post(common.baseUrl + "/search_purchase",function(result){console.log(result);
-			render2(result.data);
-		});
+	// $("#purchase").click(function(){
+	// 	$.post(common.baseUrl + "/search_purchase",function(result){
+	// 		$("#purchase_box table tbody tr").remove();
+	// 		render2(result.data);
+	// 	});
 
-	});
+	// });
 
 
 	//添加输入商品的信息
@@ -381,59 +366,73 @@ jQuery(function($){
 
 	//模糊查询
 	$("#blurSearch2").click(function(){
-		var msg = {val:$(".inputSuccess2").val()};
-        var reg = new RegExp(msg.val);
+		var msg = {
+					blurSearch2:true,
+					info:$(".inputSuccess2").val()
+				};
 		$.post(common.baseUrl + "/search_purchase",msg,function(result){
-			var data = [];
-			result.data.forEach(function(item){
-				for(var attr in item){
-					if(reg.test(item[attr])){
-						data.push(item);
-						break;
-					}
-				}
-			});
+			var data = result.data;
 			console.log(data);
 			$("#purchase_box table tbody tr").remove();
 			render2(data);
 
 		})
 	});
-
 
 
 
 	//精确查询
+	// $("#clearSearch2").click(function(){
+	// 	var msg = {
+	// 		pur1:$("#pur1").val(),
+	// 		pur2:$("#pur2").val(),
+	// 		sel1:$("#sel1").val(),
+	// 		sel2:$("#sel2").val(),
+	// 		amo1:$("#amo1").val(),
+	// 		amo2:$("#amo2").val(),
+	// 		goods_name:$("#purchase_box #firmSel").val(),
+	// 		goods_classify:$("#purchase_box #classSel").val(),
+	// 	};
+	// 	// console.log(msg);
+	// 	$.post(common.baseUrl + "/search_purchase",msg,function(result){
+ //        	var goodsName = new RegExp(msg.goods_name);
+ //        	var goodsClassify = new RegExp(msg.goods_classify);
+	// 		var data = [];
+	// 		result.data.forEach(function(item){
+	// 			for(var attr in item){
+	// 				if(goodsName.test(item["goods_name"])&&goodsClassify.test(item["goods_classify"])
+	// 					){
+	// 					data.push(item);
+	// 					break;
+	// 				}
+	// 			}
+	// 		});
+	// 		console.log(data);
+	// 		$("#purchase_box table tbody tr").remove();
+	// 		render2(data);
+	// 	})
+	// });
+
+
 	$("#clearSearch2").click(function(){
 		var msg = {
-			pur1:$("#pur1").val(),
-			pur2:$("#pur2").val(),
-			sel1:$("#sel1").val(),
-			sel2:$("#sel2").val(),
-			amo1:$("#amo1").val(),
-			amo2:$("#amo2").val(),
+			clearSearch2:true,
+			prime_priceMin:$("#pur1").val(),
+			prime_priceMax:$("#pur2").val(),
+			sale_priceMin:$("#sel1").val(),
+			sale_priceMax:$("#sel2").val(),
+			goods_qtyMin:$("#amo1").val(),
+			goods_qtyMax:$("#amo2").val(),
 			goods_name:$("#purchase_box #firmSel").val(),
 			goods_classify:$("#purchase_box #classSel").val(),
 		};
-		// console.log(msg);
+		console.log(msg);
 		$.post(common.baseUrl + "/search_purchase",msg,function(result){
-        	var goodsName = new RegExp(msg.goods_name);
-        	var goodsClassify = new RegExp(msg.goods_classify);
-			var data = [];
-			result.data.forEach(function(item){
-				for(var attr in item){
-					if(goodsName.test(item["goods_name"])&&goodsClassify.test(item["goods_classify"])
-						){
-						data.push(item);
-						break;
-					}
-				}
-			});
+			var data = result.data;
 			console.log(data);
 			$("#purchase_box table tbody tr").remove();
 			render2(data);
 		})
 	});
-
 /*-----------------------------------------------------------------------*/
 })
