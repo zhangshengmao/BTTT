@@ -7,7 +7,7 @@
 	    <link rel="stylesheet" type="text/css" href="../css/base.css" />
 	    <link rel="stylesheet" type="text/css" href="../css/index.css" />
 	    <link rel="stylesheet" type="text/css" href="../css/login_register.css">
-		<script type="text/javascript" src="libs/jquery-3.2.1.js"></script>
+		<script type="text/javascript" src="../jquery-3.2.1.js"></script>
 	</head>
 	<body>
 		<div id="login" class="form-inline">
@@ -36,6 +36,7 @@
 
 		<script type="text/javascript">
 			$("#btnLogin").on("click",function(){
+				console.log(66)
 				$.post("http://localhost:88/login",{
 					username:$("#username").val(),
 					password:$("#password").val()
@@ -43,7 +44,7 @@
 					console.log(response);
 					if(response.status){
 						alert("登录成功");
-						window.location.href= "index.html";
+						window.location.href= "../../index.html";
 					}else{
 						console.log(response.message);
 						alert("登录失败");

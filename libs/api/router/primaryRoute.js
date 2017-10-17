@@ -5,7 +5,6 @@ var purchaseRouter=require('./purchaseRuoter.js')
 var bodyparser = require('body-parser');
 var urlencode = bodyparser.urlencoded({extended: false});
 var PrimaryRuter = Object.assign({}, userRouter, purchaseRouter,salesRouter);
-
 module.exports = {
     Register: function(express){
         var app = express();
@@ -21,12 +20,9 @@ module.exports = {
               next();
             }
         });
-        app.use(express.static(__dirname + '/'));
         PrimaryRuter.Register(app, db);
         PrimaryRuter.Purchase(app, urlencode, db);
-        PrimaryRuter.Sales(app, urlencode, db);    
+        PrimaryRuter.Grounding(app, urlencode, db);    
         app.listen(88);
-        
-
     }
 }
