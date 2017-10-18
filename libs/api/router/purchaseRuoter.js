@@ -94,7 +94,7 @@ module.exports = {
                             {goods_name:{$regex:request.body.info}},
                             {goods_classify:{$regex:request.body.info}},
                             {goods_qty:parseInt(request.body.info)},
-                            {supName:{$regex:request.body.info}},
+                            {sup_name:{$regex:request.body.info}},
                             {prime_price:parseFloat(request.body.info)},
                             {sale_price:parseFloat(request.body.info)}
                         ]

@@ -11,16 +11,6 @@ jQuery(function($){
     $('.content .top a').click(function(){
 
         var idx = $(this).parent().index();
-        // if(idx == 0){
-        //     postUrl = "http://localhost:88/reserve"; 
-        //     initTable();
-        // }else if(idx == 1){
-        //     postUrl = "http://localhost:88/receive";
-        //     initTable();
-        // }else if(idx == 2){
-        //     postUrl = "http://localhost:88/return";
-        //     initTable();
-        // };
         if(idx==1){
         	$.post(common.baseUrl + "/search_purchase",function(result){
 			$("#purchase_box table tbody tr").remove();
@@ -36,7 +26,6 @@ jQuery(function($){
 
 
 
-	$("#supplier_box").hide();
 
 	$("#supplier").click(function(){
 		$("#supplier_box").show();
@@ -47,8 +36,6 @@ jQuery(function($){
 		$("#supplier_box").hide();
 		$("#purchase_box").show();
 	});
-
-	$(".add_sup_box").hide();
 
 
 	//点击“增加”按钮，实现添加供应商
@@ -152,6 +139,10 @@ jQuery(function($){
 			clerk_name:$("#clerk_name").val(),
 			time:createTime(),
 		}
+		$.post(common.baseUrl + "/insert_supplier",msg,function(result){
+			// console.log(result);
+
+		});
 
 		//往表格添加一行
 		var $tr = $("<tr/>");
@@ -159,15 +150,10 @@ jQuery(function($){
 			$(`<td></td>`).html(msg[attr]).appendTo($tr);
 		}
 		var $yes_del = $(`
-			<td><button class="btn btn-default btn-xs">确认</button></td>
+			<td><button class="btn btn-default btn-xs">修改</button></td>
 			<td><button class="btn btn-default btn-xs">删除</button></td>`).appendTo($tr);
 		$tr.appendTo($("#supplier_box table tbody"));
-		$.post(common.baseUrl + "/insert_supplier",msg,function(result){
-			console.log(result);
 
-		});
-
-		window.location.reload();
 	});
 
 	//删除供货商
@@ -176,7 +162,7 @@ jQuery(function($){
 		var msg = {sup_name:$(this).parents("tr").find(".sup_name").text()}
 		$(this).parents("tr").remove();
 		$.post(common.baseUrl + "/delete_supplier",msg,function(result){
-			console.log(result);
+			// console.log(result);
 		})
 	});
 
@@ -249,8 +235,7 @@ jQuery(function($){
 
 /*--------------------------采购进货-------------------------------------*/
 
-	// $("#purchase_box").hide();
-	$(".add_pur_box").hide();
+	$("#purchase_box").hide();
 
 
 	//点击“增加”按钮，实现添加进货商品
@@ -275,7 +260,7 @@ jQuery(function($){
 					<td class="goods_qty">${item.goods_qty}</td>
 					<td class="prime_price">${item.prime_price}</td>
 					<td class="sale_price">${item.sale_price}</td>
-					<td class="supName">${item.supName}</td>
+					<td class="supName">${item.sup_name}</td>
 					<td class="time">${createTime()}</td>
 					<td><button class="btn btn-default btn-xs affirm">修改</button></td>
 					<td><button class="btn btn-default btn-xs delete">删除</button></td>
@@ -286,16 +271,6 @@ jQuery(function($){
 		})
 	}
 
-
-
-
-	// $("#purchase").click(function(){
-	// 	$.post(common.baseUrl + "/search_purchase",function(result){
-	// 		$("#purchase_box table tbody tr").remove();
-	// 		render2(result.data);
-	// 	});
-
-	// });
 
 
 	//添加输入商品的信息
@@ -310,10 +285,13 @@ jQuery(function($){
 			goods_classify:$("#goods_classify").val(),
 			prime_price:$("#prime_price").val(),
 			sale_price:$("#sale_price").val(),
-			supName:$("#supName").val(),
+			sup_name:$("#supName").val(),
 			time:createTime(),
 		}
-		console.log(msg);
+		$.post(common.baseUrl + "/insert_purchase",msg,function(result){
+			// console.log(result);
+
+		});
 		//往表格添加一行
 		var $tr = $("<tr/>");
 		for(var attr in msg){
@@ -323,10 +301,6 @@ jQuery(function($){
 			<td><button class="btn btn-default btn-xs">修改</button></td>
 			<td><button class="btn btn-default btn-xs">删除</button></td>`).appendTo($tr);
 		$tr.appendTo($("#purchase_box table tbody"));
-		$.post(common.baseUrl + "/insert_purchase",msg,function(result){
-			console.log(result);
-
-		});
 
 		// window.location.reload();
 	});
@@ -339,7 +313,7 @@ jQuery(function($){
 		var msg = {goods_order:$(this).parents("tr").find(".goods_order").text()}
 		$(this).parents("tr").remove();
 		$.post(common.baseUrl + "/delete_purchase",msg,function(result){
-			console.log(result);
+			// console.log(result);
 		})
 	});
 
@@ -355,11 +329,11 @@ jQuery(function($){
 			goods_classify:$(this).parents("tr").find(".goods_classify").text(),
 			prime_price:$(this).parents("tr").find(".prime_price").text(),
 			sale_price:$(this).parents("tr").find(".sale_price").text(),
-			supName:$(this).parents("tr").find(".supName").text(),
+			sup_name:$(this).parents("tr").find(".supName").text(),
 		}
 
 		$.post(common.baseUrl + "/update_purchase",msg,function(result){
-			console.log(result);
+			// console.log(result);
 		})
 	});
 
@@ -372,7 +346,6 @@ jQuery(function($){
 				};
 		$.post(common.baseUrl + "/search_purchase",msg,function(result){
 			var data = result.data;
-			console.log(data);
 			$("#purchase_box table tbody tr").remove();
 			render2(data);
 
@@ -382,38 +355,6 @@ jQuery(function($){
 
 
 	//精确查询
-	// $("#clearSearch2").click(function(){
-	// 	var msg = {
-	// 		pur1:$("#pur1").val(),
-	// 		pur2:$("#pur2").val(),
-	// 		sel1:$("#sel1").val(),
-	// 		sel2:$("#sel2").val(),
-	// 		amo1:$("#amo1").val(),
-	// 		amo2:$("#amo2").val(),
-	// 		goods_name:$("#purchase_box #firmSel").val(),
-	// 		goods_classify:$("#purchase_box #classSel").val(),
-	// 	};
-	// 	// console.log(msg);
-	// 	$.post(common.baseUrl + "/search_purchase",msg,function(result){
- //        	var goodsName = new RegExp(msg.goods_name);
- //        	var goodsClassify = new RegExp(msg.goods_classify);
-	// 		var data = [];
-	// 		result.data.forEach(function(item){
-	// 			for(var attr in item){
-	// 				if(goodsName.test(item["goods_name"])&&goodsClassify.test(item["goods_classify"])
-	// 					){
-	// 					data.push(item);
-	// 					break;
-	// 				}
-	// 			}
-	// 		});
-	// 		console.log(data);
-	// 		$("#purchase_box table tbody tr").remove();
-	// 		render2(data);
-	// 	})
-	// });
-
-
 	$("#clearSearch2").click(function(){
 		var msg = {
 			clearSearch2:true,

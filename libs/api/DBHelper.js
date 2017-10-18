@@ -60,7 +60,7 @@ module.exports = {
 
                             if(err){
                                  _callback({status: false, message: error});
-                             }else{console.log(66)
+                             }else{
                                 _callback({status: true, data: result})
                              }
                              db.close();

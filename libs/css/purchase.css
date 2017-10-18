@@ -1,6 +1,6 @@
 #supplier_box,#purchase_box{position:relative;}
 #supplier_box .add_sup_box,#purchase_box .add_pur_box{position:absolute;left:200px;top:50px;border:1px solid #ccc;
-	width:650px;background-color: #fff;box-shadow:0px 0px 30px #ccc;padding:10px;}
+	width:650px;background-color: #fff;box-shadow:0px 0px 30px #ccc;padding:10px;display:none;}
 #supplier_box .add_sup_box h3,#purchase_box .add_pur_box h3{text-align:center;padding:10px;}
 #supplier_box .add_sup_box label,#purchase_box .add_pur_box label{display:inline-block;width:85px;margin-left:10px;}
 #supplier_box .add_sup_box input,#purchase_box .add_pur_box input{width:200px;display:inline-block;height:28px;margin:10px 0 ;}
@@ -10,4 +10,3 @@
 #purchase_box .row #firmSel,#purchase_box .row #classSel{width:150px;}
 #supplier_box,#purchase_box{height:435px;overflow-y:auto;}
 
-.active{background-color:#ccc;}
