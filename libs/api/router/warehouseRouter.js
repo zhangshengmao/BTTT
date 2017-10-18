@@ -1,7 +1,11 @@
 var bodyparser = require('body-parser');
 var urlencode = bodyparser.urlencoded({extended: false});
+var url = require('url');
+var jwt = require('jsonwebtoken');//
 module.exports = {
     Warehouse: function(app,urlencode,db){
+        app.use(bodyparser.urlencoded({extended: false}));
+                //过滤器
 
         app.post("/reserve", urlencode, function(request, response){
             // console.log(request.body);

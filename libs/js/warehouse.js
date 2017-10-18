@@ -3,7 +3,27 @@ $(function(){
     // $.post("http://10.3.131.22:88/reserve", {username:1}, function(response){
     //     console.log(response);
     // })
-    
+     
+    var token = '';
+    var cookies = document.cookie;
+    var arr_cookie = cookies.split('; '); 
+    arr_cookie.forEach(function(item){ 
+        var temp = item.split('=');
+        if(temp[0] === 'token'){
+            token = temp[1];
+        }
+    });
+    if(token === ''){
+        alert('请先登录');
+        window.location.href= "login.html";        
+    }
+    $.post('http://localhost:88/login',{token:token},function(response){
+        console.log(response);
+        if(!response.status){
+            alert('请先登录');
+            window.location.href= "login.html";
+        }
+    });   
     
     // ---------定义postURL路径
     var postUrl = "http://localhost:88/reserve";
