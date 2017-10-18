@@ -19,14 +19,14 @@
 				<label for="password">密 码:</label><input type="password" name="password" id="password" class="form-control" placeholder="请输入您的密码">
 			</div>
 			
-			<div  class="form-group">
+			<!-- <div  class="form-group">
 				<label for="identity">身 份：</label>
 				<select id="identify" class="form-control">
 					<option value="售货员">售货员</option>
 					<option value="超市经理">超市经理</option>
 					<option value="仓库管理员">仓库管理员</option>
 				</select>
-			</div>
+			</div> -->
 			<div class="form-group">
 				<input type="button" id="btnLogin" value = "登录" class="btn btn-success">
 				<a href="register.html">还未注册？</a>
@@ -36,27 +36,36 @@
 
 		<script type="text/javascript">
 			$("#btnLogin").on("click",function(){
-<<<<<<< HEAD
-				console.log(66)
+				// console.log(66)
 				$.post("http://localhost:88/login",{
-=======
-				$.post("http://http://10.3.131.22:88/login",{
->>>>>>> 87acec55500846a22f099ba87e253f97234d5a58
 					username:$("#username").val(),
 					password:$("#password").val()
 				},function(response){
 					console.log(response);
-					if(response.status){
-						alert("登录成功");
-<<<<<<< HEAD
-						window.location.href= "../../index.html";
-=======
-						// window.location.href= "../../index.html";
->>>>>>> 285bf9b24d6e49c9db8255b5a5af07726d704566
+					if(response.state){
+						var token = '';
+						var date = new Date();  
+						date.setDate(date.getDate() +7);
+						document.cookie = "token=" + response.token + ";expires=" + date.toUTCString();
+						if(response.identity == '售货员'){
+							window.location.href= "sales.html";
+						}else if(response.identity == '超市经理'){
+							window.location.href= "product.html";
+						}else if(response.identity == '仓库管理员'){
+							window.location.href= "warehouse.html";
+						}
+
 					}else{
-						console.log(response.message);
-						alert("登录失败");
-					}
+
+					};
+					// if(response.status){
+					// 	// alert("登录成功");
+					// 	window.location.href= "../../index.html";
+					// 	// window.location.href= "../../index.html";
+					// }else{
+					// 	console.log(response.message);
+					// 	alert("登录失败");
+					// }
 				})
 			})
 		</script>
