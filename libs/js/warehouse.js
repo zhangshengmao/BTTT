@@ -5,6 +5,10 @@ $(function(){
     //     console.log(response);
     // })
      
+
+    $("#header").load("base.html .h");
+    $("#footer").load("base.html .f");
+
     var token = '';
     var cookies = document.cookie;
     var arr_cookie = cookies.split('; '); 
@@ -23,6 +27,9 @@ $(function(){
         if(!response.status){
             alert('请先登录');
             window.location.href= "login.html";
+        }else{
+            var username = response.username;
+            $("#currUser").text(username);
         }
     });   
     

@@ -12,7 +12,7 @@ module.exports = {
                     if(error){
                         _callback({status: false, message: error});
                     } else {
-            
+
                         collection.insert(_data);
                         _callback({
                             status: true,data:_data
@@ -46,7 +46,7 @@ module.exports = {
             }
         })
     },
-    update: function(_collection, _condition, _callback){console.log(_condition)
+    update: function(_collection, _condition, _callback){
         db.open(function(error, db){
             if(error){
                 _callback({status: false, message: error});
@@ -60,7 +60,7 @@ module.exports = {
 
                             if(err){
                                  _callback({status: false, message: error});
-                             }else{console.log(66)
+                             }else{
                                 _callback({status: true, data: result})
                              }
                              db.close();
