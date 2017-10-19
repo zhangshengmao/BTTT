@@ -17,7 +17,6 @@ module.exports = {
       });
 
       app.post("/delete_supplier",urlencode,function(request,response){
-        
         db.delete("supplier", request.body, function(result){
             response.send(result);
         })

@@ -1,7 +1,45 @@
 	
 jQuery(function($){
 
-	
+	$("#header").load("base.html .h");
+	$("#footer").load("base.html .f");
+
+
+
+	var token = '';
+    var cookies = document.cookie;
+    var arr_cookie = cookies.split('; '); 
+    arr_cookie.forEach(function(item){ 
+        var temp = item.split('=');
+        if(temp[0] === 'token'){
+            token = temp[1];
+        }
+    });
+    if(token === ''){
+        alert('请先登录');
+        window.location.href= "login.html";        
+    }
+    $.post('http://localhost:88/login',{token:token},function(response){
+        if(!response.status){
+        	console.log(response);
+            alert('请先登录');
+            window.location.href= "login.html";
+        }else{
+        	var username = response.username;
+        	$("#currUser").text(username);
+        }
+    });   
+
+    $("#logout").click(function(){
+    	$.post('http://localhost:88/login',{token:""},function(response){
+	        	console.log(response);
+	            // window.location.href= "login.html";
+	    });   
+    })
+
+
+
+
 	$(".add_pro_box").hide();
 
 	//点击“增加”按钮，实现添加供应商
@@ -22,13 +60,8 @@ jQuery(function($){
         return(year + '-' + mon + '-' + date + '-' + hour + ':' + min);
     }
 
-	function render(data,bln,num){
-		data.forEach(function(item,idx){
-			if(bln&&idx+1==num){
-				item.putaway = "是";
-			}else{
-				item.putaway = "否";
-			}
+	function render(data){
+		data.forEach(function(item){
 			for(var attr in item){
 				var $tr = $(`
 					<tr>
@@ -86,57 +119,30 @@ jQuery(function($){
 
 	edit(product);
 
-	//请求库存表:生成表格前面部分
+	//请求库存表reserve:生成表格前面部分
 	$.post(common.baseUrl + "/search_product",function(result){
 
+		var obj = [];
 		result.data.forEach(function(item){
-
+			obj.push(item);
+			//请求上架ground：获取该商品是否上架
 			$.post(common.baseUrl + "/search_ground",{goods_order:item["goods_order"]},function(res){
-				console.log(res.data);
 				if(res.status){
-					var num = item["goods_order"]*1;
-					console.log(num);
-					render(result.data,true,num);
-					// render(result.data);
+					item["putaway"] = "是";
 				}else{
-					render(result.data);
+					item["putaway"] = "否";
 				}
-
 			});
-
-			// $.post(common.baseUrl + "/search_ground",{goods_order:'0002'},function(res){
-			// 	console.log(res.data);
-			// 	if(res.status&&res.data[0].goods_order=="0002"){
-			// 		var num = (res.data[0].goods_order)*1;
-			// 		console.log(num);
-			// 		render(result.data,true,num);
-			// 		// render(result.data);
-			// 	}else{
-			// 		render(result.data);
-			// 	}
 
 		});
 
-			// $.post(common.baseUrl + "/search_ground",{goods_order:'0001'},function(res){
-			// 	console.log(res.data);
-			// 	if(res.status&&res.data[0].goods_order=="0001"){
-			// 		var num = (res.data[0].goods_order)*1;
-			// 		console.log(num);
-			// 		render(result.data,true,num);
-			// 		// render(result.data);
-			// 	}else{
-			// 		render(result.data);
-			// 	}
-
-			// });
-
-		// })
-
-		// render(result.data);
-	
-
 		
+		setTimeout(function(){
+			render(obj);
+		},100)
+
 	});
+
 
 	
 	//添加
@@ -153,7 +159,6 @@ jQuery(function($){
 			prime_price:$("#prime_price").val(),
 			sale_price:$("#sale_price").val(),
 			putaway:$("#putaway").val(),
-			time:createTime()
 		}
 		$.post(common.baseUrl + "/insert_product",msg,function(result){
 			// console.log(result);
@@ -171,6 +176,73 @@ jQuery(function($){
 		$tr.appendTo($("#product_box table tbody"));
 
 	});
+
+
+
+	//删除供货商
+	$("#product_box").on("click",".delete",function(){
+		//删除当前tr:dom节点+数据库都删除
+		var msg = {sup_name:$(this).parents("tr").find(".sup_name").text()}
+		$(this).parents("tr").remove();
+		$.post(common.baseUrl + "/delete_product",msg,function(result){
+			// console.log(result);
+		})
+	});
+
+	
+
+	//点击“修改”按钮，更改数据
+	$("#product_box").on("click",".affirm",function(){
+		//获取当前行
+		var msg = {
+			sup_name:$(this).parents("tr").find(".sup_name").text(),
+			sup_address:$(this).parents("tr").find(".sup_address").text(),
+			linkman_name:$(this).parents("tr").find(".linkman_name").text(),
+			linkman_tel:$(this).parents("tr").find(".linkman_tel").text(),
+			linkman_position:$(this).parents("tr").find(".linkman_position").text(),
+			clerk_name:$(this).parents("tr").find(".clerk_name").text(),
+		}
+		$.post(common.baseUrl + "/update_product",msg,function(result){
+			// console.log(result);
+		})
+	});
+
+
+
+
+	//模糊查询
+	$("#blurSearch1").click(function(){
+
+		$.post(common.baseUrl + "/search_product",
+        {
+            blurSearch1:true,
+            info:$("#inputSuccess1").val()
+        },
+        function(result){
+            var data = result.data;
+            $("#product_box table tbody tr").remove();
+			render(data);
+
+        })
+	});
+
+	
+
+	$("#clearSearch1").click(function(){
+		var msg = {
+			clearSearch1:true,
+			sup_name:$("#firmSel").val(),
+			linkman_name:$(".classSel1").val(),
+			clerk_name:$(".classSel2").val()
+		};
+		$.post(common.baseUrl + "/search_product",msg,function(result){
+        	 var data = result.data;
+            $("#product_box table tbody tr").remove();
+			render(data);
+		})
+	});
+
+
 
 
 });
