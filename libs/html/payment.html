@@ -12,12 +12,13 @@
 <body>
 	<div id="container">
 		<h3>支付页面</h3>
-		<div id="payMethod">
+		<!-- <div id="payMethod">
 			<p>支付方式: </p>
 			<p><br/><span class="wechat">微信</span><span class="wechat">支付宝</span><span class="wechat">银行卡</span></p>
-		</div>
-		<div class="form-group total_box" >
-			<span id="total">1000</span>
+		</div> -->
+		<div class="form-group" >
+			<!-- <span id="total"></span> -->
+			<label for="total">支付金额</label><input type="text" placeholder="请填写备注" id="total" class="form-control">
 		</div>
 		<div  class="form-group">
 			<label for="remark">备注(50字以内)</label><input type="text" placeholder="请填写备注" id="remark" class="form-control">
@@ -28,10 +29,20 @@
 	</div>
 
 	<script type="text/javascript">
-		$('#payment').click(function(){
-			socket = io("ws://localhost:887");
-			var obj={Boolean:true}
-			socket.emit('ServerLogin', JSON.stringify(obj) );
+
+		var ws;
+		ws = new WebSocket("ws://10.3.131.3:888");
+		ws.onmessage = function(_msg){
+			console.log(_msg.data);
+		}	
+
+		ws.onopen = function(){
+			console.log(666);
+		}	
+
+		$('#payment').click(function(_me){
+			ws.send("aaa");
+			// ws.close();
 		})
 
 	</script>
