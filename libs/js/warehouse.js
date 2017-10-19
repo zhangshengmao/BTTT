@@ -172,6 +172,7 @@ $(function(){
             time:Time()
         },
         function(response){
+            console.log(response);
             $('.tableBox').html('');
             $('.tableBox').datagrid({
                 url:postUrl,

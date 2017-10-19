@@ -46,7 +46,7 @@ module.exports = {
                 if(!result.status){
                     response.send(result);
                 } else {
-                    console.log(result);
+                    // console.log(result);
                     var user = {
                         username:request.body.username
                     };
