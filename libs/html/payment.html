@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" id="vp">
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="../css/payment.css" />
+	<script type="text/javascript" src="../jquery-3.2.1.js"></script>
+	<script type="text/javascript" src="../socket.io.min.js"></script>
+	
+</head>
+<body>
+	<div id="container">
+		<h3>支付页面</h3>
+		<div id="payMethod">
+			<p>支付方式: </p>
+			<p><br/><span class="wechat">微信</span><span class="wechat">支付宝</span><span class="wechat">银行卡</span></p>
+		</div>
+		<div class="form-group total_box" >
+			<span id="total">1000</span>
+		</div>
+		<div  class="form-group">
+			<label for="remark">备注(50字以内)</label><input type="text" placeholder="请填写备注" id="remark" class="form-control">
+		</div>
+		<div>
+			<button id="payment" class="btn btn-success">支付</button>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		var ws;
+		ws = new WebSocket("ws://localhost:888");
+		ws.onmessage = function(_msg){
+			console.log(_msg);
+		}	
+
+		ws.onopen = function(){
+			console.log(666);
+		}	
+
+		// ws.onclose = function(){
+		// 	console.log(666)
+
+		// }
+
+		
+
+		$('#payment').click(function(_me){
+			ws.send("aaa");
+			// ws.close();
+		})
+
+	</script>
+</body>
+</html>
