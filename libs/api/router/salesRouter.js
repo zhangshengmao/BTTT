@@ -7,14 +7,17 @@ module.exports={
         app.post('/userControl', urlencode, function(reqeust, response){
             console.log(reqeust.body.username)
             db.select("users", {username: reqeust.body.username}, function(result){
+                
                 if(!result.status){
                  response.send(result);
                 } else if(result.data.length > 0) {
-                 response.send({status: false, message: "当前用户已存在"});
+
+                 response.send({status:false,data:result});
 
                 } else { 
                  db.insert("users", reqeust.body, function(result){
-                     response.send(result);
+                    console.log(result.data.length)
+                    response.send(result);
                  })
                 }
             });
@@ -23,7 +26,6 @@ module.exports={
             db.select('grounding', {goods_order:reqeust.body.goods_order}, function(result){
                 console.log(reqeust.body)
                 if(result.data.length>0){
-                    console.log(66)
                     response.send({status:false});
                 }else{
                     db.insert('grounding', reqeust.body, function(result){
@@ -47,6 +49,7 @@ module.exports={
             var arr=[{goods_order:reqeust.body.goods_order},
                     reqeust.body
             ]
+            // console.log(reqeust.body)
             db.update('grounding',arr, function(result){
                 console.log(result.status)
                 response.send(result)

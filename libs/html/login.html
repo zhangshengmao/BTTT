@@ -48,7 +48,7 @@
 						date.setDate(date.getDate() +7);
 						document.cookie = "token=" + response.token + ";expires=" + date.toUTCString();
 						if(response.identity == '售货员'){
-							window.location.href= "sales.html";
+							window.location.href= "grounding.html";
 						}else if(response.identity == '超市经理'){
 							window.location.href= "product.html";
 						}else if(response.identity == '仓库管理员'){

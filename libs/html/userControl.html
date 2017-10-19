@@ -35,44 +35,24 @@
                 </div>
                 <div class="condition">
                     <div class="row">
-                        <div class="purchase col-md-4">
-                            <span>进价区间：</span>
-                            <input type="text" id="pur1"/>
-                            <span>-</span>
-                            <input type="text" id="pur2"/>
-                        </div>
-                        <div class="sell col-md-4">
-                            <span>售价区间：</span>
-                            <input type="text" id="sel1" />
-                            <span>-</span>
-                            <input type="text" id="sel2" />         
-                        </div>
-                        <div class="amount col-md-4">
-                            <span>数量区间：</span>
-                            <input type="text" id="amo1" />
-                            <span>-</span>
-                            <input type="text" id="amo2" />                   
-                        </div>
-                    </div>
-                    <div class="row">
                         <div class="firm col-md-4">
-                            <span>供货商家：</span>
-                            <input type="text" id="ser_firms" />
+                            <span>用户名：</span>
+                            <input type="text" id="username" />
                         </div>
                         <div class="classify col-md-4">
-                            <span>商品分类：</span>
-                            <input type="text" id="ser_classify" />                     
+                            <span>职位：</span>
+                            <input type="text" id="identity" />                     
                         </div>
                         <div class="col-md-4">
-                            <button class="btn btn-success btn-xs toSearch">确认</button>
+                            <button class="btn btn-success btn-xs toSearch" id="affirm">确认</button>
                         </div>
                     </div>
                 </div>
                 <div class=" search form-group has-success has-feedback col-xs-4">
                     <input type="text" class="form-control fuzInput" id="inputSuccess1" aria-describedby="inputSuccess2Status">
-                    <button type="button" class="btn btn-success fuzSearch">搜索商品</button>
+                    <button type="button" class="btn btn-success fuzSearch" id="hunt">搜索用户</button>
                 </div>   
-                <table class="table table-bordered table-hover">
+                <table class="table table-bordered table-hover" id="jion_tbody">
                     <caption>用户管理表</caption>
                     <thead>
                         <tr>
@@ -87,7 +67,7 @@
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="clearBody">
                         <!-- <tr>
                             <td><input type="text" /></td>
                             <td><input type="text" /></td>

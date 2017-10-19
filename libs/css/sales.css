@@ -30,3 +30,4 @@ input:disabled{background-color: #fff;}
 .table caption{text-align:center;font-size:16px;}
 .table th{text-align:center;}
 .table tr td input{width:80px;border:0 none;text-align:center;}
+#username,#identity{width: 150px;height: 30px;}

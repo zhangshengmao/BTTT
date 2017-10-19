@@ -20,6 +20,7 @@ module.exports = {
                
                 } else { 
                     db.insert("users", request.body, function(result){
+                        result.status=true;
                         response.send(result);
                     })
                 }
@@ -62,5 +63,43 @@ module.exports = {
                 }
              })
         });
+        app.post('/lookUp', urlencode, function(request, response){
+            db.select("users", {}, function(result){
+                response.send(result);
+            });
+        })
+        app.post('/delUser', urlencode, function(reqeust, response){
+            db.delete('users',reqeust.body, function(result){
+                response.send(result)
+            })
+        });
+        app.post('/revampUser', urlencode, function(reqeust, response){
+            var arr=[{createTime:reqeust.body.createTime},
+                    reqeust.body
+            ]
+            console.log(reqeust.body.createTime)
+            db.update('users',arr, function(result){
+                response.send(result)
+            })
+        })
+        app.post('/huntUser', urlencode, function(request, response){
+            db.select("users",
+                {$or:[{username:{$regex:request.body.info}},
+                      {identity:{$regex:request.body.info}},
+                      {tel:parseFloat(request.body.info)},
+                      {e_mail:parseFloat(request.body.info)}
+                    ]
+                },
+                function(result){
+                response.send(result);
+            })
+        });
+        app.post('/termHunt', urlencode, function(reqeust, response){
+            db.select('users', reqeust.body, function(result){
+                // console.log(result)
+                response.send(result);
+
+            });
+        })
     }
 } 

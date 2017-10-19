@@ -19,13 +19,7 @@ module.exports = {
         })
     },
     update: function(_collection, _condition, _callback){
-<<<<<<< HEAD
-        db.collection(_collection).update(_condition[0], {$set:_condition[1]}, {safe:true}).then(function(result){
-            _callback({status:true,data:result});
 
-
-        });
-=======
         db.open(function(error, db){
             if(error){
                 _callback({status: false, message: error});
@@ -48,7 +42,7 @@ module.exports = {
                 })
             }
         })
->>>>>>> ae243f469b2d9cba3f167734d54d416173acd144
+
     },
     delete: function(_collection, _data, _callback){
         db.collection(_collection).remove(_data).then(function(result){

@@ -17,12 +17,12 @@ jQuery(function($){
         window.location.href= "login.html";        
     }
     $.post('http://localhost:88/login',{token:token},function(response){
-        console.log(response);
+       
         if(!response.status){
             alert('请先登录');
             window.location.href= "login.html";
         }else{
-            console.log(response.username);
+           
             var username = response.username;
             $("#currUser").text(username);
         }
@@ -134,7 +134,9 @@ jQuery(function($){
         jia(result)
     })
     function jia(result){
+        console.log(result.data)
         result.data.forEach(function(item){
+
             for(var attr in item){
                 var $tr = $(`
                     <tr>
@@ -151,6 +153,7 @@ jQuery(function($){
                     `)
             }
             $tr.appendTo($("#supplier_box table tbody"));
+
         })
         $('.tablebox').click(function(e){
             delete1(e.target);
@@ -162,11 +165,9 @@ jQuery(function($){
         if(target.id=='delete'){
 
             var goods_order=$(target).parents('tr').children('td').eq(0).text();
-            console.log(goods_order)
+            
             $.post(common.baseUrl+'/delete',{goods_order:goods_order}, function(result){
-                console.log(result)
-                if(result.status){
-                    console.log(666)
+                if(result.ok===1){
                     $(target).parents('tr').remove();
                 }
             });
@@ -195,7 +196,7 @@ jQuery(function($){
         }
     }
     // 模糊搜索仓库商品数据
-    $('#hunt').click(function(){
+ $('#hunt').click(function(){
         $('.putaway_box').show();
         $.post(common.baseUrl+'/hunt',{
             fuzSearch:true,
@@ -203,7 +204,6 @@ jQuery(function($){
             },function(result){
                 // var data = response.data;
                 putawayData = result.data;
-                // console.log(result)
                 putawayShow(result)
         })
     })
@@ -214,15 +214,14 @@ jQuery(function($){
         var gClass={goods_classify:$('#goodsClass').val()};
         var obj= $('#goodsName').val()==""? gClass : $('#goodsClass').val()=="" ? gName : Object.assign({}, gClass, gName);
         $.post(common.baseUrl+'/putaway',obj, function(result) {
-            console.log(result);
             putawayData = result.data;
-            putawayShow(result)
+            putawayShow(result);
+            console.log()
         });
         
     });
     $('.putaway_box').click(function(e){
         if($(e.target).hasClass('btn btn-success btn-xs ss')){
-            console.log(putawayData)
             putawayData.forEach(function(item){
                 delete item._id;
             })
@@ -236,13 +235,13 @@ jQuery(function($){
                     if(num == putawayData[j].goods_code){
                         var qty=$(trs[i]).children().eq(4).children().eq(0).val();
                         qty=qty*1+putawayData[j].goods_qty*1
-                        
+                        $(trs[i]).children().eq(4).children().eq(0).val(qty)
                             putawayData[j].goods_qty=qty;
-                            console.log(putawayData[j])
                             $.post(common.baseUrl+'/revamp',putawayData[j],function(result){
-                                if(result.status){
-                                    $(trs[i]).children().eq(4).children().eq(0).val(qty);
-                                }
+
+            
+                                    
+                                
                             })
                             putawayData.splice(j,1);
                             length1--;
@@ -252,7 +251,9 @@ jQuery(function($){
 
             }
             $.post(common.baseUrl+'/putawaySave', {arr:JSON.stringify(putawayData)}, function(res){
-                if(res.status){
+                
+                res.data=res.ops;
+                if(res.result.ok==1){
                     jia(res);
                 }
             })
@@ -265,8 +266,8 @@ jQuery(function($){
     });
     function putawayShow(result){
         if(result.status){
-            console.log(result.data)
                 result.data.forEach(function(item){
+                    
                     for(var attr in item){
                         var $tr = $(`
                             <tr>
