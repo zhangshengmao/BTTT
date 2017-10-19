@@ -42,13 +42,13 @@ module.exports = {
             }; 
 
             db.select('users',request.body, function(result){
+                console.log(result)
                 if(!result.status){
                     response.send(result);
                 } else {
                     console.log(result);
                     var user = {
-                        username:request.body.username,
-                        identity:result.data[0].identity
+                        username:request.body.username
 
                     };
                     var token = jwt.sign(user, 'secret',{
