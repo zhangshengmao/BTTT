@@ -10,7 +10,21 @@
     <h3>扫描二维码付款</h3>
     <div id="qrcode"></div>
     <script>
-      $('#qrcode').qrcode("http://10.3.131.3/super/libs/html/print.html");
+      $('#qrcode').qrcode("http://10.3.131.3/super/libs/html/payment.html");
+      	var ws;
+      	ws = new WebSocket("ws://10.3.131.3:888");
+      	ws.onmessage = function(_msg){
+      		console.log(_msg.data);
+      	}	
+
+      	ws.onopen = function(){
+      		console.log(666);
+      	}	
+
+      	$('#payment').click(function(_me){
+      		ws.send("aaa");
+      		// ws.close();
+      	})
     </script>              
 </body>
 </html>

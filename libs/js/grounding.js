@@ -355,26 +355,72 @@ jQuery(function($){
             $('#goodsNum').val('')
     }
     // 账单结算
+    var closeData = [];
+    var total=0;
     $('#clearBtn').click(function(){
         var trs=$('#clearlist').find('tr');
-        var closeData = [];
-        var tatol=0;
         for(var i=1;i<=arr.length;i++){
             var obj = {
-                goods_classify:$(trs[i]).children().eq(2).children().eq(0).val(),
+                goods_name:$(trs[i]).children().eq(2).children().eq(0).val(),
                 goods_qty:$(trs[i]).children().eq(4).children().eq(0).val(),
                 sale_price:$(trs[i]).children().eq(5).children().eq(0).val(),
                 time:createTime()
             };
             closeData.push(obj);
-            tatol+=obj.sale_price*obj.goods_qty;
+            total+=obj.sale_price*obj.goods_qty;
         }
-        // window.location.href = '../html/QRcode.html';
-        closeData = JSON.stringify(closeData);
-        // 删除多余的&
-      
-        console.log(closeData)
-        location.href="print.html?" + closeData;
+        // window.location.href = '../html/print.html';
+        // closeData = JSON.stringify(closeData);
+        // // 删除多余的&
+        $('.Qrcode').show();
+        // console.log(closeData)
 
+    })
+    function erweima(){
+        $('#qrcode').qrcode("http://10.3.131.3/super/libs/html/payment.html");
+            var ws;
+            ws = new WebSocket("ws://10.3.131.3:888");
+            ws.onmessage = function(_msg){
+                console.log(_msg.data);
+
+                success();
+            }   
+
+            ws.onopen = function(){
+                console.log(666);
+            }   
+
+            $('#payment').click(function(_me){
+                ws.send("aaa");
+                // ws.close();
+            })
+    }
+    $('.Qrcode').hide();
+    
+    erweima();
+     $('.success').hide();
+    function success(){
+        $('.Qrcode').hide();
+        $('.success').show();
+
+
+    }
+    var list ='';
+    $('#print').click(function(){
+        list = closeData.map(function(item){
+
+            return `商品名称：${item.goods_name}\n
+                    单品数量：${item.goods_qty} \n
+                    商品金额：${item.sale_price}\n`
+        }).join('');
+        $.post("http://10.3.131.33:81/print", {text:
+                                                    'BTTT 超市收银系统  \n'
+                                                    +'*************************************\n'
+                                                    +list
+                                                    +'总金额：'+total+'\n'
+                                                    +'买单时间：'+createTime()+'\n'
+                                                    +'*************************************\n'}, function(res){
+                                                        console.log(res)
+        })
     })
 })

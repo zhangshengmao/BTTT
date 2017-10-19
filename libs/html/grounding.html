@@ -11,6 +11,7 @@
     <script type="text/javascript" src="../jquery-3.2.1.js"></script>
     <script type="text/javascript" src="../js/grounding.js"></script>
     <script type="text/javascript" src="../js/common.js"></script>
+    <script type="text/javascript" src="../jquery.qrcode.min.js"></script>
 </head>
 <body>
     <header id="header"></header>
@@ -186,6 +187,13 @@
         <span class="close" id="close1">&times;</span>
     </div>
    
-
+    <div class="Qrcode">
+        <h3>扫描二维码付款</h3>
+        <div id="qrcode"></div>
+    </div>  
+    <div class="success">
+        <p>付款成功</p>
+        <button class="btn btn-success btn-xs" id="print">打印</button>
+    </div>   
 </body>
 </html>
