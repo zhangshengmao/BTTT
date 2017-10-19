@@ -8,6 +8,56 @@
 .close{position:absolute;right:5px;top:0;}
 .tablebox{height:315px;overflow-y: auto;width: 1027px;margin:0 auto;}
 #goodsName,#goodsClass{width: 150px;height:30px;}
+<<<<<<< HEAD
+.putaway_box{width: 800px;border:1px solid #ccc;padding:20px;position:absolute;top:100px;left:300px;background:#fff;}
+#addputaway{width:50px ;height:30px;margin:20px 0 0 350px;}
+.material input,.material select{width: 150px;height: 30px;}
+.material label{padding-left:50px;}
+.material label:first-child{padding-left:0;}
+.clear_goods{margin-top:40px;height:335px;overflow-y: auto;width: 1027px;margin:0 auto;}
+#clearBtn{height:40px;width: 100px;}
+.settleAccounts{width:110px;margin:0 auto ;padding:10px;}
+.payoffTable{width: 460px;position:absolute;left:400px;top:200px;background:#fff;}
+
+.left{
+    float: left;
+}
+.right{
+    float:right;
+}
+.clearfix{
+    clear: both;
+}
+ul{list-style: none;}
+/*.print_container{
+    padding: 20px;
+    width: 188px;
+}*/
+.section1{
+}
+.section2 label{
+    display: block;
+}
+.section3 label{
+    display: block;
+}
+.section4{
+}
+.section4 .total label{
+    display: block;
+}
+.section4 .other_fee{
+    border-bottom: 1px solid #DADADA;
+}
+.section5 label{
+    display: block;
+    font-size: 30px;
+}
+.section5 label tr td{
+    font-size: 30px;padding-bottom: 30px;
+}
+=======
 .putaway_box{width: 800px;border:1px solid #ccc;padding:20px;
 	position:absolute;top:100px;left:300px;background:#fff;box-shadow:0px 0px 30px #ccc;}
 #addputaway{width:50px ;height:30px;margin:20px 0 0 350px;}
+>>>>>>> ae243f469b2d9cba3f167734d54d416173acd144

@@ -63,7 +63,7 @@
                     </div>   
                     <br />
                     <div class="tablebox">
-                        <table class="table table-bordered table-hover">
+                        <table class="table table-bordered table-hover" id="createTable">
                             <caption>供货商管理表</caption>
                             <thead>
                                 <tr>
@@ -85,6 +85,7 @@
                        
                                
                     </div>
+                    
                     <div  class="add_sup_box">
                         <h3>商品上架信息</h3>
                         <label for="sup_name">商品编号：</label><input type="text" id="sup_name" class="form-control">
@@ -102,29 +103,24 @@
                     <div id="sellGoods_box">
                         <div class="condition">
                             <div class="sellGoods_row">
-                                <div class="firm col-md-4">
-                                    <span>商品名称：</span>
-                                    <input type="text" />
-                                </div>
-                                <div class="classify col-md-4">
-                                    <span>商品分类：</span>
-                                    <input type="text" />
-                                                    
-                                </div>
-                               
-                                <div class="col-md-4" style="margin-top:30px">
-                                    <button class="btn btn-success btn-xs">确认</button>
-                                </div>
+                            <div class="material">
+                                <label for="salesclerk">售货员：</label><input type="text" id="salesclerk"/>
+                                <label for="date">时间：</label><input type="text" id="date"/>
+                                <label for="">销售类型：</label><select name="" id="">
+                                    <option value="批发">批发</option>
+                                    <option value="零售">零售</option>
+                                </select>
+                            </div>
                             </div>
                         </div>
                         <div class=" search form-group has-success has-feedback col-xs-4">
-                            <input type="text" class="form-control" id="" aria-describedby="inputSuccess2Status">
-                            <button type="button" class="btn btn-success" id="">搜索</button>
+                            <input type="text" class="form-control" id="goodsNum" aria-describedby="inputSuccess2Status">
+                            <button type="button" class="btn btn-success" id="huntGoods">搜索商品编号</button>
                         </div>   
                         <br />
-                        <div class="">
-                            <table class="table table-bordered table-hover">
-                                <caption>供货商管理表</caption>
+                        <div class="clear_goods">
+                            <table class="table table-bordered table-hover" id="clearlist">
+                                <caption>商品结算表</caption>
                                 <thead>
                                     <tr>
                                         <th>商品编号</th>
@@ -133,9 +129,7 @@
                                         <th>分类</th>
                                         <th>数量</th>
                                         <th>价格(RMB)</th>
-                                        <th>上架时间</th>
-                                        <th><button class="btn btn-success btn-xs" id="">上架</button></th>
-                                        <th></th>
+                                        <th>结算时间</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -145,7 +139,10 @@
                            
                                    
                         </div>
-                        <div  class="add_sup_box">
+                        <div class="settleAccounts">
+                            <p><button class="btn btn-success btn-xs" id="clearBtn">结算账单</button></p>
+                        </div>
+                        <!-- <div  class="add_sup_box">
                             <h3>商品上架信息</h3>
                             <label for="sup_name">商品编号：</label><input type="text" id="sup_name" class="form-control">
                             <label for="sup_address">商品条码：</label><input type="text" id="sup_address" class="form-control">
@@ -156,7 +153,7 @@
                             <input type="button" id="addToDb" value="添加" class="btn btn-success btn-xs">
 
                             <span class="close">&times;</span>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -167,7 +164,7 @@
     <div  class="putaway_box">
         <h3>商品上架信息</h3>
         <table class="table table-bordered table-hover" id="putaway_table">
-            <caption>供货商管理表</caption>
+            <caption>预上架表</caption>
             <thead>
                 <tr>
                     <th>商品编号</th>
@@ -178,7 +175,6 @@
                     <th>价格</th>
                     <th>修改时间</th>
                     <th></th>
-                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -189,5 +185,7 @@
 
         <span class="close" id="close1">&times;</span>
     </div>
+   
+
 </body>
 </html>

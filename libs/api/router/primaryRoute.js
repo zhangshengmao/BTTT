@@ -27,7 +27,6 @@ module.exports = {
         PrimaryRuter.Purchase(app, urlencode, db);
 
         PrimaryRuter.Grounding(app, urlencode, db);    
-
         PrimaryRuter.Warehouse(app, urlencode, db);    
         PrimaryRuter.Sales(app, urlencode, db);    
 
