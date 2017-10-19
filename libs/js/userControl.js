@@ -40,6 +40,7 @@ jQuery(function($){
                 createElemet(res)
                 return false
             }
+            console.log(res)
                 alert(res.message);
                 
           

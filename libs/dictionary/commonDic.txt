@@ -1,0 +1,19 @@
+{
+	"cn": {
+		"goods_order": "商品编码",
+		"goods_code": "商品条码",
+		"goods_name": "商品名称",
+		"goods_classify": "商品分类",
+		"goods_qty":"数量",
+		"sup_name":"供应商",
+		"prime_price":"进价",
+		"sale_price":"售价",
+		"time":"修改时间"
+	},
+	"en": {
+		"_id": "ID",
+		"procode": "Product Code",
+		"proprice": "Product Price",
+		"proname": "Product Name"		
+	}
+}

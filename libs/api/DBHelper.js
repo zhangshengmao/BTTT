@@ -19,7 +19,6 @@ module.exports = {
         })
     },
     update: function(_collection, _condition, _callback){
-
         db.open(function(error, db){
             if(error){
                 _callback({status: false, message: error});
@@ -42,7 +41,6 @@ module.exports = {
                 })
             }
         })
-
     },
     delete: function(_collection, _data, _callback){
         db.collection(_collection).remove(_data).then(function(result){

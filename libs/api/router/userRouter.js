@@ -32,7 +32,7 @@ module.exports = {
             if(request.body.token){
                 var token = request.body.token;
                 jwt.verify(token, 'secret', function(error, result){
-                    console.log(result);
+                    // console.log(result);
                      if(error){
                          response.send({status: false, message: error});
                      } else {
@@ -43,17 +43,16 @@ module.exports = {
             }; 
 
             db.select('users',request.body, function(result){
+                console.log(result)
                 if(!result.status){
                     response.send(result);
                 } else {
-                    console.log(result);
+                    // console.log(result);
                     var user = {
-                        username:request.body.username,
-                        identity:result.data[0].identity
-
+                        username:request.body.username
                     };
                     var token = jwt.sign(user, 'secret',{
-                        'expiresIn':144000
+                        'expiresIn':1440
                     });
                     response.send({
                         state:true,

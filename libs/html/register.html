@@ -45,11 +45,12 @@
 			},function(response){
 				console.log(response);
 				if(response.result.ok==1){
+
 					alert("注册成功,去登录");
 					//跳转到登录页面
 					window.location.href = "login.html";
 				}else{
-					console.log(response.message);
+					console.log(response);
 					alert("该用户名已存在或者其他错误");
 
 				}
