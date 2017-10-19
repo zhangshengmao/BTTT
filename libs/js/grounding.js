@@ -409,18 +409,16 @@ jQuery(function($){
     $('#print').click(function(){
         list = closeData.map(function(item){
 
-            return `商品名称：${item.goods_name}\n
-                    单品数量：${item.goods_qty} \n
-                    商品金额：${item.sale_price}\n`
+            return '商品名称:'+item.goods_name+'\n'+'单品数量:'+item.goods_qty+'\n'+'商品金额:'+item.sale_price+'\n'
         }).join('');
         $.post("http://10.3.131.33:81/print", {text:
-                                                    'BTTT 超市收银系统  \n'
-                                                    +'*************************************\n'
-                                                    +list
-                                                    +'总金额：'+total+'\n'
-                                                    +'买单时间：'+createTime()+'\n'
-                                                    +'*************************************\n'}, function(res){
-                                                        console.log(res)
-        })
+        'BTTT 超市收银系统  \n'
+        +'*************************************\n'
+        +list
+        +'总金额：'+total+'\n'
+        +'买单时间：'+createTime()+'\n'
+        +'*************************************\n'}, function(res){
+            console.log(res)
+})
     })
 })
