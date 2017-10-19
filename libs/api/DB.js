@@ -15,13 +15,16 @@ module.exports = {
 	},
 	select:function(_collection,_condition,_callback){
 		db.collection(_collection).find(_condition || {}).toArray(function(error,dataset){
-			_callback({status:true,data:dataset});
+			if(error){
+				_callback({status:false});
+			}else{
+				_callback({status:true,data:dataset});
+			}
 		})
 	},
 	update: function(_collection, _condition, _callback){
 		db.collection(_collection).update(_condition[0], {$set:_condition[1]}, {safe:true}).then(function(result){
 			_callback(result);
-
 
 		});
 	},

@@ -47,8 +47,8 @@ module.exports = {
                 } else {
                     console.log(result);
                     var user = {
-                        username:request.body.username,
-                        identity:result.data[0].identity
+                        username:request.body.username
+                        // identity:result.data[0].identity
 
                     };
                     var token = jwt.sign(user, 'secret',{
