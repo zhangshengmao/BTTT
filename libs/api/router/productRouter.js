@@ -67,7 +67,7 @@ module.exports = {
                 {$or:[
                       {goods_name:request.body.goods_name},
                       {goods_classify:request.body.goods_classify},
-                      {clerk_name:request.body.clerk_name}
+                      {sup_name:request.body.sup_name}
                     ]
                 },
                 function(result){

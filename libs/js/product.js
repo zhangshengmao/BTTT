@@ -234,8 +234,8 @@ jQuery(function($){
 		var msg = {
 			clearSearch1:true,
 			sup_name:$("#firmSel").val(),
-			linkman_name:$(".classSel1").val(),
-			clerk_name:$(".classSel2").val()
+			goods_name:$(".classSel1").val(),
+			goods_classify:$(".classSel2").val()
 		};
 		$.post(common.baseUrl + "/search_product",msg,function(result){
         	 var data = result.data;
