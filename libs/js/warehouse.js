@@ -1,5 +1,6 @@
 $(function(){
 
+
     // $.post("http://10.3.131.22:88/reserve", {username:1}, function(response){
     //     console.log(response);
     // })
@@ -81,33 +82,56 @@ $(function(){
     }
 
     
-    // -----生成表格中的trs
-    function initTable(){
-        $.post(postUrl, {goods_order:''},function(response){
-            var data = response.data;
-            // console.log(data);
-            makeTrs(data);
-        });
-    };
-
-    
-    initTable();
+    $('.tableBox').datagrid({
+        url:postUrl,
+        cols:'goods_order,goods_code,goods_name,goods_classify,goods_qty,sup_name,prime_price,sale_price,time',
+        method:'post',
+        edit:true,
+        delete:true,
+        info:{goods_order:''}
+    })
 
     // ----tab标签切换
     $('.content .top li').eq(0).children().css({backgroundColor:'#5cb85c',color:'#fff'});
     $('.content .top a').click(function(){
 
         var idx = $(this).parent().index();
-        console.log(idx);
         if(idx == 0){
-            postUrl = "http://localhost:88/reserve"; 
-            initTable();
+            $('.tableBox').html('');
+            postUrl = "http://localhost:88/reserve";
+            $('.tableBox').datagrid({
+                url:postUrl,
+                cols:'goods_order,goods_code,goods_name,goods_classify,goods_qty,sup_name,prime_price,sale_price,time',
+                method:'post',
+                edit:true,
+                delete:true,
+                info:{goods_order:''}
+            });            
+            $('h4').html('库存管理表'); 
         }else if(idx == 1){
+            $('.tableBox').html('');
             postUrl = "http://localhost:88/receive";
-            initTable();
+            $('.tableBox').datagrid({
+                url:postUrl,
+                cols:'goods_order,goods_code,goods_name,goods_classify,goods_qty,sup_name,prime_price,sale_price,time',
+                method:'post',
+                edit:true,
+                delete:true,
+                info:{goods_order:''}
+            });
+            $('h4').html('收货管理表');
         }else if(idx == 2){
+            $('.tableBox').html('');
             postUrl = "http://localhost:88/return";
-            initTable();
+            $('.tableBox').datagrid({
+                url:postUrl,
+                cols:'goods_order,goods_code,goods_name,goods_classify,goods_qty,sup_name,prime_price,sale_price,time',
+                method:'post',
+                edit:true,
+                delete:true,
+                info:{goods_order:''}
+            });
+            $('h4').html('退货管理表');
         };
 
 
@@ -122,10 +146,12 @@ $(function(){
     $('.add_info .close').click(function(){
        $('.add_info').css({display:'none'});   
     });
-    $('.table .addtr').click(function(){
-        $('.add_info').css({display:'block'}); 
-    });
+
     $('#addToDb').click(function(){
+        if($('#order').val() == null || $('#order').val()== undefined || $('#order').val() == ''){
+            alert('不能为空');
+            return false;    
+        }
        $.post(postUrl, 
         {
             goods_order:$('#order').val(),
@@ -139,44 +165,16 @@ $(function(){
             time:Time()
         },
         function(response){
-            var data = response.data;
-            // console.log(data);
-            Insert(data);
+            $('.tableBox').html('');
+            $('.tableBox').datagrid({
+                url:postUrl,
+                cols:'goods_order,goods_code,goods_name,goods_classify,goods_qty,sup_name,prime_price,sale_price,time',
+                method:'post',
+                edit:true,
+                delete:true,
+                info:{goods_order:''}
+            })
         });        
-    });
-
-    // ------点击删除tr及对应数据库内数据
-    $('.table').on('click','.delet',function(){
-        var tr = $(this).parent().parent();
-        $.post(postUrl, 
-            {goods_order:$(tr).find('.goods_order').val(),delet:true},
-            function(response){
-            // console.log(response);
-            if(response.status){
-                $(tr).remove();  
-            }
-        });
-    });
-
-    // ----更新数据事件
-    $('.table').on('click','.addTo',function(){
-        var tr = $(this).parent().parent();
-       $.post(postUrl, 
-        {
-            goods_order:$(tr).find('.goods_order').val(),
-            goods_code:$(tr).find('.goods_code').val(),
-            goods_name:$(tr).find('.goods_name').val(),
-            goods_classify:$(tr).find('.goods_classify').val(),
-            goods_qty:$(tr).find('.goods_qty').val(),
-            sup_name:$(tr).find('.sup_name').val(),
-            prime_price:$(tr).find('.prime_price').val(),
-            sale_price:$(tr).find('.sale_price').val(),
-            time:Time()
-        },
-        function(response){
-            // var data = response.data;
-            // console.log(data);
-        });          
     });
 
     // ------精确查找

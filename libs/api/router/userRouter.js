@@ -31,7 +31,7 @@ module.exports = {
             if(request.body.token){
                 var token = request.body.token;
                 jwt.verify(token, 'secret', function(error, result){
-                    console.log(result);
+                    // console.log(result);
                      if(error){
                          response.send({status: false, message: error});
                      } else {
@@ -52,7 +52,7 @@ module.exports = {
 
                     };
                     var token = jwt.sign(user, 'secret',{
-                        'expiresIn':144000
+                        'expiresIn':1440
                     });
                     response.send({
                         state:true,

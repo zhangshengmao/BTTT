@@ -1,5 +1,6 @@
 var userRouter = require('./userRouter');
-var db = require('../DBHelper.js');
+// var db = require('../DBHelper.js');
+var db = require('../DB.js');
 var warehouseRouter = require('./warehouseRouter.js');
 var salesRouter = require('./salesRouter')
 var purchaseRouter=require('./purchaseRuoter.js')
