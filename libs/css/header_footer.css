@@ -1,0 +1,6 @@
+#header{background-color:#ECF0F1;height:70px;overflow:hidden;}
+#header h1{font-size:35px;line-height:58px;padding-left:10px;width:500px;float:left;}
+#header p{float:right;font-size:14px;margin-top:40px;margin-right:50px;}
+#header p a{display:inline-block;margin-left:30px;}
+#footer{background-color:#FcFcFc;height:60px;text-align:center;overflow:hidden;}
+#footer p{margin-top:10px;}

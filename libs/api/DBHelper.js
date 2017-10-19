@@ -19,11 +19,36 @@ module.exports = {
         })
     },
     update: function(_collection, _condition, _callback){
+<<<<<<< HEAD
         db.collection(_collection).update(_condition[0], {$set:_condition[1]}, {safe:true}).then(function(result){
             _callback({status:true,data:result});
 
 
         });
+=======
+        db.open(function(error, db){
+            if(error){
+                _callback({status: false, message: error});
+            } else {
+                db.collection(_collection, function(error, collection){
+                    if(error){
+                        _callback({status: false, message: error});
+                    } else {
+                        // _condition=[{修改的那一条的Id：_id},{修改这条数据的哪一种属性：改成什么,}]
+                        collection.update(_condition[0], {$set:_condition[1]}, {safe:true}, function(err, result){
+
+                            if(err){
+                                 _callback({status: false, message: error});
+                             }else{
+                                _callback({status: true, data: result})
+                             }
+                             db.close();
+                        });
+                    }
+                })
+            }
+        })
+>>>>>>> ae243f469b2d9cba3f167734d54d416173acd144
     },
     delete: function(_collection, _data, _callback){
         db.collection(_collection).remove(_data).then(function(result){

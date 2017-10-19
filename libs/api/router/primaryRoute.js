@@ -1,11 +1,13 @@
 var userRouter = require('./userRouter');
-var db = require('../DBHelper.js');
+// var db = require('../DBHelper.js');
+var db = require("../DB.js");
 var warehouseRouter = require('./warehouseRouter.js');
 var salesRouter = require('./salesRouter')
 var purchaseRouter=require('./purchaseRuoter.js')
+var productRouter = require("./productRouter.js")
 var bodyparser = require('body-parser');
 var urlencode = bodyparser.urlencoded({extended: false});
-var PrimaryRuter = Object.assign({}, userRouter, purchaseRouter,salesRouter,warehouseRouter);
+var PrimaryRuter = Object.assign({}, userRouter, purchaseRouter,salesRouter,warehouseRouter,productRouter);
 module.exports = {
     Register: function(express){
         var app = express();
@@ -27,6 +29,8 @@ module.exports = {
         PrimaryRuter.Grounding(app, urlencode, db);    
         PrimaryRuter.Warehouse(app, urlencode, db);    
         PrimaryRuter.Sales(app, urlencode, db);    
+
+        PrimaryRuter.Product(app, urlencode, db);    
 
         app.listen(88);
     }
