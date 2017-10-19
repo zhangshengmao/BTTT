@@ -1,95 +1,35 @@
-var mongodb = require('mongodb');
-var dbServer = new mongodb.Server('localhost', 27017);
-var db = new mongodb.Db('BTTT', dbServer);
-// var querystringify= require('querystringify')
+var mongodb = require("mongodb");
+var MongoClient = mongodb.MongoClient;
+var db;
+
+MongoClient.connect("mongodb://localhost:27017/BTTT",function(err,database){
+    if(err) throw err;
+    db = database;
+});
+
 module.exports = {
-    insert: function(_collection, _data, _callback){
-        db.open(function(error, db){
-            if(error){
-                _callback({status: false, message: error});
-            } else {
-                db.collection(_collection, function(error, collection){
-                    if(error){
-                        _callback({status: false, message: error});
-                    } else {
-
-                        collection.insert(_data);
-                        _callback({
-                            status: true,data:_data
-                        });
-
-                    }
-                    db.close();
-                })
-            }
+    insert:function(_collection,_data,_callback){
+        db.collection(_collection).insert(_data).then(function(result){
+            _callback({status:true,data:result});
+        });
+    },
+    select:function(_collection,_condition,_callback){
+        db.collection(_collection).find(_condition || {}).toArray(function(error,dataset){
+            _callback({status:true,data:dataset});
         })
     },
-    select: function(_collection, _condition, _callback){
-        db.open(function(error, db){
-            if(error){
-                _callback({status: false, message: error});
-            } else {
-                db.collection(_collection, function(error, collection){
-                    if(error){
-                        _callback({status: false, message: error});
-                    } else {
-                        collection.find(_condition || {}).toArray(function(error, dataset){
-                            db.close();
-                            if(error){
-                                _callback({status: false, message: error});
-                            } else {
-                                _callback({status: true, data:dataset});
-                            }
-                        })
-                    }
-                })
-            }
-        })
-    },
-    update: function(_collection, _condition, _callback){console.log(_condition)
-        db.open(function(error, db){
-            if(error){
-                _callback({status: false, message: error});
-            } else {
-                db.collection(_collection, function(error, collection){
-                    if(error){
-                        _callback({status: false, message: error});
-                    } else {
-                        // _condition=[{修改的那一条的Id：_id},{修改这条数据的哪一种属性：改成什么,}]
-                        collection.update(_condition[0], {$set:_condition[1]}, {safe:true}, function(err, result){
+    update: function(_collection, _condition, _callback){
+        db.collection(_collection).update(_condition[0], {$set:_condition[1]}, {safe:true}).then(function(result){
+            _callback({status:true,data:result});
 
-                            if(err){
-                                 _callback({status: false, message: error});
-                             }else{console.log(66)
-                                _callback({status: true, data: result})
-                             }
-                             db.close();
-                        });
-                    }
-                })
-            }
-        })
+
+        });
     },
-    delete: function(_collection, _condition, _callback){
-        db.open(function(error, db){
-            if(error){
-                _callback({status: false, message: error});
-            } else {
-                db.collection(_collection, function(error, collection){
-                    if(error){
-                        _callback({status: false, message: error});
-                    } else {
-                        collection.remove(_condition,{safe:true},function(error,result){
-                            if(error){
-                                _callback({status: false, message: error});
-                            } else {
-                                _callback({status: true, data: result});
-                            }
-                            db.close();
-                      });
-                    }
-                })
-            }
+    delete: function(_collection, _data, _callback){
+        db.collection(_collection).remove(_data).then(function(result){
+            _callback({status:true,data:result});
+
+
         })
     }
 }

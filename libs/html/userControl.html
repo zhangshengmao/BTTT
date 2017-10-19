@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../css/base.css" />
+    <link rel="stylesheet" type="text/css" href="../css/sales.css" />
+    <script type="text/javascript" src="../jquery-3.2.1.js"></script>
+</head>
+<body>
+    <header id="header">HEADER</header>
+    <main id="main">
+        <div class="row">
+            <ul class="nav col-md-2">
+                <li class="product">
+                    <a href="#" class="btn btn-default btn-lg">产品管理</a>
+                </li>
+                <li class="purchase">
+                    <a href="#" class="btn btn-default btn-lg">采购管理</a>
+                </li>
+                <li class="warehouse">
+                    <a href="#" class="btn btn-default btn-lg">仓库管理</a>
+                </li>
+                <li class="sell">
+                    <a href="#" class="btn btn-default btn-lg">销售管理</a>
+                </li>
+                <li class="sell">
+                    <a href="#" class="btn btn-default btn-lg">用户管理</a>
+                </li>
+            </ul>
+            <div class="content reserveContent col-md-10">
+                <div class="reserveBox">
+                    
+                </div>
+                <div class="condition">
+                    <div class="row">
+                        <div class="purchase col-md-4">
+                            <span>进价区间：</span>
+                            <input type="text" id="pur1"/>
+                            <span>-</span>
+                            <input type="text" id="pur2"/>
+                        </div>
+                        <div class="sell col-md-4">
+                            <span>售价区间：</span>
+                            <input type="text" id="sel1" />
+                            <span>-</span>
+                            <input type="text" id="sel2" />         
+                        </div>
+                        <div class="amount col-md-4">
+                            <span>数量区间：</span>
+                            <input type="text" id="amo1" />
+                            <span>-</span>
+                            <input type="text" id="amo2" />                   
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="firm col-md-4">
+                            <span>供货商家：</span>
+                            <input type="text" id="ser_firms" />
+                        </div>
+                        <div class="classify col-md-4">
+                            <span>商品分类：</span>
+                            <input type="text" id="ser_classify" />                     
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-success btn-xs toSearch">确认</button>
+                        </div>
+                    </div>
+                </div>
+                <div class=" search form-group has-success has-feedback col-xs-4">
+                    <input type="text" class="form-control fuzInput" id="inputSuccess1" aria-describedby="inputSuccess2Status">
+                    <button type="button" class="btn btn-success fuzSearch">搜索商品</button>
+                </div>   
+                <table class="table table-bordered table-hover">
+                    <caption>用户管理表</caption>
+                    <thead>
+                        <tr>
+                            <th>用户名称</th>
+                            <th>用户密码</th>
+                            <th>用户职位</th>
+                            <th>手机号</th>
+                            <th>电子邮箱</th>
+                            <th>创建时间</th>
+                            <th>修改时间</th>
+                            <th><button class="btn btn-success btn-xs addtr" id="showHide">增加</button></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- <tr>
+                            <td><input type="text" /></td>
+                            <td><input type="text" /></td>
+                            <td><input type="text" /></td>
+                            <td><input type="text" /></td>
+                            <td><input type="text" /></td>
+                            <td><input type="text" /></td>
+                            <td><input type="text" /></td>
+                            <td><input type="text" /></td>
+                            <td><input type="text" /></td>
+                            <td><button class="btn btn-default btn-xs">确认</button></td>
+                            <td><button class="btn btn-default btn-xs">删除</button></td>
+                        </tr> -->
+                    </tbody>
+                </table> 
+                <div class="add_user">
+                    <h3>添加用户信息</h3>
+                    <label for="order">用户名：</label><input type="text" id="username" class="form-control">
+                    <label for="code">用户密码：</label><input type="text" id="password" class="form-control">
+                    <label for="goods_name">用户职位：</label><input type="text" id="identity" class="form-control">
+                    <label for="classify">手机号码：</label><input type="text" id="tel" class="form-control">
+                    <label for="qty">电子邮箱：</label><input type="text" id="e_mail" class="form-control">
+                    <label for="sup_name">创建时间：</label><input type="text" id="sup_name" class="form-control">
+                    <input type="button" id="addToDb" value="添加" class="btn btn-success btn-xs">
+                    <span class="close">&times;</span>
+                </div>        
+            </div>     
+        </div>
+
+    </main>
+    <footer id="footer">FOOTER</footer>
+    <script type="text/javascript" src="../js/userControl.js"></script>
+    <script type="text/javascript" src="../js/common.js"></script>
+</body>
+</html>

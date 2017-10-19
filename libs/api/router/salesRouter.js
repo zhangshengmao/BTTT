@@ -1,17 +1,24 @@
+var fs = require('fs');
 module.exports={
     Sales:function(app, urlencode, db, session){
-        app.post('/products', function(reqeust, response){
-            console.log(reqeust.session.name)
-            if(reqeust.session.name){
-                console.log(2)
-                db.save('..')
-                response.send(reqeust.session.identity)
-            } else {console.log(1)
-                response.send("当用用户没有登陆");
-            }
-        })
+
     },
     Grounding:function(app, urlencode, db, session){
+        app.post('/userControl', urlencode, function(reqeust, response){
+            console.log(reqeust.body.username)
+            db.select("users", {username: reqeust.body.username}, function(result){
+                if(!result.status){
+                 response.send(result);
+                } else if(result.data.length > 0) {
+                 response.send({status: false, message: "当前用户已存在"});
+
+                } else { 
+                 db.insert("users", reqeust.body, function(result){
+                     response.send(result);
+                 })
+                }
+            });
+        })
         app.post('/grounding', urlencode, function(reqeust, response){
             db.select('grounding', {goods_order:reqeust.body.goods_order}, function(result){
                 console.log(reqeust.body)
@@ -41,7 +48,7 @@ module.exports={
                     reqeust.body
             ]
             db.update('grounding',arr, function(result){
-                // console.log(result)
+                console.log(result.status)
                 response.send(result)
             })
         })
@@ -74,7 +81,12 @@ module.exports={
                 response.send(res)
             })             
         })
-
+        app.post('/sellGoods', urlencode, function(reqeust, response){
+            console.log(reqeust.body)
+            db.select('grounding', reqeust.body, function(result){
+                response.send(result)
+            });
+        })
     }
     
 }
