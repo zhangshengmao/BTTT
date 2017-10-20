@@ -29,21 +29,13 @@
 	</div>
 
 	<script type="text/javascript">
+	// var person, socket = null;
+	$('#payment').click(function(){
 
-		var ws;
-		ws = new WebSocket("ws://10.3.131.3:888");
-		ws.onmessage = function(_msg){
-			console.log(_msg.data);
-		}	
+		socket = io("ws://localhost:888");
+		socket.emit('pay', '支付成功');
+	})
 
-		ws.onopen = function(){
-			console.log(666);
-		}	
-
-		$('#payment').click(function(_me){
-			ws.send("aaa");
-			// ws.close();
-		})
 
 	</script>
 </body>

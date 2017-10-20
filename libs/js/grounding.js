@@ -378,23 +378,10 @@ jQuery(function($){
 
     })
     function erweima(){
-        $('#qrcode').qrcode("http://10.3.131.3/super/libs/html/payment.html");
-            var ws;
-            ws = new WebSocket("ws://10.3.131.3:888");
-            ws.onmessage = function(_msg){
-                console.log(_msg.data);
-
-                success();
-            }   
-
-            ws.onopen = function(){
-                console.log(666);
-            }   
-
-            $('#payment').click(function(_me){
-                ws.send("aaa");
-                // ws.close();
-            })
+    //     socket = io("ws://localhost:888");
+    //     client.on('ok', function(msg){
+        
+    // })
     }
     $('.Qrcode').hide();
     

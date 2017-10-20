@@ -34,25 +34,26 @@ jQuery(function($){
             createTime:createTime(),
             time:createTime()
         };
+        console.log($('#username').val())
         $.post(common.baseUrl+"/register" , msg, function(res){
+            
              if(res.status){
-                console.log(res)
                 createElemet(res)
                 return false
             }
-            console.log(res)
-                alert(res.message);
+                alert('出错了');
                 
           
         })
     })
     $.post(common.baseUrl+'/lookUp', {}, function(res){
-        console.log(res)
+        
         if(res.status){
             jia(res);
         }
     });
     function jia(result){
+        console.log(result)
         result.data.forEach(function(item){
 
             for(var attr in item){

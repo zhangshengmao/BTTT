@@ -13,7 +13,9 @@ module.exports = {
         app.post("/register", urlencode, function(request, response){
             
             db.select("users", {username: request.body.username}, function(result){
-                if(!result.status){
+                console.log(result)
+                if(result.status){
+                    console.log(66)
                     response.send(result);
                 } else if(result.data.length > 0) {
                     response.send({status: false, message: "当前用户已存在"});
