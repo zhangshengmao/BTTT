@@ -134,7 +134,11 @@ jQuery(function($){
         jia(result)
     })
     function jia(result){
+<<<<<<< HEAD
+        // console.log(result.data)
+=======
         console.log(result.data)
+>>>>>>> f372cfd986d85df43f7de8e387bc7880a9808156
         result.data.forEach(function(item){
 
             for(var attr in item){
@@ -375,17 +379,44 @@ jQuery(function($){
         // // 删除多余的&
         $('.Qrcode').show();
         // console.log(closeData)
+        erweima();
 
     })
     function erweima(){
+<<<<<<< HEAD
     //     socket = io("ws://localhost:888");
     //     client.on('ok', function(msg){
         
     // })
+=======
+        console.log(total);
+        $('#qrcode').qrcode("http://10.3.131.3/super/libs/html/payment.html?total="+total);
+            var ws;
+            ws = new WebSocket("ws://10.3.131.3:888");
+            ws.onmessage = function(_msg){
+                console.log(_msg.data);
+
+                success();
+            }   
+
+            ws.onopen = function(){
+                console.log(666);
+            }   
+
+            $('#payment').click(function(_me){
+                ws.send("aaa");
+                // ws.close();
+            })
+            // socket = io("ws://localhost:888");
+            // socket.on('ok',function(msg){
+            //      success();
+            //     console.log(msg)
+            // });
+>>>>>>> d9d29f84985b4f8cc955bed4d4ec26a8aba1fb40
     }
     $('.Qrcode').hide();
     
-    erweima();
+    
      $('.success').hide();
     function success(){
         $('.Qrcode').hide();
@@ -396,19 +427,19 @@ jQuery(function($){
     var list ='';
     $('#print').click(function(){
         list = closeData.map(function(item){
-
-            return `商品名称：${item.goods_name}\n
-                    单品数量：${item.goods_qty} \n
-                    商品金额：${item.sale_price}\n`
+            return '商品名称:'+item.goods_name+'\n'+'单品数量:'+item.goods_qty+'\n'+'商品金额:'+item.sale_price+'\n'
         }).join('');
         $.post("http://10.3.131.33:81/print", {text:
-                                                    'BTTT 超市收银系统  \n'
-                                                    +'*************************************\n'
-                                                    +list
-                                                    +'总金额：'+total+'\n'
-                                                    +'买单时间：'+createTime()+'\n'
-                                                    +'*************************************\n'}, function(res){
-                                                        console.log(res)
-        })
+        'BTTT 超市收银系统  \n'
+        +'*************************************\n'
+        +list
+        +'总金额：'+total+'\n'
+        +'买单时间：'+createTime()+'\n'
+        +'*************************************\n'}, function(res){
+            console.log(res)
+        $('.success').hide();
+            
+
+})
     })
 })

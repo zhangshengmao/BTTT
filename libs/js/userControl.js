@@ -1,4 +1,32 @@
 jQuery(function($){
+    $("#header").load("base.html .h");
+    $("#footer").load("base.html .f");
+
+    var token = '';
+    var cookies = document.cookie;
+    var arr_cookie = cookies.split('; '); 
+    arr_cookie.forEach(function(item){ 
+        var temp = item.split('=');
+        if(temp[0] === 'token'){
+            token = temp[1];
+        }
+    });
+    if(token === ''){
+        alert('请先登录');
+        window.location.href= "login.html";        
+    }
+    $.post('http://localhost:88/login',{token:token},function(response){
+       
+        if(!response.status){
+            alert('请先登录');
+            window.location.href= "login.html";
+        }else{
+           
+            var username = response.username;
+            $("#currUser").text(username);
+        }
+    });   
+    
     $('.add_user').hide();
     $('#showHide').click(function(){
         $('.add_user').show();
