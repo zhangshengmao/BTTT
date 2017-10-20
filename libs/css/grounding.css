@@ -69,5 +69,9 @@ ul{list-style: none;}
 .Qrcode{position:absolute;top:200px;left:600px;background:#fff;box-shadow:0px 0px 30px #ccc;}
 .success{position:absolute;top:200px;left:600px;background:#fff;
     box-shadow:0px 0px 30px #ccc;width:300px;height:300px;text-align:center;}
+<<<<<<< HEAD
  .success p{color:#5cb85c;font-size:20px;padding:30px 0 50px 0;}   
 .success button{width:50px;height:30px;margin:0 auto;}
+=======
+.success button{margin-left:130px;}
+>>>>>>> f372cfd986d85df43f7de8e387bc7880a9808156

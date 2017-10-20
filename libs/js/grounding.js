@@ -134,7 +134,11 @@ jQuery(function($){
         jia(result)
     })
     function jia(result){
+<<<<<<< HEAD
         // console.log(result.data)
+=======
+        console.log(result.data)
+>>>>>>> f372cfd986d85df43f7de8e387bc7880a9808156
         result.data.forEach(function(item){
 
             for(var attr in item){
