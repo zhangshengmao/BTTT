@@ -5,7 +5,11 @@ $.fn.datagrid = function(opts){
 		method: 'get',
 		edit: false,
 		delete: false,
-		info:{}
+        receive:false,
+        return:false,
+        insert:false,
+		info:{},
+		caption:''
 	}
 
 	var options = $.extend(_defalt, opts);
@@ -16,6 +20,8 @@ $.fn.datagrid = function(opts){
 		var $table = $('<table class="table table-bordered table-hover"></table>').click(function(event){
 			events(event);
 		});
+		var $caption = $('<caption></caption>');
+		$caption.html(options.caption).appendTo($table);
 		var $thead = $('<thead></thead>');
 		var $tbody = $('<tbody></tbody>');
 		$.get('../dictionary/commonDic.txt', function(dic){
@@ -33,8 +39,39 @@ $.fn.datagrid = function(opts){
 							$("<th></th>").text(dicObj["cn"][key] || key).appendTo($tr);
 						}
 					}
-					$('<th></th>').html('<button class="btn btn-success btn-xs addtr" flag="addtr">增加</button>').appendTo($tr);
-					$('<th></th>').html('').appendTo($tr);		
+					if(options.insert){
+						$('<th></th>').html('<button class="btn btn-success btn-xs addtr" flag="addtr">增加</button>').appendTo($tr);
+						var n = -1;
+						if(options.edit){
+							n++;
+						}
+						if(options.delete){
+							n++;
+						}
+						if(options.return){
+							n++;
+						}
+						if(options.receive){
+							n++;
+						}
+						for(var i =0;i<n;i++){
+							$('<th></th>').html('').appendTo($tr);
+						}
+						
+					}else{
+						if(options.edit){
+							$('<th></th>').html('').appendTo($tr);
+						};
+						if(options.delete){
+							$('<th></th>').html('').appendTo($tr);
+						};
+						if(options.receive){
+							$('<th></th>').html('').appendTo($tr);
+						};
+						if(options.return){
+							$('<th></th>').html('').appendTo($tr);
+						};
+					}
 					$tr.appendTo($thead);
 					$thead.appendTo($table);
 
@@ -48,12 +85,18 @@ $.fn.datagrid = function(opts){
 								$td.appendTo($tr);
 							}
 						}
+						if(options.return){
+							$('<td><button class="btn btn-default btn-xs return" flag="return">退货</button></td>').appendTo($tr);
+						}					
 						if(options.edit){
 							$('<td><button class="btn btn-default btn-xs addTo" flag="addTo">确认</button></td>').appendTo($tr);
 						}
 						if(options.delete){
 							$('<td><button class="btn btn-default btn-xs delet" flag="delet">删除</button></td>').appendTo($tr);
-						}					
+						}
+						if(options.receive){
+							$('<td><button class="btn btn-default btn-xs receive" flag="recieve">收货</button></td>').appendTo($tr);
+						}
 						$tr.appendTo($tbody);
 					}
 					// var $caption = $('<caption>库存管理表</caption>');
@@ -87,25 +130,38 @@ $.fn.datagrid = function(opts){
 	        $.post(options.url, 
 	            {goods_order:$(tr).children().eq(0).children().val(),delet:true},
 	            function(response){
-	            	console.log(response)
+	            	// console.log(response)
 	            if(response.ok == 1){
 	                $(tr).remove();  
 	            }
 	        });			
 		}else if(currObj.is('button') && currObj.attr('flag') == 'addTo'){
 	        var tr = currObj.parent().parent();
+	        var obj = {};
+	        if(options.return){
+	        	obj = {
+		            goods_order:$(tr).children().eq(0).children().val(),
+		            goods_name:$(tr).children().eq(1).children().val(),
+		            goods_classify:$(tr).children().eq(2).children().val(),
+		            sup_name:$(tr).children().eq(3).children().val(),
+		            return_qty:$(tr).children().eq(4).children().val(),
+		            time:Time()
+	        	}
+	        }else{
+	        	obj={
+		            goods_order:$(tr).children().eq(0).children().val(),
+		            goods_code:$(tr).children().eq(1).children().val(),
+		            goods_name:$(tr).children().eq(2).children().val(),
+		            goods_classify:$(tr).children().eq(3).children().val(),
+		            goods_qty:$(tr).children().eq(4).children().val(),
+		            sup_name:$(tr).children().eq(5).children().val(),
+		            prime_price:$(tr).children().eq(6).children().val(),
+		            sale_price:$(tr).children().eq(7).children().val(),
+		            time:Time()
+			    }
+	        }
 	       	$.post(options.url, 
-	        {
-	            goods_order:$(tr).children().eq(0).children().val(),
-	            goods_code:$(tr).children().eq(1).children().val(),
-	            goods_name:$(tr).children().eq(2).children().val(),
-	            goods_classify:$(tr).children().eq(3).children().val(),
-	            goods_qty:$(tr).children().eq(4).children().val(),
-	            sup_name:$(tr).children().eq(5).children().val(),
-	            prime_price:$(tr).children().eq(6).children().val(),
-	            sale_price:$(tr).children().eq(7).children().val(),
-	            time:Time()
-	        },
+	        obj,
 	        function(response){
 	            // var data = response.data;
 	            // console.log(data);

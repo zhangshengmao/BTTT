@@ -2,21 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>warehouse</title>
+    <title>return</title>
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="../css/base.css" />
     <link rel="stylesheet" type="text/css" href="../css/index.css" />
     <link rel="stylesheet" type="text/css" href="../css/warehouse.css" />
+    <link rel="stylesheet" type="text/css" href="../css/base.css" />
     <script type="text/javascript" src="../jquery-3.2.1.js"></script>
     <script type="text/javascript" src="../js/datagrid.js"></script>
-    <link rel="stylesheet" type="text/css" href="../css/header_footer.css" />
     <script type="text/javascript" src="../js/common.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/header_footer.css" />
+
 </head>
 <body>
     <header id="header"></header>
     <main id="main">
         <div class="row">
-<ul class="nav col-md-2" id="bigul">
+        <ul class="nav col-md-2" id="bigul">
                 <li class="navproduct">
                     <p class="btn btn-default btn-lg anim" id="productBtn"><a href="product.html">产品管理</a></p>
                 </li>
@@ -59,23 +60,19 @@
 
         </ul>
             <div class="content reserveContent col-md-10">
-            
                 <div class=" search form-group has-success has-feedback col-xs-4">
                     <input type="text" class="form-control fuzInput" id="inputSuccess1" aria-describedby="inputSuccess2Status">
-                    <button type="button" class="btn btn-success fuzSearch">搜索商品</button>
+                    <button type="button" class="btn btn-success fuzSearch" >搜索</button>
                 </div>   
                 <div class="tableBox">
                 </div>
                 <div class="add_info">
                     <h3>添加商品信息</h3>
                     <label for="order">商品编码：</label><input type="text" id="order" class="form-control">
-                    <label for="code">商品条码：</label><input type="text" id="code" class="form-control">
                     <label for="goods_name">商品名称：</label><input type="text" id="goods_name" class="form-control">
                     <label for="classify">分类：</label><input type="text" id="classify" class="form-control">
-                    <label for="qty">数量：</label><input type="text" id="qty" class="form-control">
                     <label for="sup_name">供应商名称：</label><input type="text" id="sup_name" class="form-control">
-                    <label for="prime_price">进价：</label><input type="text" id="prime_price" class="form-control">
-                    <label for="sale_price">售价：</label><input type="text" id="sale_price" class="form-control">
+                    <label for="return_qty">退货数量：</label><input type="text" id="return_qty" class="form-control">
                     <input type="button" id="addToDb" value="添加" class="btn btn-success btn-xs">
                     <span class="close">&times;</span>
                 </div>        
@@ -85,6 +82,6 @@
     </main>
 
     <footer id="footer"></footer>
-<script type="text/javascript" src="../js/warehouse.js"></script>
+<script type="text/javascript" src="../js/return.js"></script>
 </body>
 </html>

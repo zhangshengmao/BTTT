@@ -8,7 +8,8 @@
 		"sup_name":"供应商",
 		"prime_price":"进价",
 		"sale_price":"售价",
-		"time":"修改时间"
+		"time":"修改时间",
+		"return_qty":"退货数量"
 	},
 	"en": {
 		"_id": "ID",

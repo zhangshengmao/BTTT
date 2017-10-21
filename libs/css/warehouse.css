@@ -9,11 +9,10 @@
 .row #firmSel,#supplier_box .row #classSel{width:200px;height:25px;}
 input:disabled{background-color: #fff;}
 #header{height:60px;background-color:#fff;border-bottom:2px solid #777;}
-#main{border-bottom:2px solid #777;}
+#main{height: 530px;}
 #main .row{margin:0px;}
-#main .row .nav{background-color:#eee;height:550px;padding-left:10px;border-right:2px solid #777;}
-#main .nav li{margin-top:15px;}
-#main .content{background-color:#fefefe;height:550px;padding-left:10px;overflow:scroll;}
+
+#main .content{background-color:#fefefe;height:400px;padding-left:10px;}
 #main .top{padding:10px 0px;border-bottom:1px solid #777;}
 #main .top li{text-align:center;}
 #main .top li a{ display:inline-block;width: 200px;}
@@ -26,10 +25,11 @@ input:disabled{background-color: #fff;}
 #ser_firms,#ser_classify{width:150px;}
 .search{margin-top:10px;text-align:right; position:relative;}
 .search button{position:absolute;top:0px;right: -80px;}
-.table{text-align:center;}
+.tableBox{width: 1020px;height:450px;overflow: scroll;}
 .table caption{text-align:center;font-size:16px;}
 .table th{text-align:center;}
 .table tr td input{width:80px;border:0 none;text-align:center;}
+#footer{border-top:2px solid #777;}
 
 h4{margin-top:80px;margin-bottom:15px;text-align:center;}
 
