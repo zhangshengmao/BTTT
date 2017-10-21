@@ -1,7 +1,6 @@
 jQuery(function($){
     // 导航条
     common.navigationBars();
-    console.log($('.z_index').text()=='11111');
     $("#header").load("base.html .h");
     $("#footer").load("base.html .f");
 
@@ -53,11 +52,11 @@ jQuery(function($){
         $('.readyList').html('')
         
     });
-    $('.sellGoods').hide();
+    // $('.sellGoods').hide();
     $('#sellGoods').click(function(){
         $('#sellGoods').css({background:'#ccc'})
         $('#putaway').css({background:'#fff'})
-        $('.sellGoods').show();
+        // $('.sellGoods').show();
         $('#supplier_box').hide();
          $('#date').text(common.createTime())
         setInterval(function(){
@@ -70,9 +69,6 @@ jQuery(function($){
     $('#putaway').click(function(){
         $('#putaway').css({background:'#ccc'})
         $('#sellGoods').css({background:'#fff'})
-
-        $('.sellGoods').hide();
-        $('#supplier_box').show();
     });
     // 进入页面显示已经上架商品
     $.post(common.baseUrl+"/create",function(result){
@@ -150,7 +146,8 @@ jQuery(function($){
             },function(result){
                 // var data = response.data;
                 putawayData = result.data;
-                putawayShow(result)
+                putawayShow(result);
+                console.log(putawayData);
         })
     })
     // 根据商品名称或商品分类进行搜索
@@ -168,6 +165,7 @@ jQuery(function($){
             putawayData.forEach(function(item){
                 delete item._id;
             })
+            console.log(putawayData)
             var qtyj = false;
             var htmlj=false;
             var length1 = putawayData.length;
@@ -184,6 +182,7 @@ jQuery(function($){
                             putawayData[j].goods_qty=qty;
                             $.post(common.baseUrl+'/revamp',putawayData[j],function(result){
                                 qtyj=true;
+                                // $.post(common.basurl+'')
                             })
                             putawayData.splice(j,1);
                             length1--;
@@ -211,6 +210,7 @@ jQuery(function($){
             $(e.target).parents('tr').remove()
         }
     });
+    
     function putawayShow(result){
         if(result.status){
                 result.data.forEach(function(item){
@@ -233,6 +233,15 @@ jQuery(function($){
                 })
             }
     }
+
+
+
+
+
+
+
+
+
     /*--------------------------收银管理-------------------------------------*/
     $('.payoffTable').hide();
     var arr = [];

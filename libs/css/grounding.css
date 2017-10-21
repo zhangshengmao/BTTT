@@ -69,7 +69,6 @@ ul{list-style: none;}
  .success p{color:#5cb85c;font-size:20px;padding:30px 0 50px 0;}   
 .success button{width:50px;height:30px;margin:0 auto;}
 .success button{margin-left:130px;}
-.sellGoods{display:none;}
 .search #handMover{position:absolute;top:0px;right: -124px;}
 .z_index{color:#ECF0F1;position:absolute;top:0;left:500px;}
 
