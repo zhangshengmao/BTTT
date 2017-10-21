@@ -5,11 +5,33 @@
 #supplier_box .add_sup_box label{display:inline-block;width:85px;margin-left:10px;}
 #supplier_box .add_sup_box input{width:200px;display:inline-block;height:28px;margin:10px 0 ;}
 #supplier_box .add_sup_box #addToDb{width:80px;margin-left:100px;}
+#main{border-bottom:2px solid #777;}
+#main .row{margin:0px;}
+#main .row .nav{background-color:#eee;height:550px;padding-left:10px;border-right:2px solid #777;}
+#main .nav li{margin-top:15px;}
+#main .content{background-color:#fefefe;height:550px;padding-left:10px;}
+#main .top{padding:10px 0px;border-bottom:1px solid #777;}
+#main .top li{text-align:center;}
+#main .top li a{ display:inline-block;width: 200px;}
+.condition{padding-top:15px;}
+.condition div{text-align:left;}
+#main .condition .row{margin-bottom:10px;}
+.condition input{width:60px;height: 20px;}
+.condition select{width:100px;}
+.condition button{width:100px;}
+.search{margin-top:10px;text-align:right; position:relative;}
+.search button{position:absolute;top:0px;right: -68px;}
+.search #affirm{position:absolute;top:0px;right: -158px;}
+.table{text-align:center;}
+.table caption{text-align:center;font-size:16px;}
+.table th{text-align:center;}
+.table tr td input{width:80px;border:0 none;text-align:center;}
+
 .close{position:absolute;right:5px;top:0;}
 .tablebox{height:315px;overflow-y: auto;width: 1027px;margin:0 auto;}
 #goodsName,#goodsClass{width: 150px;height:30px;}
 
-.putaway_box{width: 800px;border:1px solid #ccc;padding:20px;position:absolute;top:100px;left:300px;background:#fff;}
+.putaway_box{width: 800px;border:1px solid #ccc;padding:20px;position:absolute;top:100px;left:300px;background:#fff;display:none;}
 
 .putaway_box{width: 800px;border:1px solid #ccc;padding:20px;position:absolute;top:100px;left:300px;background:#fff;}
 #addputaway{width:50px ;height:30px;margin:20px 0 0 350px;}
@@ -35,43 +57,18 @@ ul{list-style: none;}
     padding: 20px;
     width: 188px;
 }*/
-.section1{
-}
-.section2 label{
-    display: block;
-}
-.section3 label{
-    display: block;
-}
-.section4{
-}
-.section4 .total label{
-    display: block;
-}
-.section4 .other_fee{
-    border-bottom: 1px solid #DADADA;
-}
-.section5 label{
-    display: block;
-    font-size: 30px;
-}
-.section5 label tr td{
-    font-size: 30px;padding-bottom: 30px;
-}
 
 .putaway_box{width: 800px;border:1px solid #ccc;padding:20px;
 	position:absolute;top:100px;left:300px;background:#fff;box-shadow:0px 0px 30px #ccc;}
 #addputaway{width:50px ;height:30px;margin:20px 0 0 350px;}
 
-/*.putaway_box{width: 800px;border:1px solid #ccc;padding:20px;
-	position:absolute;top:100px;left:300px;background:#fff;box-shadow:0px 0px 30px #ccc;}
-#addputaway{width:50px ;height:30px;margin:20px 0 0 350px;}*/
-.Qrcode{position:absolute;top:200px;left:600px;background:#fff;box-shadow:0px 0px 30px #ccc;}
-.success{position:absolute;top:200px;left:600px;background:#fff;
+.Qrcode{position:absolute;top:200px;left:600px;background:#fff;box-shadow:0px 0px 30px #ccc;display:none;}
+.Qrcode span,.closesuc{position:absolute;right:0px;top:0px;background:red;padding:5px 7px;display:block;}
+.success{position:absolute;top:200px;left:600px;background:#fff;display:none;
     box-shadow:0px 0px 30px #ccc;width:300px;height:300px;text-align:center;}
-<<<<<<< HEAD
  .success p{color:#5cb85c;font-size:20px;padding:30px 0 50px 0;}   
 .success button{width:50px;height:30px;margin:0 auto;}
-=======
 .success button{margin-left:130px;}
->>>>>>> f372cfd986d85df43f7de8e387bc7880a9808156
+.sellGoods{display:none;}
+.search #handMover{position:absolute;top:0px;right: -124px;}
+

@@ -1,13 +1,5 @@
-var socketServer = require('ws').Server;
-
-var wss = new socketServer({
-	port: 888
-});
-
-// var app = require('express')();
-// var server = require('http').Server(app);
-
-// var wss = new socketServer({server: server, port: 8080});
+// var io = require('socket.io')();
+var wss = new socketServer({server: server, port: 888});
 
 wss.on('connection', function (client) {
     client.on('message', function (_message) {
