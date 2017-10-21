@@ -1,6 +1,7 @@
 jQuery(function($){
     // 导航条
     common.navigationBars();
+    console.log($('.z_index').text()=='11111');
     $("#header").load("base.html .h");
     $("#footer").load("base.html .f");
 
@@ -203,9 +204,6 @@ jQuery(function($){
             alert('新商品上架成功或原商品补给成功');
             var trs=$('.putaway_box tr');
             $('.readyList').html('')
-            // for(var i=1; i<trs.length; i++){
-            // trs[i].remove();
-            // }
         }
         if($(e.target).hasClass('del')){
             var idx=$(e.target).parents('tr').index();
@@ -264,9 +262,7 @@ jQuery(function($){
         var obj = {
             goods_code:$('#goodsNum').val()
         }
-
             var a=true;
-            // console.log(arr.length)
             for(var i=0;i<arr.length; i++){
 
                 if(arr[i]==$('#goodsNum').val()){
@@ -283,7 +279,6 @@ jQuery(function($){
                qtyinp.val(qty)
                console.log(qty)
             }else{
-
                 $.post(common.baseUrl+'/sellGoods', obj, function(result) {
                     if(result.status){
                         if(result.data.length>0){
@@ -319,9 +314,12 @@ jQuery(function($){
     var closeData = [];
     var total=0;
     $('#clearBtn').click(function(){
+        closeData = [];
         var trs=$('#clearlist').find('tr');
         for(var i=1;i<=arr.length;i++){
             var obj = {
+                goods_order:$(trs[i]).children().eq(0).children().eq(0).val(),
+                goods_code:$(trs[i]).children().eq(1).children().eq(0).val(),
                 goods_name:$(trs[i]).children().eq(2).children().eq(0).val(),
                 goods_qty:$(trs[i]).children().eq(4).children().eq(0).val(),
                 sale_price:$(trs[i]).children().eq(5).children().eq(0).val(),
@@ -329,9 +327,11 @@ jQuery(function($){
             };
             closeData.push(obj);
             total+=obj.sale_price*obj.goods_qty;
+            // obj.total_parice=total;
         }
+        dataAccounts(closeData);
+        console.log()
         $('.Qrcode').show();
-        // console.log(closeData)
         erweima();
 
     })
@@ -340,7 +340,7 @@ jQuery(function($){
         console.log(total);
         $('#qrcode').qrcode("http://10.3.131.3/super/libs/html/payment.html?total="+total);
             var ws;
-            ws = new WebSocket("ws://10.3.131.3:888");
+            ws = new WebSocket("ws:"+common.ip+":888");
             ws.onmessage = function(_msg){
                 console.log(_msg.data);
 
@@ -393,5 +393,15 @@ jQuery(function($){
     $('.closesuc').click(function(){
             $('.success').hide();
     });
-
+    function dataAccounts(closeData){
+        var obj = {
+            orderNumber:Date.now(),
+            dataObj:JSON.stringify(closeData)
+        }
+        console.log(closeData)
+       $.post(common.baseUrl+'/dataChange',obj, function(res) {
+        console.log(res)
+       });
+    }
+ // console.log()
 })

@@ -1,5 +1,13 @@
-// var io = require('socket.io')();
-var wss = new socketServer({server: server, port: 888});
+var socketServer = require('ws').Server;
+
+var wss = new socketServer({
+    port: 888
+});
+
+// var app = require('express')();
+// var server = require('http').Server(app);
+
+// var wss = new socketServer({server: server, port: 8080});
 
 wss.on('connection', function (client) {
     client.on('message', function (_message) {
@@ -36,10 +44,10 @@ wss.broadcast = function broadcast(_messageObj) {
 }; 
 // var io = require('socket.io')();
 // io.on("connection", function(client){
-// 	client.on('pay', function(msg){
-// 		io.emit("ok", JSON.stringify(msg));
-// 		console.log(666);
-// 	})
+//  client.on('pay', function(msg){
+//      io.emit("ok", JSON.stringify(msg));
+//      console.log(666);
+//  })
 // })
 
 // io.listen(888);

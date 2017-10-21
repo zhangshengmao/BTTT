@@ -29,31 +29,12 @@
 	</div>
 
 	<script type="text/javascript">
-	// var person, socket = null;
-	$('#payment').click(function(){
-
-	// 	var params = location.search;
-	// 	var pay = params.split("=")[1];
-	// 	console.log(pay);
-	// 	$('#total').val(pay);
-
-	// 	socket = io("ws://localhost:888");
-	// 	socket.emit('pay', '支付成功');
-	// })
-
-
-		ws.onopen = function(){
-			console.log(666);
-		}	
-
-		$('#payment').click(function(_me){
+		var ws;
+		ws = new WebSocket("ws://localhost:888");
+		$('#payment').click(function(){
 			ws.send("aaa");
 			// ws.close();
 		})
-		// $('#payment').click(function(){
-		// 	socket = io("ws://localhost:888");
-		// 	socket.emit('pay', '支付成功');
-		// })
 	</script>
 </body>
 </html>

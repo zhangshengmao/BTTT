@@ -1,11 +1,16 @@
 var common = common || {};
 common.baseUrl = 'http://10.3.131.14:88';
+common.ip="10.3.131.14";
 common.navigationBars = function(){
     $('#bigul').click(function(e){
+
         if($(e.target).hasClass('anim')){
-            console.log($(e.target).next().children().length);
             $('.smallul').animate({height:0},100);
-            $(e.target).next().animate({height:60*$(e.target).next().children().length},50);
+            if($(e.target).next().height()==0){
+                $(e.target).next().animate({height:60*$(e.target).next().children().length},50);
+            }else{
+                $(e.target).next().animate({height:0*$(e.target).next().children().length},50);
+            }
         }
     })
 }
@@ -27,3 +32,14 @@ common.createTime=function (){
         date + " " + hour + ":" + min + ":" + sec;
         return mydate;
     }
+    $.post(baseUrl + '/reserve', 
+            {
+                return:true,
+                goods_order:$(tr).children().eq(0).children().val(),
+                goods_name:$(tr).children().eq(2).children().val(),
+                goods_classify:$(tr).children().eq(3).children().val(),
+                sup_name:$(tr).children().eq(5).children().val(),
+                return_qty:$(tr).children().eq(4).children().val(),
+                time:Time()
+            },
+            function(response){

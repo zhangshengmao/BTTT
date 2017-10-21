@@ -1,34 +1,10 @@
 var fs = require('fs');
 var io = require('socket.io')();
 module.exports={
-    Sales:function(app, urlencode, db){
-
-
-        // var onlinePersons = {};
-
-        // io.on("connection", function(client){
-        //     // console.log(123);
-        //     client.on('ServerLogin', function(_person){
-        //         var personObj = JSON.parse(_person);
-        //         onlinePersons[personObj.id] = personObj;
-
-        //         // io.emit("CreatePersons", JSON.stringify(onlinePersons));
-        //         console.log(onlinePersons);
-        //     })
-
-        // //     client.on("ServerMove", function(_person){
-        // //         var personObj = JSON.parse(_person);
-        // //         onlinePersons[personObj.id] = personObj;
-        // //         io.emit("ClientMove", JSON.stringify(personObj));
-        // //     })
-        // })
-
-        // io.listen(887);
-        
+    Sales:function(app, urlencode, db){  
     },
     Grounding:function(app, urlencode, db){
         app.post('/userControl', urlencode, function(reqeust, response){
-            console.log(reqeust.body.username)
             db.select("users", {username: reqeust.body.username}, function(result){
                 
                 if(!result.status){
@@ -39,7 +15,6 @@ module.exports={
 
                 } else { 
                  db.insert("users", reqeust.body, function(result){
-                    console.log(result.data.length)
                     response.send(result);
                  })
                 }
@@ -47,7 +22,7 @@ module.exports={
         })
         app.post('/grounding', urlencode, function(reqeust, response){
             db.select('grounding', {goods_order:reqeust.body.goods_order}, function(result){
-                console.log(reqeust.body)
+               
                 if(result.data.length>0){
                     response.send({status:false});
                 }else{
@@ -72,9 +47,8 @@ module.exports={
             var arr=[{goods_order:reqeust.body.goods_order},
                     reqeust.body
             ]
-            // console.log(reqeust.body)
             db.update('grounding',arr, function(result){
-                console.log(result.status)
+               
                 response.send(result)
             })
         })
@@ -96,7 +70,7 @@ module.exports={
         })
         app.post('/putaway', urlencode, function(reqeust, response){
             db.select('reserve', reqeust.body, function(result){
-                // console.log(result)
+               
                 response.send(result);
 
             });
@@ -108,10 +82,38 @@ module.exports={
             })             
         })
         app.post('/sellGoods', urlencode, function(reqeust, response){
-            console.log(reqeust.body)
+         
             db.select('grounding', reqeust.body, function(result){
                 response.send(result)
             });
+        })
+        app.post('/dataChange', urlencode, function(reqeust, response){
+            var data = JSON.parse(reqeust.body.dataObj);
+                var js=-1;
+                callback();
+                function callback(){
+                    js++;
+                    if(js==data.length){
+                        response.send({status:true})
+                        db.insert('orderHistory', reqeust.body, function(res){
+                            response.send(res)
+                        })
+                        return;
+
+                    }
+                    
+                    var arr={goods_order:data[js].goods_order}
+                    db.select('grounding',arr, function(res){
+                       
+                       if(res.status){
+                            res.data[0].goods_qty=res.data[0].goods_qty-data[js].goods_qty;
+                            var dataarr=[arr, res.data[0]];
+                            db.update('grounding',dataarr, function(result){
+                                    callback(); 
+                            })
+                       }
+                    })
+                }
         })
     }
     
