@@ -1,29 +1,29 @@
 var fs = require('fs');
 var io = require('socket.io')();
 module.exports={
-    Sales:function(app, urlencode, db, session){
+    Sales:function(app, urlencode, db){
 
 
-        var onlinePersons = {};
+        // var onlinePersons = {};
 
-        io.on("connection", function(client){
-            // console.log(123);
-            client.on('ServerLogin', function(_person){
-                var personObj = JSON.parse(_person);
-                onlinePersons[personObj.id] = personObj;
-
-                // io.emit("CreatePersons", JSON.stringify(onlinePersons));
-                console.log(onlinePersons);
-            })
-
-        //     client.on("ServerMove", function(_person){
+        // io.on("connection", function(client){
+        //     // console.log(123);
+        //     client.on('ServerLogin', function(_person){
         //         var personObj = JSON.parse(_person);
         //         onlinePersons[personObj.id] = personObj;
-        //         io.emit("ClientMove", JSON.stringify(personObj));
-        //     })
-        })
 
-        io.listen(887);
+        //         // io.emit("CreatePersons", JSON.stringify(onlinePersons));
+        //         console.log(onlinePersons);
+        //     })
+
+        // //     client.on("ServerMove", function(_person){
+        // //         var personObj = JSON.parse(_person);
+        // //         onlinePersons[personObj.id] = personObj;
+        // //         io.emit("ClientMove", JSON.stringify(personObj));
+        // //     })
+        // })
+
+        // io.listen(887);
         
     },
     Grounding:function(app, urlencode, db){

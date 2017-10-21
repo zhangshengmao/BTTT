@@ -1,18 +1,5 @@
-var io = require('socket.io')();
-
-var onlinePersons = {};
-
-io.on("connection", function(client){
-    // console.log(123);
-    client.on('pay', function(msg){
-        io.emit("ok",msg );
-    })
-
-<<<<<<< HEAD
-})
-io.listen(888)
-=======
-// var wss = new socketServer({server: server, port: 8080});
+// var io = require('socket.io')();
+var wss = new socketServer({server: server, port: 888});
 
 wss.on('connection', function (client) {
     client.on('message', function (_message) {
@@ -56,4 +43,3 @@ wss.broadcast = function broadcast(_messageObj) {
 // })
 
 // io.listen(888);
->>>>>>> d9d29f84985b4f8cc955bed4d4ec26a8aba1fb40
