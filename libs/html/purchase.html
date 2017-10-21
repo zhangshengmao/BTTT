@@ -13,91 +13,61 @@
     <script type="text/javascript" src="../js/purchase.js"></script>
 </head>
 <body>
-    <header id="header">HEADER</header>
+    <header id="header"></header>
     <main id="main">
         <div class="row">
-            <ul class="nav col-md-2">
-                <li class="product">
-                    <a href="product.html" class="btn btn-default btn-lg">产品管理</a>
+            <ul class="nav col-md-2" id="bigul">
+
+                <li class="navproduct">
+                    <p class="btn btn-default btn-lg anim" id="productBtn"><a href="product.html">产品管理</a></p>
                 </li>
-                <li class="purchase">
-                    <a href="purchase.html" class="btn btn-default btn-lg">采购管理</a>
+                <li class="navpurchase ">
+                    <p class="btn btn-default btn-lg anim" id="purchaseBtn">采购管理</p>
+                    <ul class="smallul">
+                        <li class="btn btn-default btn-lg" >
+                            <a href="purchase.html">采购进货</a>
+                        </li>
+                        <li class="btn btn-default btn-lg" >
+                            <a href="supplier.html">供货商管理</a>
+                        </li>
+                    </ul>
                 </li>
-                <li class="warehouse">
-                    <a href="warehouse.html" class="btn btn-default btn-lg">仓库管理</a>
+                <li class="navwarehouse ">
+                    <p class="btn btn-default btn-lg anim" id="warehouseBtn">仓库管理</p>
+                    <ul class="smallul">
+                        <li class="btn btn-default btn-lg" >
+                            <a href="supplier.html">库存管理</a>
+                        </li>
+                        <li class="btn btn-default btn-lg" >
+                            <a href="supplier.html">收货管理</a>
+                        </li>
+                        <li class="btn btn-default btn-lg" >
+                            <a href="supplier.html">退货管理</a>
+                        </li>
+                    </ul>
                 </li>
-                <li class="sell">
-                    <a href="grounding.html" class="btn btn-default btn-lg">销售管理</a>
+                <li class="navsell ">
+                    <p class="btn btn-default btn-lg anim" id="sellBtn">销售管理</p>
+                    <ul class="smallul">
+                        <li class="btn btn-default btn-lg" >
+                            <a href="supplier.html">上架管理</a>
+                        </li class="btn btn-default btn-lg" >
+                        <li class="btn btn-default btn-lg" id="sellGoods">
+                            <a href="supplier.html">收银管理</a>
+                        </li >
+                    </ul>
                 </li>
+
             </ul>
+
             <div class="content col-md-10">
                 <ul class="top row">
-                    <li class="li_supplier col-md-4">
-                        <a href="#" class="btn btn-default" id="supplier">供货商管理</a>
-                    </li>
                     <li class="li_purchase reserve col-md-4">
                         <a href="#" class="btn btn-default" id="purchase">采购进货</a>
                     </li>
                 </ul>
 
-                <div id="supplier_box">
-                    <div class="condition">
-                        <div class="row">
-                            <div class="firm col-md-4">
-                                <span>供货商名称：</span>
-                                <input name="firmSel" id="firmSel"/>
-                            </div>
-                            <div class="classify col-md-4">
-                                <span>主联系人：</span>
-                                <input name="classSel" id="classSel" class="classSel1"/>
-                            </div>
-                            <div class="classify col-md-4">
-                                <span>业务员：</span>
-                                <input name="classSel" id="classSel" class="classSel2"/>
-                            </div>
-                            <div class="col-md-4" style="margin-top:30px">
-                                <button class="btn btn-success btn-xs" id="clearSearch1">确认</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class=" search form-group has-success has-feedback col-xs-4">
-                        <input type="text" class="form-control" id="inputSuccess1" aria-describedby="inputSuccess2Status">
-                        <button type="button" class="btn btn-success" id="blurSearch1">搜索</button>
-                    </div>   
-
-                    <table class="table table-bordered table-hover">
-                        <caption>供货商管理表</caption>
-                        <thead>
-                            <tr>
-                                <th>供货商名称</th>
-                                <th>供货商地址</th>
-                                <th>主联系人姓名</th>
-                                <th>电话</th>
-                                <th>职务</th>
-                                <th>业务员</th>
-                                <th>修改时间</th>
-                                <th><button class="btn btn-success btn-xs" id="add_supplier">增加</button></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                           
-                        </tbody>
-                    </table> 
-                    <div  class="add_sup_box">
-                        <h3>登记供货商信息</h3>
-                        <label for="sup_name">供货商名称：</label><input type="text" id="sup_name" class="form-control">
-                        <label for="sup_address">供货商地址：</label><input type="text" id="sup_address" class="form-control">
-                        <label for="linkman_name">主联系人姓名：</label><input type="text" id="linkman_name" class="form-control">
-                        <label for="linkman_tel">主联系人电话：</label><input type="text" id="linkman_tel" class="form-control">
-                        <label for="linkman_position">主联系人职务：</label><input type="text" id="linkman_position" class="form-control">
-                        <label for="clerk_name">业务员姓名：</label><input type="text" id="clerk_name" class="form-control">
-                        <input type="button" id="addToSup" value="添加" class="btn btn-success btn-xs">
-
-                        <span class="close">&times;</span>
-                    </div>
-                </div>
-
+               
                 <div id="purchase_box">
                     <div class="condition">
                         <div class="row">
@@ -136,10 +106,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class=" search form-group has-success has-feedback col-xs-4">
-                        <input type="text" class="form-control inputSuccess2" id="inputSuccess1" aria-describedby="inputSuccess2Status"/>
-                        <button type="button" class="btn btn-success" id="blurSearch2">搜索</button>
-                    </div> 
+                  
                     <table class="table table-bordered table-hover">
                         <caption>进货管理表</caption>
                         <thead>
@@ -171,7 +138,7 @@
                         <label for="goods_qty">商品数量：</label><input type="text" id="goods_qty" class="form-control">
                         <label for="prime_price">进价：</label><input type="text" id="prime_price" class="form-control">
                         <label for="sale_price">售价：</label><input type="text" id="sale_price" class="form-control">
-                        <label for="supName">供货商名称：</label><input type="text" id="supName" class="form-control">
+                        <label for="sup_name">供货商名称：</label><input type="text" id="sup_name" class="form-control">
                         <input type="button" id="addToPur" value="添加" class="btn btn-success btn-xs">
 
                         <span class="close">&times;</span>
@@ -181,6 +148,6 @@
             </div>
         </div>
     </main>
-    <footer id="footer">FOOTER</footer>
+    <footer id="footer"></footer>
 </body>
 </html>

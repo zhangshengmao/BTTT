@@ -34,16 +34,13 @@
             </ul>
             <div class="content col-md-10">
                 <ul class="top row">
-                    <!-- <li class="li_supplier col-md-4">
-                        <a href="#" class="btn btn-default" id="supplier">供货商管理</a>
-                    </li> -->
                     <li class="li_purchase reserve col-md-4">
-                        <a href="#" class="btn btn-default" id="purchase">商品管理</a>
+                        <a href="#" class="btn btn-default" id="purchase">产品管理</a>
                     </li>
                 </ul>
 
                 <div id="product_box">
-                    <div class="condition">
+                    <!-- <div class="condition">
                         <div class="row">
                             <div class="firm col-md-4">
                                 <span>供货商名称：</span>
@@ -61,7 +58,7 @@
                                 <button class="btn btn-success btn-xs" id="clearSearch1">确认</button>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class=" search form-group has-success has-feedback col-xs-4">
                         <input type="text" class="form-control" id="inputSuccess1" aria-describedby="inputSuccess2Status">
                         <button type="button" class="btn btn-success" id="blurSearch1">搜索</button>
@@ -88,11 +85,13 @@
                     <div  class="add_pro_box">
                         <h3>登记供货商信息</h3>
                         <label for="goods_order">商品编码：</label><input type="text" id="goods_order" class="form-control">
-                        <label for="goods_order">商品条码：</label><input type="text" id="goods_order" class="form-control">
+                        <label for="goods_code">商品条码：</label><input type="text" id="goods_code" class="form-control">
                         <label for="goods_name">商品名称：</label><input type="text" id="goods_name" class="form-control">
                         <label for="goods_classify">商品分类：</label><input type="text" id="goods_classify" class="form-control">
                         <label for="goods_qty">库存：</label><input type="text" id="goods_qty" class="form-control">
                         <label for="sup_name">供货商：</label><input type="text" id="sup_name" class="form-control">
+                        <label for="prime_price">进价：</label><input type="text" id="prime_price" class="form-control">
+                        <label for="sale_price">售价：</label><input type="text" id="sale_price" class="form-control">
                         <label for="putaway">是否上架：</label><input type="text" id="putaway" class="form-control">
                         <input type="button" id="addToPro" value="添加" class="btn btn-success btn-xs">
 

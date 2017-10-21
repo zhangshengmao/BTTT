@@ -30,15 +30,9 @@ jQuery(function($){
         }
     });   
 
-    $("#logout").click(function(){
-    	$.post('http://localhost:88/login',{token:""},function(response){
-	        	console.log(response);
-	            // window.location.href= "login.html";
-	    });   
-    })
 
-
-
+	$('.content .top li').eq(0).children().css({backgroundColor:'#5cb85c',color:'#fff'});
+    
 
 	$(".add_pro_box").hide();
 
@@ -159,6 +153,7 @@ jQuery(function($){
 			prime_price:$("#prime_price").val(),
 			sale_price:$("#sale_price").val(),
 			putaway:$("#putaway").val(),
+			time:createTime()
 		}
 		$.post(common.baseUrl + "/insert_product",msg,function(result){
 			// console.log(result);
@@ -168,11 +163,16 @@ jQuery(function($){
 		//往表格添加一行
 		var $tr = $("<tr/>");
 		for(var attr in msg){
-			$(`<td></td>`).html(msg[attr]).appendTo($tr);
+			if(attr=="goods_code" || attr=="time" || attr=="prime_price" || attr=="sale_price"){
+				
+			}else{
+
+				$(`<td></td>`).html(msg[attr]).appendTo($tr);
+			}
 		}
 		var $yes_del = $(`
-			<td><button class="btn btn-default btn-xs">修改</button></td>
-			<td><button class="btn btn-default btn-xs">删除</button></td>`).appendTo($tr);
+			<td><button class="btn btn-default btn-xs" affirm>修改</button></td>
+			<td><button class="btn btn-default btn-xs" delete>删除</button></td>`).appendTo($tr);
 		$tr.appendTo($("#product_box table tbody"));
 
 	});
@@ -185,7 +185,7 @@ jQuery(function($){
 		var msg = {sup_name:$(this).parents("tr").find(".sup_name").text()}
 		$(this).parents("tr").remove();
 		$.post(common.baseUrl + "/delete_product",msg,function(result){
-			// console.log(result);
+			console.log(result);
 		})
 	});
 
@@ -195,15 +195,18 @@ jQuery(function($){
 	$("#product_box").on("click",".affirm",function(){
 		//获取当前行
 		var msg = {
-			sup_name:$(this).parents("tr").find(".sup_name").text(),
-			sup_address:$(this).parents("tr").find(".sup_address").text(),
-			linkman_name:$(this).parents("tr").find(".linkman_name").text(),
-			linkman_tel:$(this).parents("tr").find(".linkman_tel").text(),
-			linkman_position:$(this).parents("tr").find(".linkman_position").text(),
-			clerk_name:$(this).parents("tr").find(".clerk_name").text(),
+			goods_order:$(this).parents("tr").find(".goods_order").text(),
+			goods_name:$(this).parents("tr").find(".goods_name").text(),
+			goods_code:$(this).parents("tr").find(".goods_code").text(),
+			goods_classify:$(this).parents("tr").find(".goods_classify").text(),
+			goods_qty:$(this).parents("tr").find(".goods_qty").text(),
+			sup_name:$(this).parents("tr").find(".supName").text(),
+			prime_price:$(this).parents("tr").find(".prime_price").text(),
+			sale_price:$(this).parents("tr").find(".sale_price").text(),
+
 		}
 		$.post(common.baseUrl + "/update_product",msg,function(result){
-			// console.log(result);
+			console.log(result);
 		})
 	});
 
@@ -232,8 +235,8 @@ jQuery(function($){
 		var msg = {
 			clearSearch1:true,
 			sup_name:$("#firmSel").val(),
-			linkman_name:$(".classSel1").val(),
-			clerk_name:$(".classSel2").val()
+			goods_name:$(".classSel1").val(),
+			goods_classify:$(".classSel2").val()
 		};
 		$.post(common.baseUrl + "/search_product",msg,function(result){
         	 var data = result.data;

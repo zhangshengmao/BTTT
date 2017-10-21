@@ -1,5 +1,6 @@
 jQuery(function($){
-
+    // 导航条
+    common.navigationBars();
     $("#header").load("base.html .h");
     $("#footer").load("base.html .f");
 
@@ -17,14 +18,14 @@ jQuery(function($){
         window.location.href= "login.html";        
     }
     $.post('http://localhost:88/login',{token:token},function(response){
-        console.log(response);
+       
         if(!response.status){
             alert('请先登录');
             window.location.href= "login.html";
         }else{
-            console.log(response.username);
             var username = response.username;
             $("#currUser").text(username);
+            $('#salesclerk').text(username)
         }
     });   
 
@@ -47,10 +48,8 @@ jQuery(function($){
     });
     $("#close1").click(function(){
         $('.putaway_box').hide();
-        var trs=$('.putaway_box tr')
-        for(var i=1; i<trs.length; i++){
-            trs[i].remove();
-        }
+
+        $('.readyList').html('')
         
     });
     $('.sellGoods').hide();
@@ -59,12 +58,13 @@ jQuery(function($){
         $('#putaway').css({background:'#fff'})
         $('.sellGoods').show();
         $('#supplier_box').hide();
-         $('#date').val(createTime())
+         $('#date').text(common.createTime())
         setInterval(function(){
-            $('#date').val(createTime())
+            $('#date').text(common.createTime())
         },1000 )
         
     })
+
     $('#putaway').css({background:'#ccc'})
     $('#putaway').click(function(){
         $('#putaway').css({background:'#ccc'})
@@ -72,62 +72,6 @@ jQuery(function($){
 
         $('.sellGoods').hide();
         $('#supplier_box').show();
-    });
-    // 设置时间
-    function createTime(){
-        //创建当前时间
-        var now = new Date();
-        //获取日期
-        var year = now.getFullYear();
-        var month = now.getMonth()+1;
-        var date = now.getDate();
-        var week_str = ['星期日', '星期一','星期二','星期三','星期四','星期五','星期六'];
-        var week = now.getDay();
-
-        //获取时间
-        var hour = now.getHours();
-        var min = now.getMinutes();
-        var sec = now.getSeconds();
-        var mydate = year + "-" + month  + "-" + 
-        date + " " + hour + ":" + min + ":" + sec;
-        return mydate;
-    }
-    $("#addToDb").click(function(){
-
-
-        //获取输入框的信息
-        var msg = {
-            goods_order:$("#sup_name").val(),
-            goods_code:$("#sup_address").val(),
-            goods_name:$("#linkman_name").val(),
-            goods_classify:$("#linkman_tel").val(),
-            goods_qty:$("#linkman_position").val(),
-            sale_price:$("#clerk_name").val(),
-            time:createTime()
-        }
-       
-        $.post(common.baseUrl+"/grounding", msg, function(result){
-            console.log(result)
-            if(result.status){
-                    var $tr = $(`
-                        <tr>
-                        <td><input type="text" value="${msg.goods_order}"/></td>
-                        <td><input type="text" value="${msg.goods_code}"/></td>
-                        <td><input type="text" value="${msg.goods_name}"/></td>
-                        <td><input type="text" value="${msg.goods_classify}"/></td>
-                        <td><input type="text" value="${msg.goods_qty}"/></td>
-                        <td><input type="text" value="${msg.sale_price}"/></td>
-                       <td>${createTime()}</td>
-                        <td><button class="btn btn-default btn-xs revamp" id="revamp">确认</button></td>
-                        <td><button class="btn btn-default btn-xs delete" id="delete">删除</button></td>
-                        </tr>
-                        `)
-                $tr.appendTo($("#supplier_box table tbody"));
-
-            }
-        });
-        $('.add_sup_box').hide();
-
     });
     // 进入页面显示已经上架商品
     $.post(common.baseUrl+"/create",function(result){
@@ -144,13 +88,14 @@ jQuery(function($){
                     <td><input type="text" value="${item.goods_classify}"/></td>
                     <td><input type="text" value="${item.goods_qty}"/></td>
                     <td><input type="text" value="${item.sale_price}"/></td>
-                   <td>${createTime()}</td>
+                   <td>${common.createTime()}</td>
                     <td><button class="btn btn-default btn-xs revamp" id="revamp">确认</button></td>
                     <td><button class="btn btn-default btn-xs delete" id="delete">删除</button></td>
                     </tr>
                     `)
             }
             $tr.appendTo($("#supplier_box table tbody"));
+
         })
         $('.tablebox').click(function(e){
             delete1(e.target);
@@ -162,12 +107,11 @@ jQuery(function($){
         if(target.id=='delete'){
 
             var goods_order=$(target).parents('tr').children('td').eq(0).text();
-            console.log(goods_order)
+            
             $.post(common.baseUrl+'/delete',{goods_order:goods_order}, function(result){
-                console.log(result)
-                if(result.status){
-                    console.log(666)
+                if(result.ok===1){
                     $(target).parents('tr').remove();
+                    alert('删除成功');
                 }
             });
         }
@@ -176,6 +120,7 @@ jQuery(function($){
     // 商品编号不能改
     function revamp(target){
         if(target.id=='revamp'){
+
             var tdval=$(target).parents('tr').children('td');
             var term=
                 {   
@@ -185,13 +130,14 @@ jQuery(function($){
                     goods_classify:tdval.eq(3).children().eq(0).val(),
                     goods_qty:tdval.eq(4).children().eq(0).val(),
                     sale_price:tdval.eq(5).children().eq(0).val(),
-                    time:createTime()
+                    time:common.createTime()
                 }
             
             console.log(term)
             $.post(common.baseUrl+'/revamp',term, function(result) {
-                console.log(result)
+                alert('修改成功');
             })
+
         }
     }
     // 模糊搜索仓库商品数据
@@ -203,29 +149,26 @@ jQuery(function($){
             },function(result){
                 // var data = response.data;
                 putawayData = result.data;
-                // console.log(result)
                 putawayShow(result)
         })
     })
     // 根据商品名称或商品分类进行搜索
     $('#affirm').click(function(){
         $('.putaway_box').show();
-        var gName={goods_name:$('#goodsName').val()};
-        var gClass={goods_classify:$('#goodsClass').val()};
-        var obj= $('#goodsName').val()==""? gClass : $('#goodsClass').val()=="" ? gName : Object.assign({}, gClass, gName);
+        var obj={goods_classify:$('#inputSuccess1').val()};
         $.post(common.baseUrl+'/putaway',obj, function(result) {
-            console.log(result);
             putawayData = result.data;
-            putawayShow(result)
+            putawayShow(result);
         });
         
     });
     $('.putaway_box').click(function(e){
         if($(e.target).hasClass('btn btn-success btn-xs ss')){
-            console.log(putawayData)
             putawayData.forEach(function(item){
                 delete item._id;
             })
+            var qtyj = false;
+            var htmlj=false;
             var length1 = putawayData.length;
             var trs= $('#createTable').find('tr')
             var length2 = trs.length;
@@ -236,13 +179,10 @@ jQuery(function($){
                     if(num == putawayData[j].goods_code){
                         var qty=$(trs[i]).children().eq(4).children().eq(0).val();
                         qty=qty*1+putawayData[j].goods_qty*1
-                        
+                        $(trs[i]).children().eq(4).children().eq(0).val(qty)
                             putawayData[j].goods_qty=qty;
-                            console.log(putawayData[j])
                             $.post(common.baseUrl+'/revamp',putawayData[j],function(result){
-                                if(result.status){
-                                    $(trs[i]).children().eq(4).children().eq(0).val(qty);
-                                }
+                                qtyj=true;
                             })
                             putawayData.splice(j,1);
                             length1--;
@@ -252,10 +192,20 @@ jQuery(function($){
 
             }
             $.post(common.baseUrl+'/putawaySave', {arr:JSON.stringify(putawayData)}, function(res){
-                if(res.status){
+                
+                res.data=res.ops;
+                if(res.result.ok==1){
                     jia(res);
+                    htmlj=true;
                 }
             })
+            $('.putaway_box').hide();
+            alert('新商品上架成功或原商品补给成功');
+            var trs=$('.putaway_box tr');
+            $('.readyList').html('')
+            // for(var i=1; i<trs.length; i++){
+            // trs[i].remove();
+            // }
         }
         if($(e.target).hasClass('del')){
             var idx=$(e.target).parents('tr').index();
@@ -265,8 +215,8 @@ jQuery(function($){
     });
     function putawayShow(result){
         if(result.status){
-            console.log(result.data)
                 result.data.forEach(function(item){
+                    
                     for(var attr in item){
                         var $tr = $(`
                             <tr>
@@ -277,7 +227,7 @@ jQuery(function($){
                             <td><input type="text" value="${item.goods_qty}"/></td>
                             <td><input type="text" value="${item.sale_price}"/></td>
 
-                           <td>${createTime()}</td>
+                           <td>${common.createTime()}</td>
                            <td><button class="btn btn-default btn-xs del" id="del">删除</button></td>
                             `)
                     }
@@ -289,19 +239,26 @@ jQuery(function($){
     $('.payoffTable').hide();
     var arr = [];
     // 手动或扫码添加商品到待结算表
-    $('#huntGoods').click(function(){
+    $('#handMover').click(function(){
       changegoods();
     });
     var gg = document.querySelector('#goodsNum')
     var timeoutID
-    gg.oninput=function(){
-        clearTimeout(timeoutID)
-        timeoutID=setTimeout(function(){
-            console.log(66)
-            changegoods();
-        },500);
+    // gg.oninput=function(){
+    //     clearTimeout(timeoutID)
+    //     timeoutID=setTimeout(function(){
+    //         console.log(66)
+    //         changegoods();
+    //     },100);
         
-    }
+    // }
+    $(document).keypress(function(e){
+        if(e.keyCode=='13'){
+            console.log(e.keyCode)
+            $('#goodsNum').focus();
+            changegoods();
+        }
+    })
     function changegoods(){
         console.log(666);
         var obj = {
@@ -341,40 +298,100 @@ jQuery(function($){
                                     <td><input type="text" value="${res.goods_classify}"/></td>
                                     <td><input type="text" value="1" class="qty"/></td>
                                     <td><input type="text" value="${res.sale_price}"/></td>
-                                    <td>${createTime()}</td>
+                                    <td>${common.createTime()}</td>
                                     </tr>
                                     `)
                                 $tr.appendTo($("#clearlist"));
                         }else{
+
                             alert('没有此商品');
                         }
-                    }
+                    }else{
+    
+                            alert('没有此商品');
+                        }
                      
                 });
             }
             $('#goodsNum').val('')
     }
     // 账单结算
+    var closeData = [];
+    var total=0;
     $('#clearBtn').click(function(){
         var trs=$('#clearlist').find('tr');
-        var closeData = [];
-        var tatol=0;
         for(var i=1;i<=arr.length;i++){
             var obj = {
-                goods_classify:$(trs[i]).children().eq(2).children().eq(0).val(),
+                goods_name:$(trs[i]).children().eq(2).children().eq(0).val(),
                 goods_qty:$(trs[i]).children().eq(4).children().eq(0).val(),
                 sale_price:$(trs[i]).children().eq(5).children().eq(0).val(),
-                time:createTime()
+                time:common.createTime()
             };
             closeData.push(obj);
-            tatol+=obj.sale_price*obj.goods_qty;
+            total+=obj.sale_price*obj.goods_qty;
         }
-        // window.location.href = '../html/QRcode.html';
-        closeData = JSON.stringify(closeData);
-        // 删除多余的&
-      
-        console.log(closeData)
-        location.href="print.html?" + closeData;
+        $('.Qrcode').show();
+        // console.log(closeData)
+        erweima();
 
     })
+    function erweima(){
+
+        console.log(total);
+        $('#qrcode').qrcode("http://10.3.131.3/super/libs/html/payment.html?total="+total);
+            var ws;
+            ws = new WebSocket("ws://10.3.131.3:888");
+            ws.onmessage = function(_msg){
+                console.log(_msg.data);
+
+                success();
+            }   
+
+            ws.onopen = function(){
+                console.log(666);
+            }   
+
+            $('#payment').click(function(_me){
+                ws.send("aaa");
+                // ws.close();
+            })
+            // socket = io("ws://localhost:888");
+            // socket.on('ok',function(msg){
+            //      success();
+            //     console.log(msg)
+            // });
+    }
+    $('.Qrcode').hide();
+     $('.success').hide();
+    function success(){
+        $('.Qrcode').hide();
+        $('.success').show();
+        $('#qrcode').html('');
+
+    }
+    var list ='';
+    $('#print').click(function(){
+        list = closeData.map(function(item){
+            return '商品名称:'+item.goods_name+'\n'+
+                    '单品数量:'+item.goods_qty+'\n'+
+                    '商品金额:'+item.sale_price+'\n' }).join('');
+                     $.post("http://10.3.131.33:81/print", {text:
+                    'BTTT 超市收银系统  \n'
+                    +'*************************************\n'
+                    +list
+                    +'总金额：'+total+'\n'
+                    +'买单时间：'+common.createTime()+'\n'
+                    +'*************************************\n'}, function(res){
+                    console.log(res)
+                    $('.success').hide();
+        })
+   })
+    $('.closeQrcode').click(function(){
+            $('.Qrcode').hide();
+            $('#qrcode').html('');
+    });
+    $('.closesuc').click(function(){
+            $('.success').hide();
+    });
+
 })

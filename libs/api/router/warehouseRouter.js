@@ -43,6 +43,7 @@ module.exports = {
                  db.select("reserve", {}, function(result){
                     response.send(result);
                 });
+
             }else{
                 db.select("reserve", {goods_order:request.body.goods_order}, function(result){
                     // console.log(result);
@@ -116,6 +117,7 @@ module.exports = {
             }
         });
 
+
         app.post("/return", urlencode, function(request, response){
             // console.log(request.body);
             
@@ -170,6 +172,7 @@ module.exports = {
                  db.select("return", {}, function(result){
                     response.send(result);
                 });
+
             }else{
                 db.select("return", {goods_order:request.body.goods_order}, function(result){
                     console.log(result);
@@ -188,8 +191,8 @@ module.exports = {
                             // console.log(result);
                             response.send(result);
                         });
-                    }else if(result.data.length <= 0){
-                        // console.log(request.body);
+                    }else if(result.data.length == 0){
+                        // console.log(result);
                         var obj = {
                             goods_order:request.body.goods_order,
                             goods_name:request.body.goods_name,
@@ -199,6 +202,7 @@ module.exports = {
                             time:request.body.time
                         };
                         db.insert("return", obj, function(result){
+                            // console.log(result)
                             response.send(result);
                         });
                         
@@ -206,5 +210,6 @@ module.exports = {
                 })
             }
         });
+       
     }
 } 

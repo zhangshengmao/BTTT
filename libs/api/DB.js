@@ -27,7 +27,6 @@ module.exports = {
 		db.collection(_collection).update(_condition[0], {$set:_condition[1]}, {safe:true}).then(function(result){
 			_callback(result);
 
-
 		});
 	},
 	delete: function(_collection, _data, _callback){

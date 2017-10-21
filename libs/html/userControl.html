@@ -6,10 +6,13 @@
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="../css/base.css" />
     <link rel="stylesheet" type="text/css" href="../css/sales.css" />
+    <link rel="stylesheet" type="text/css" href="../css/header_footer.css">
     <script type="text/javascript" src="../jquery-3.2.1.js"></script>
 </head>
 <body>
-    <header id="header">HEADER</header>
+    <header id="header">
+        
+    </header>
     <main id="main">
         <div class="row">
             <ul class="nav col-md-2">
@@ -33,46 +36,12 @@
                 <div class="reserveBox">
                     
                 </div>
-                <div class="condition">
-                    <div class="row">
-                        <div class="purchase col-md-4">
-                            <span>进价区间：</span>
-                            <input type="text" id="pur1"/>
-                            <span>-</span>
-                            <input type="text" id="pur2"/>
-                        </div>
-                        <div class="sell col-md-4">
-                            <span>售价区间：</span>
-                            <input type="text" id="sel1" />
-                            <span>-</span>
-                            <input type="text" id="sel2" />         
-                        </div>
-                        <div class="amount col-md-4">
-                            <span>数量区间：</span>
-                            <input type="text" id="amo1" />
-                            <span>-</span>
-                            <input type="text" id="amo2" />                   
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="firm col-md-4">
-                            <span>供货商家：</span>
-                            <input type="text" id="ser_firms" />
-                        </div>
-                        <div class="classify col-md-4">
-                            <span>商品分类：</span>
-                            <input type="text" id="ser_classify" />                     
-                        </div>
-                        <div class="col-md-4">
-                            <button class="btn btn-success btn-xs toSearch">确认</button>
-                        </div>
-                    </div>
-                </div>
+       
                 <div class=" search form-group has-success has-feedback col-xs-4">
                     <input type="text" class="form-control fuzInput" id="inputSuccess1" aria-describedby="inputSuccess2Status">
-                    <button type="button" class="btn btn-success fuzSearch">搜索商品</button>
+                    <button type="button" class="btn btn-success fuzSearch" id="hunt">搜索用户</button>
                 </div>   
-                <table class="table table-bordered table-hover">
+                <table class="table table-bordered table-hover" id="jion_tbody">
                     <caption>用户管理表</caption>
                     <thead>
                         <tr>
@@ -87,20 +56,8 @@
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <!-- <tr>
-                            <td><input type="text" /></td>
-                            <td><input type="text" /></td>
-                            <td><input type="text" /></td>
-                            <td><input type="text" /></td>
-                            <td><input type="text" /></td>
-                            <td><input type="text" /></td>
-                            <td><input type="text" /></td>
-                            <td><input type="text" /></td>
-                            <td><input type="text" /></td>
-                            <td><button class="btn btn-default btn-xs">确认</button></td>
-                            <td><button class="btn btn-default btn-xs">删除</button></td>
-                        </tr> -->
+                    <tbody class="clearBody">
+                       
                     </tbody>
                 </table> 
                 <div class="add_user">
@@ -118,7 +75,7 @@
         </div>
 
     </main>
-    <footer id="footer">FOOTER</footer>
+    <footer id="footer"></footer>
     <script type="text/javascript" src="../js/userControl.js"></script>
     <script type="text/javascript" src="../js/common.js"></script>
 </body>
