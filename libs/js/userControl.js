@@ -26,7 +26,7 @@ jQuery(function($){
             $("#currUser").text(username);
         }
     });   
-    
+  // ===============================================================================  
     $('.add_user').hide();
     $('#showHide').click(function(){
         $('.add_user').show();

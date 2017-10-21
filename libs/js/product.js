@@ -31,7 +31,8 @@ jQuery(function($){
     });   
 
 
-
+	$('.content .top li').eq(0).children().css({backgroundColor:'#5cb85c',color:'#fff'});
+    
 
 	$(".add_pro_box").hide();
 

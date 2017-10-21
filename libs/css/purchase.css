@@ -8,5 +8,9 @@
 #supplier_box .add_sup_box .close,#purchase_box .add_pur_box .close{position:absolute;right:5px;top:0;}
 #supplier_box .row #firmSel,#supplier_box .row #classSel{width:200px;height:25px;}
 #purchase_box .row #firmSel,#purchase_box .row #classSel{width:150px;}
-#supplier_box,#purchase_box{height:435px;overflow-y:auto;}
+#supplier_box table,#purchase_box table{overflow-y:auto;}
+
+#purchase_box .add_pur_box ul{position:absolute;right:0;bottom:0;width:230px;overflow:hidden;}
+#purchase_box .add_pur_box ul li{line-height:16px;}
+#purchase_box .add_pur_box ul li:hover{background-color:#58bc58;}
 
