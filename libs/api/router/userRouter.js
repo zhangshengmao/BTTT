@@ -28,7 +28,12 @@ module.exports = {
                 }
             });
         })
-        
+        app.post('/identity', urlencode, function(request, response){
+            db.select('users',request.body,function(result){
+                console.log(result);
+                response.send({identity:result.data[0].identity})
+            })
+        })
         app.post('/login', urlencode, function(request, response){
             //操作数据库
             if(request.body.token){
@@ -38,14 +43,17 @@ module.exports = {
                      if(error){
                          response.send({status: false, message: error});
                      } else {
-                         response.send({status: true,username:result.username});
+                         response.send({status: true,username:result.username,
+                            identity:result.identity
+
+                         });
                      }
                 }) 
                 return false;                  
             }; 
 
             db.select('users',request.body, function(result){
-                console.log(result)
+                // console.log(result)
                 if(!result.status){
                     response.send(result);
                 } else {

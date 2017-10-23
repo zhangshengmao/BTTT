@@ -4,17 +4,13 @@ $(function(){
     // $.post("http://10.3.131.22:88/reserve", {username:1}, function(response){
     //     console.log(response);
     // })
+     
     common.navigationBars();
-
-
     $("#header").load("base.html .h");
     $("#footer").load("base.html .f");
-    // ---------定义baseURL路径
     var baseUrl = "http://localhost:88";
-    common.identity();
 
-     
-    
+    common.identity();
 
     // -------生成table中的trs
     function makeTrs(data){
@@ -30,8 +26,7 @@ $(function(){
                             <td><input type="text" class="prime_price" value=${item.prime_price} /></td>
                             <td><input type="text" class="sale_price" value=${item.sale_price} /></td>
                             <td><input type="text" class="time" value=${item.time} /></td>
-                            <td><button class="btn btn-default btn-xs addTo">确认</button></td>
-                            <td><button class="btn btn-default btn-xs delet">删除</button></td>
+                            <td><button class="btn btn-default btn-xs receive">收货</button></td>
                         </tr>`
         }).join('');
         $('.table tbody').html(trs);
@@ -51,69 +46,56 @@ $(function(){
 
     
     $('.tableBox').datagrid({
-        url:baseUrl + '/reserve',
+        url:baseUrl + '/search_purchase',
         cols:'goods_order,goods_code,goods_name,goods_classify,goods_qty,sup_name,prime_price,sale_price,time',
         method:'post',
-        edit:true,
-        delete:true,
-        insert:true,
+        receive:true,
         info:{goods_order:''},
-        caption:'库存管理表'
+        caption:'收货管理表'
     })
 
+// ---------确认收货
+    $('.tableBox').on('click','.receive',function(){
+            var $btn_receive = $(this);
+            var tr = $btn_receive.parent().parent();
 
-
-    // ---------点击添加tr及添加到数据库
-    $('.add_info .close').click(function(){
-       $('.add_info').css({display:'none'});   
+            $.post(baseUrl + '/reserve', 
+            {
+                goods_order:$(tr).children().eq(0).children().val(),
+                goods_code:$(tr).children().eq(1).children().val(),
+                goods_name:$(tr).children().eq(2).children().val(),
+                goods_classify:$(tr).children().eq(3).children().val(),
+                goods_qty:$(tr).children().eq(4).children().val(),
+                sup_name:$(tr).children().eq(5).children().val(),
+                prime_price:$(tr).children().eq(6).children().val(),
+                sale_price:$(tr).children().eq(7).children().val(),
+                time:Time()
+            },
+            function(response){
+                $btn_receive.attr({disabled:true});
+                $(tr).find('.receive').attr({disabled:true});
+                $.post(baseUrl + '/delete_purchase',
+                    {goods_order:$(tr).children().eq(0).children().val()},
+                    function(response){
+                        console.log(response)
+                });  
+            });          
     });
-
-    $('#addToDb').click(function(){
-        if($('#order').val() == null || $('#order').val()== undefined || $('#order').val() == ''){
-            alert('不能为空');
-            return false;    
-        }
-       $.post(postUrl, 
-        {
-            goods_order:$('#order').val(),
-            goods_code:$('#code').val(),
-            goods_name:$('#goods_name').val(),
-            goods_classify:$('#classify').val(),
-            goods_qty:$('#qty').val(),
-            sup_name:$('#sup_name').val(),
-            prime_price:$('#prime_price').val(),
-            sale_price:$('#sale_price').val(),
-            time:Time()
-        },
-        function(response){
-            console.log(response);
-            $('.tableBox').html('');
-            $('.tableBox').datagrid({
-                url:baseUrl + '/reserve',
-                cols:'goods_order,goods_code,goods_name,goods_classify,goods_qty,sup_name,prime_price,sale_price,time',
-                method:'post',
-                edit:true,
-                delete:true,
-                insert:true,
-                info:{goods_order:''},
-                caption:'库存管理表'
-            })           
-        });        
-    });
-
+        
 
     // ------模糊搜索
     $('.fuzSearch').click(function(){
-        $.post(baseUrl + '/reserve',
+        $.post(baseUrl + '/search_purchase',
         {
-            fuzSearch:true,
+            blurSearch2:true,
             info:$('.fuzInput').val()
         },
         function(response){
             var data = response.data;
+            $('.table tbody').html();
             makeTrs(data);
+           
         })
-    });
-    
+    });    
     
 });

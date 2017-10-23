@@ -32,14 +32,3 @@ common.createTime=function (){
         date + " " + hour + ":" + min + ":" + sec;
         return mydate;
     }
-    // $.post(baseUrl + '/reserve', 
-    //         {
-    //             return:true,
-    //             goods_order:$(tr).children().eq(0).children().val(),
-    //             goods_name:$(tr).children().eq(2).children().val(),
-    //             goods_classify:$(tr).children().eq(3).children().val(),
-    //             sup_name:$(tr).children().eq(5).children().val(),
-    //             return_qty:$(tr).children().eq(4).children().val(),
-    //             time:Time()
-    //         },
-    //         function(response){

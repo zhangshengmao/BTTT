@@ -1,4 +1,4 @@
-module.exports = {
+ module.exports = {
     Purchase: function(app, urlencode, db){
       //供货商管理
       app.post("/insert_supplier",urlencode,function(request,response){

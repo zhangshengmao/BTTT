@@ -182,7 +182,16 @@ jQuery(function($){
                             putawayData[j].goods_qty=qty;
                             $.post(common.baseUrl+'/revamp',putawayData[j],function(result){
                                 qtyj=true;
-                                // $.post(common.basurl+'')
+
+                                // $.post(common.baseUrl+'/return',
+                                //     {
+                                //         return:true,
+                                //         goods_order:putawayData[j].goods_order,
+                                //         return_qty: $($('#putaway_table').find('tr')).children().eq(1).children().eq(0).val(),
+                                //         time:Time()
+                                //     }
+                                //     , function(res) {
+                                // });
                             })
                             putawayData.splice(j,1);
                             length1--;
@@ -197,6 +206,7 @@ jQuery(function($){
                 if(res.result.ok==1){
                     jia(res);
                     htmlj=true;
+                    checkWarehouse();
                 }
             })
             $('.putaway_box').hide();
@@ -234,8 +244,24 @@ jQuery(function($){
             }
     }
 
+    var js=-1;
+    function checkWarehouse(){
+        js++
 
-
+        if(js==putawayData.length){
+            js=-1;
+            return;
+        }
+        $.post(common.baseUrl+'/return',
+            {
+                return:true,
+                goods_order:putawayData[js].goods_order,
+                return_qty: putawayData[js].goods_qty,
+            }
+            , function(res) {
+            checkWarehouse(data)
+        });
+    }
 
 
 
