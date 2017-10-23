@@ -1,0 +1,15 @@
+1.用户名：v 密码：123
+2.baseUrl: 在js文件夹里面的common.js文件里的开头。
+3.在根目录文件夹里打开cmd命令窗口运行node server即可打开node服务器端口
+4.在libs下的router文件夹里打开cmd命令窗口运行socked_server即可打开websocket端口。
+5.数据库文件为在data文件夹里面。
+6、github地址:git@github.com:zhangshengmao/BTTT.git
+7.已配置模块
+	Express
+	Body-parser
+	Browser-sync
+	Mongodb
+	jsonwebtoken
+	express-session
+	cookie-parser
+	socket.io
